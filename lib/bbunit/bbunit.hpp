@@ -2,30 +2,32 @@
 #define TESTLIB_TEST_BBUNIT_HPP
 
 #include <iostream>
-
-#ifdef _WIN32
-#include <windows.h>
 #include <vector>
 #include <map>
 #include <tuple>
 #include <functional>
 
+#ifdef _WIN32
+#include <windows.h>
 #endif
 
 #ifdef _WIN32
+const int FOREGROUND_RESET = 7;
+const int BACKGROUND_RESET = 0;
+
 void setColor(int colorCode)
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorCode);
 }
 #else
+const int FOREGROUND_GREEN = 0;
+const int BACKGROUND_RED = 0;
+
 void setColor(int colorCode)
 {
     // @todo To be implemented
 }
 #endif
-
-const int FOREGROUND_RESET = 7;
-const int BACKGROUND_RESET = 0;
 
 namespace BBUnit {
 
