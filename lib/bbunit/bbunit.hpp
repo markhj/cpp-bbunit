@@ -36,6 +36,11 @@ namespace BBUnit {
         SelfTest,
     };
 
+    enum PrintMode {
+        FocusOnFail,
+        FullList,
+    };
+
     struct TestResult {
         bool passed;
         std::string message;
@@ -169,6 +174,8 @@ namespace BBUnit {
     private:
         TestMode mode = TestMode::Standard;
 
+        PrintMode printMode = PrintMode::FocusOnFail;
+
         bool selfTestingScope = false;
 
         unsigned int assertions = 0,
@@ -178,6 +185,30 @@ namespace BBUnit {
         {
             setColor(FOREGROUND_RESET | BACKGROUND_RESET);
 
+            switch (printMode) {
+                case PrintMode::FocusOnFail:
+                    printFocusOnFail(testPassed, message);
+                    break;
+                case PrintMode::FullList:
+                    printFullList(testPassed, message);
+                    break;
+            }
+        }
+
+        void printFocusOnFail(bool testPassed, const std::string& message)
+        {
+            if (testPassed) {
+                return;
+            }
+
+            setColor(BACKGROUND_RED);
+            std::cout << "\n FAILED ";
+            setColor(FOREGROUND_RESET | BACKGROUND_RESET);
+            std::cout << " " << message << std::endl;
+        }
+
+        void printFullList(bool testPassed, const std::string& message)
+        {
             if (testPassed) {
                 setColor(FOREGROUND_GREEN);
                 std::cout << "  OK  ";
@@ -226,9 +257,29 @@ namespace BBUnit {
                 passed += item->getPassed();
             }
 
-            std::cout << "\n============================"
-                << "\nPassed: " << passed << " | Total: " << assertions << std::endl;
+            summarize(assertions, passed);
         }
+
+        static void summarize(int assertions, int passed)
+        {
+            std::cout << "\n-------------------------------------------------\n";
+
+            if (passed == assertions) {
+                setColor(BACKGROUND_GREEN);
+                std::cout << " NICE! ";
+                setColor(BACKGROUND_RESET);
+                std::cout << " ";
+            } else {
+                setColor(FOREGROUND_RED);
+                std::cout << "Failed: " << (assertions - passed);
+                setColor(FOREGROUND_RESET);
+                std::cout << " | ";
+            }
+
+            setColor(BACKGROUND_RESET | FOREGROUND_RESET);
+            std::cout << "Passed: " << passed << " | Total: " << assertions << std::endl;
+        }
+
     };
 
 }
