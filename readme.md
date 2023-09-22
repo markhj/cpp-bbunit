@@ -104,9 +104,7 @@ The included ``CMakeLists.txt`` compiles an executable, which
 tests the library itself.
 
 ## Roadmap :blue_car:
-- Make print mode configurable
 - Adding more assertion types, such as "greater than or equals to", etc.
-- Fix string comparison bug
 
 - Tools to test for partial content of strings
 - Test for thrown exceptions

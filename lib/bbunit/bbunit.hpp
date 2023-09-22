@@ -95,6 +95,13 @@ namespace BBUnit {
             return assert(expected == actual, message);
         }
 
+        TestResult assertEquals(const char *expected, const char *actual, const char *message)
+        {
+            std::string a = expected,
+                b = actual;
+            return assert(a == b, message);
+        }
+
         TestResult assertEquals(const std::string& expected, const std::string& actual, const char *message)
         {
             return assert(expected == actual, message);

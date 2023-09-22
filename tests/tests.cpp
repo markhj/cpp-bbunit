@@ -10,6 +10,7 @@ protected:
         greaterThan();
         lessThan();
         bools();
+        constChar();
         strings();
         countAndEmpty();
     }
@@ -46,10 +47,19 @@ protected:
         assertTrue(assertEquals(true, true, "assertEquals of true"));
     }
 
+    void constChar()
+    {
+        assertFalse(assertEquals("See you later, world", "Hello world", "Different const chars"));
+        assertTrue(assertEquals("Hello world", "Hello world", "Identical const chars"));
+    }
+
     void strings()
     {
-        assertFalse(assertEquals("See you later, world", "Hello world", "Different strings"));
-        assertTrue(assertEquals("Hello world", "Hello world", "Identical strings"));
+        std::string a = "Hello world";
+        std::string b = "See you later, world";
+
+        assertFalse(assertEquals(b, a, "Different strings"));
+        assertTrue(assertEquals(a, a, "Identical strings"));
     }
 
     void countAndEmpty()
