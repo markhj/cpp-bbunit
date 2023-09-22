@@ -73,6 +73,16 @@ namespace BBUnit {
             assert(expected == actual, message);
         }
 
+        void assertGreaterThan(int compare, int actual, const char *message)
+        {
+            assert(actual > compare, message);
+        }
+
+        void assertGreaterThan(double compare, double actual, const char *message)
+        {
+            assert(actual > compare, message);
+        }
+
         void assertTrue(bool actual, const char* message)
         {
             assert(actual, message);

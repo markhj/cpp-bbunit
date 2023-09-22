@@ -5,9 +5,23 @@ protected:
     void test() override
     {
         numbers();
+        greaterThan();
+        lessThan();
         bools();
         strings();
         countAndEmpty();
+    }
+
+    void greaterThan()
+    {
+        assertGreaterThan(2, 5, "5 is bigger than 2");
+        assertGreaterThan(5, 5, "5 is not bigger than 5");
+        assertGreaterThan(8, 5, "5 is not bigger than 8");
+    }
+
+    void lessThan()
+    {
+
     }
 
     void numbers()
