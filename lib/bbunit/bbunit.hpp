@@ -9,6 +9,8 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <algorithm>
+
 #endif
 
 #ifdef _WIN32
@@ -179,6 +181,33 @@ namespace BBUnit {
         TestResult assertEmpty(std::map<K, V> map, const char* message)
         {
             return assert(map.size() == 0, message);
+        }
+
+        TestResult assertContains(const char *contains, const char* actual, const char* message)
+        {
+            std::string a = actual;
+            return assertContains(contains, a, message);
+        }
+
+        TestResult assertContains(const char *contains, const std::string& actual, const char* message)
+        {
+            return assert(actual.find(contains) != std::string::npos, message);
+        }
+
+        TestResult assertContainsCI(const char *contains, const char* actual, const char* message)
+        {
+            std::string a = actual;
+            return assertContainsCI(contains, a, message);
+        }
+
+        TestResult assertContainsCI(const char *contains, const std::string& actual, const char* message)
+        {
+            std::string lwContains = contains, lwActual = actual;
+
+            std::transform(lwContains.begin(), lwContains.end(), lwContains.begin(), ::tolower);
+            std::transform(lwActual.begin(), lwActual.end(), lwActual.begin(), ::tolower);
+
+            return assert(lwActual.find(lwContains) != std::string::npos, message);
         }
 
         void assertTrue(const TestResult& testResult)

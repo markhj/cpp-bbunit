@@ -104,8 +104,7 @@ The included ``CMakeLists.txt`` compiles an executable, which
 tests the library itself.
 
 ## Roadmap :blue_car:
-- Tools to test for partial content of strings
+- Improved test runner class
 - Test for thrown exceptions
 - Test for contents of a collection type (vector, map, etc.)
 - Improved capabilities to collect cases in suites
-- Improved test runner class

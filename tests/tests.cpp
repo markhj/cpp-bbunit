@@ -12,6 +12,8 @@ protected:
         bools();
         constChar();
         strings();
+        contains();
+        containsCI();
         countAndEmpty();
     }
 
@@ -70,6 +72,28 @@ protected:
 
         assertFalse(assertEquals(b, a, "Different strings"));
         assertTrue(assertEquals(a, a, "Identical strings"));
+    }
+
+    void contains()
+    {
+        std::string str = "Hello world";
+
+        assertTrue(assertContains("world", "Hello world", "Contains 'Hello world'"));
+        assertTrue(assertContains("world", str, "Contains 'Hello world'"));
+
+        assertFalse(assertContains("nothing", "Hello world", "Contains 'Hello world'"));
+        assertFalse(assertContains("nothing", str, "Contains 'Hello world'"));
+    }
+
+    void containsCI()
+    {
+        std::string str = "Hello World";
+
+        assertTrue(assertContainsCI("WORLD", "Hello World", "Contains 'Hello World' (const char)"));
+        assertTrue(assertContainsCI("WORLD", str, "Contains 'Hello World' (string)"));
+
+        assertFalse(assertContainsCI("nothing", "Hello world", "Does not contain 'Hello world'"));
+        assertFalse(assertContainsCI("nothing", str, "Does not contain 'Hello world'"));
     }
 
     void countAndEmpty()
