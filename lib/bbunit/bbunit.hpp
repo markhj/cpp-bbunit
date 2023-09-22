@@ -31,8 +31,21 @@ void setColor(int colorCode)
 
 namespace BBUnit {
 
+    enum TestMode {
+        Standard,
+        SelfTest,
+    };
+
     struct TestResult {
         bool passed;
+        std::string message;
+    };
+
+    class MustBeSelfTestingException : public std::exception {
+    public:
+        const char* what() const noexcept override {
+            return "Test case must be in self-testing mode to use this function.";
+        }
     };
 
     class TestCase {
@@ -56,6 +69,11 @@ namespace BBUnit {
 
     protected:
         virtual void test() = 0;
+
+        void setMode(TestMode toMode)
+        {
+            mode = toMode;
+        }
 
         TestResult assertEquals(int expected, int actual, const char *message)
         {
@@ -121,18 +139,46 @@ namespace BBUnit {
             return assert(map.size() == 0, message);
         }
 
+        void assertTrue(const TestResult& testResult)
+        {
+            selfTesting([&]() {
+                assert(testResult.passed, testResult.message);
+            });
+        }
+
+        void assertFalse(const TestResult& testResult)
+        {
+            selfTesting([&]() {
+                assert(!testResult.passed, testResult.message);
+            });
+        }
+
+        void selfTesting(const std::function<void()>& func)
+        {
+            if (mode != TestMode::SelfTest) {
+                throw MustBeSelfTestingException();
+            }
+
+            selfTestingScope = true;
+
+            func();
+
+            selfTestingScope = false;
+        }
+
     private:
+        TestMode mode = TestMode::Standard;
+
+        bool selfTestingScope = false;
+
         unsigned int assertions = 0,
             passed = 0;
 
-        TestResult assert(bool testPassed, const std::string& message)
+        void printResult(bool testPassed, const std::string& message)
         {
-            assertions++;
-
             setColor(FOREGROUND_RESET | BACKGROUND_RESET);
 
             if (testPassed) {
-                passed++;
                 setColor(FOREGROUND_GREEN);
                 std::cout << "  OK  ";
             } else {
@@ -142,9 +188,24 @@ namespace BBUnit {
 
             setColor(FOREGROUND_RESET | BACKGROUND_RESET);
             std::cout << " " << message << std::endl;
+        }
+
+        TestResult assert(bool testPassed, const std::string& message)
+        {
+            if (mode == TestMode::Standard
+                || (mode == TestMode::SelfTest && selfTestingScope)
+                ) {
+                assertions++;
+
+                if (testPassed)
+                    passed++;
+
+                printResult(testPassed, message);
+            }
 
             return {
                 .passed = testPassed,
+                .message = message,
             };
         }
 
