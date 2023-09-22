@@ -117,6 +117,36 @@ namespace BBUnit {
             return assert(actual > compare, message);
         }
 
+        TestResult assertGreaterThanOrEqual(int compare, int actual, const char *message)
+        {
+            return assert(actual >= compare, message);
+        }
+
+        TestResult assertGreaterThanOrEqual(double compare, double actual, const char *message)
+        {
+            return assert(actual >= compare, message);
+        }
+
+        TestResult assertLessThan(int compare, int actual, const char *message)
+        {
+            return assert(actual < compare, message);
+        }
+
+        TestResult assertLessThan(double compare, double actual, const char *message)
+        {
+            return assert(actual < compare, message);
+        }
+
+        TestResult assertLessThanOrEqual(int compare, int actual, const char *message)
+        {
+            return assert(actual <= compare, message);
+        }
+
+        TestResult assertLessThanOrEqual(double compare, double actual, const char *message)
+        {
+            return assert(actual <= compare, message);
+        }
+
         TestResult assertTrue(bool actual, const char* message)
         {
             return assert(actual, message);

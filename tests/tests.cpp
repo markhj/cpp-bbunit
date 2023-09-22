@@ -17,14 +17,24 @@ protected:
 
     void greaterThan()
     {
-        assertTrue(assertGreaterThan(2, 5, "5 is bigger than 2"));
-        assertFalse(assertGreaterThan(5, 5, "5 is not bigger than 5"));
-        assertFalse(assertGreaterThan(8, 5, "5 is not bigger than 8"));
+        assertTrue(assertGreaterThan(2, 5, "5 is greater than 2"));
+        assertFalse(assertGreaterThan(5, 5, "5 is not greater than 5"));
+        assertFalse(assertGreaterThan(8, 5, "5 is not greater than 8"));
+
+        assertTrue(assertGreaterThanOrEqual(2, 5, "5 is greater than or equal to 2"));
+        assertTrue(assertGreaterThanOrEqual(5, 5, "5 is greater than or equal to 5"));
+        assertFalse(assertGreaterThanOrEqual(8, 5, "5 is NOT greater than or equal to 8"));
     }
 
     void lessThan()
     {
+        assertFalse(assertLessThan(2, 5, "5 is less than 2"));
+        assertFalse(assertLessThan(5, 5, "5 is not less than 5"));
+        assertTrue(assertLessThan(8, 5, "5 is not less than 8"));
 
+        assertFalse(assertLessThanOrEqual(2, 5, "5 is less than or equal to 2"));
+        assertTrue(assertLessThanOrEqual(5, 5, "5 is less than or equal to 5"));
+        assertTrue(assertLessThanOrEqual(8, 5, "5 is NOT less than or equal to 8"));
     }
 
     void numbers()
