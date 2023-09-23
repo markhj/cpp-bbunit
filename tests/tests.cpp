@@ -113,7 +113,7 @@ int main()
     BBUnit::TestSuite<MyTest> bools(&MyTest::bools);
     BBUnit::TestSuite<MyTest> sets(&MyTest::countAndEmpty);
 
-    BBUnit::TestRunner().run(numbers, strings, bools, sets);
+    BBUnit::TestRunner().setPrintMode(BBUnit::PrintMode::FullList).run(numbers, strings, bools, sets);
 
     return 0;
 }

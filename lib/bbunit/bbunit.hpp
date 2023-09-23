@@ -35,13 +35,13 @@ void setColor(int colorCode)
 namespace BBUnit {
 
     enum TestMode {
-        Standard,
-        SelfTest,
+        Standard = 1,
+        SelfTest = 2,
     };
 
     enum PrintMode {
-        FocusOnFail,
-        FullList,
+        FocusOnFail = 10,
+        FullList = 20,
     };
 
     struct TestResult {
@@ -70,6 +70,12 @@ namespace BBUnit {
         [[nodiscard]] unsigned int getPassed() const
         {
             return passed;
+        }
+
+        TestCase& setPrintMode(PrintMode newPrintMode)
+        {
+            printMode = newPrintMode;
+            return *this;
         }
 
     protected:
@@ -310,7 +316,8 @@ namespace BBUnit {
         template <typename... Funcs>
         explicit TestSuite(Funcs... funcs) : current(TC())
         {
-            (functions.push_back([this, funcs]() {
+            (functions.push_back([&, funcs](PrintMode pMode) {
+                current.setPrintMode(pMode);
                 (current.*funcs)();
                 return TestSummary {
                     .assertions = current.getAssertions(),
@@ -324,7 +331,7 @@ namespace BBUnit {
             TestSummary total;
 
             for (const auto& testFunc : functions) {
-                TestSummary summary = testFunc();
+                TestSummary summary = testFunc(printMode);
 
                 total.assertions = summary.assertions;
                 total.passed = summary.passed;
@@ -333,25 +340,21 @@ namespace BBUnit {
             return total;
         }
 
+        TestSuite& setPrintMode(PrintMode newPrintMode)
+        {
+            printMode = newPrintMode;
+            return *this;
+        }
+
     private:
         TC current;
 
-        std::vector<std::function<TestSummary()>> functions;
+        std::vector<std::function<TestSummary(PrintMode pMode)>> functions;
+
+        PrintMode printMode = PrintMode::FocusOnFail;
     };
 
     class TestRunner {
-    private:
-        unsigned int assertions = 0, passed = 0;
-
-        template <typename TCD>
-        void runSuite(TestSuite<TCD> testSuite)
-        {
-            TestSummary summary = testSuite.run();
-
-            assertions += summary.assertions;
-            passed += summary.passed;
-        }
-
     public:
         template<typename... TestSuites>
         void run(TestSuites... suites)
@@ -379,6 +382,26 @@ namespace BBUnit {
 
             setColor(BACKGROUND_RESET | FOREGROUND_RESET);
             std::cout << "Passed: " << passed << " | Total: " << assertions << std::endl;
+        }
+
+        TestRunner& setPrintMode(PrintMode newPrintMode)
+        {
+            printMode = newPrintMode;
+            return *this;
+        }
+
+    private:
+        unsigned int assertions = 0, passed = 0;
+
+        PrintMode printMode = PrintMode::FocusOnFail;
+
+        template <typename TCD>
+        void runSuite(TestSuite<TCD> testSuite)
+        {
+            TestSummary summary = testSuite.setPrintMode(printMode).run();
+
+            assertions += summary.assertions;
+            passed += summary.passed;
         }
 
     };
