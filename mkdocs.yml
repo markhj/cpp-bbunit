@@ -3,3 +3,7 @@ theme:
   name: 'material'
 nav:
   - Home: index.md
+  - Installation:
+    - Include library: installation/include.md
+  - Assertions:
+    - List of assertions: assertions/list-assertions.md
