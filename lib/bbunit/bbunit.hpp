@@ -318,7 +318,7 @@ namespace BBUnit {
         }
 
         template <typename ExceptionType>
-        TestResult assertExceptionOfType(std::function<void()> func, const char* message)
+        TestResult assertException(std::function<void()> func, const char* message)
         {
             bool caught = false;
             try {

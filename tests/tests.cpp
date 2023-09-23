@@ -131,11 +131,11 @@ public:
             throw std::runtime_error("Some error");
         }, "assertException when runtime_error is thrown"));
 
-        assertTrue(assertExceptionOfType<CustomException>([]() {
+        assertTrue(assertException<CustomException>([]() {
             throw CustomException();
             }, "CustomException thrown and expected"));
 
-        assertFalse(assertExceptionOfType<CustomException>([]() {
+        assertFalse(assertException<CustomException>([]() {
             throw std::exception();
         }, "Normal exception thrown, but CustomException expected"));
     }
