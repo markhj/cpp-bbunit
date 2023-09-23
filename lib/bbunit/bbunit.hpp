@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <memory>
 #include <regex>
+#include <format>
 
 #ifdef _WIN32
 const int FOREGROUND_RESET = 7;
@@ -86,14 +87,35 @@ namespace BBUnit {
             mode = toMode;
         }
 
+        TestResult assertEquals(int expected, int actual)
+        {
+            return assertEquals(expected,
+                                actual,
+                                std::format("Assert that int {} matches {}", expected, actual).c_str());
+        }
+
         TestResult assertEquals(int expected, int actual, const char *message)
         {
             return assert(expected == actual, message);
         }
 
+        TestResult assertEquals(double expected, double actual)
+        {
+            return assertEquals(expected,
+                          actual,
+                          std::format("Assert that float/double {} matches {}", expected, actual).c_str());
+        }
+
         TestResult assertEquals(double expected, double actual, const char *message)
         {
             return assert(expected == actual, message);
+        }
+
+        TestResult assertEquals(bool expected, bool actual)
+        {
+            return assertEquals(expected,
+                                actual,
+                          std::format("Assert that bool {} matches {}", expected, actual).c_str());
         }
 
         TestResult assertEquals(bool expected, bool actual, const char *message)
@@ -158,9 +180,19 @@ namespace BBUnit {
             return assert(actual, message);
         }
 
+        TestResult assertTrue(bool actual)
+        {
+            return assertTrue(actual, "Assert that bool is true");
+        }
+
         TestResult assertFalse(bool actual, const char* message)
         {
             return assert(!actual, message);
+        }
+
+        TestResult assertFalse(bool actual)
+        {
+            return assertFalse(actual, "Assert that bool is false");
         }
 
         template <typename T>
@@ -187,12 +219,12 @@ namespace BBUnit {
             return assert(map.size() == 0, message);
         }
 
-        TestResult assertContains(const char *contains, const std::string& actual, const char* message)
+        TestResult assertContains(const std::string& contains, const std::string& actual, const char* message)
         {
             return assert(actual.find(contains) != std::string::npos, message);
         }
 
-        TestResult assertContainsCI(const char *contains, const std::string& actual, const char* message)
+        TestResult assertContainsCI(const std::string& contains, const std::string& actual, const char* message)
         {
             std::string lwContains = contains, lwActual = actual;
 

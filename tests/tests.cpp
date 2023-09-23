@@ -22,11 +22,11 @@ public:
 
     void numbers()
     {
-        assertFalse(assertEquals(2, 5, "Must be 2 (integer)"));
-        assertTrue(assertEquals(5, 5, "Must be 5 (integer)"));
+        assertFalse(assertEquals(2, 5));
+        assertTrue(assertEquals(5, 5));
 
-        assertFalse(assertEquals(2.0f, 5.0f, "Must be 2 (float)"));
-        assertTrue(assertEquals(5.0f, 5.0f, "Must be 5 (float)"));
+        assertFalse(assertEquals(2.0f, 5.0f));
+        assertTrue(assertEquals(5.0f, 5.0f));
     }
 
     void greaterThan()
@@ -53,13 +53,13 @@ public:
 
     void bools()
     {
-        assertTrue(assertTrue(true, "assertTrue of true"));
-        assertFalse(assertTrue(false, "assertTrue of false"));
-        assertFalse(assertFalse(true, "assertFalse of false"));
-        assertTrue(assertFalse(false, "assertFalse of true"));
+        assertTrue(assertTrue(true));
+        assertFalse(assertTrue(false));
+        assertFalse(assertFalse(true));
+        assertTrue(assertFalse(false));
 
-        assertFalse(assertEquals(false, true, "assertEquals of false"));
-        assertTrue(assertEquals(true, true, "assertEquals of true"));
+        assertFalse(assertEquals(false, true));
+        assertTrue(assertEquals(true, true));
     }
 
     void constChar()
