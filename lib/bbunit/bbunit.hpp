@@ -14,6 +14,7 @@
 #include <functional>
 #include <algorithm>
 #include <memory>
+#include <regex>
 
 #ifdef _WIN32
 const int FOREGROUND_RESET = 7;
@@ -388,6 +389,11 @@ namespace BBUnit {
             return assert(caught, message);
         }
 
+        TestResult assertRegex(const char* regex, std::string actual, const char* message)
+        {
+            return assert(std::regex_match(actual, std::regex(regex)), message);
+        }
+
         void assertTrue(const TestResult& testResult)
         {
             selfTesting([&]() {
@@ -535,6 +541,8 @@ namespace BBUnit {
         template<typename... TestSuites>
         void run(TestSuites... suites)
         {
+            std::cout << "C++ BBUnit" << std::endl;
+
             (runSuite(suites), ...);
 
             summarize();

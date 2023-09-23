@@ -236,6 +236,21 @@ public:
             throw std::runtime_error("Hello world");
         }, "assertExceptionOfTypeContains with right content but wrong class (const char)"));
     }
+
+    void regex()
+    {
+        assertTrue(
+                assertRegex(R"(^\d+$)", "12345", "Valid regex")
+                );
+
+        assertFalse(
+                assertRegex(R"(^\d+$)", "abcdef", "Invalid regex")
+        );
+
+        assertTrue(
+                assertRegex(R"(^\d+$)", std::string("12345"), "Valid regex")
+        );
+    }
 };
 
 int main()
@@ -249,6 +264,8 @@ int main()
         &MyTest::contains,
         &MyTest::containsCI);
 
+    BBUnit::TestSuite<MyTest> regex(&MyTest::regex);
+
     BBUnit::TestSuite<MyTest> bools(&MyTest::bools);
 
     BBUnit::TestSuite<MyTest> sets(&MyTest::countAndEmpty);
@@ -258,7 +275,12 @@ int main()
         &MyTest::exceptionMessageContainsConstChar,
         &MyTest::exceptionMessageContainsString);
 
-    BBUnit::TestRunner().run(numbers, strings, bools, sets, exceptions);
+    BBUnit::TestRunner().run(numbers,
+                             strings,
+                             bools,
+                             sets,
+                             exceptions,
+                             regex);
 
     return 0;
 }

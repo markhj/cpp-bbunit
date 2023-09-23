@@ -10,4 +10,5 @@ nav:
   - Assertions:
     - List of assertions: assertions/list-assertions.md
     - Exceptions: assertions/exceptions.md
+    - Regular expressions: assertions/regex.md
   - Code structure: misc/structure.md

@@ -1,0 +1,16 @@
+# Regular expression assertions
+
+You can assert the contents of strings more dynamically with regular expressions using the 
+``assertRegex`` function.
+
+Its signature is:
+````c++
+TestResult assertRegex(const char* regex, std::string actual, const char* message)
+````
+
+## Usage
+You can test with raw string literals like this:
+
+````c++
+assertRegex(R"(^Order \d+$)", "Order 12345", "Checking order number regex");
+````
