@@ -3,6 +3,8 @@
 **C++ BBUnit** is a small header-only unit testing library, inspired
 by PHPUnit.
 
+To learn everything about installing and operating the library, check the documentaiton at: https://cpp-bbunit.readthedocs.io
+
 ## Don't use in production :guardsman:
 
 This library is very early in its development, and it's **_not_** recommended to
@@ -58,40 +60,6 @@ int main()
 }
 ````
 
-## All functions :satellite:
-
-### Assert equals
-````
-assertEquals(int expected, int actual, const char *message)
-assertEquals(double expected, double actual, const char *message)
-assertEquals(bool expected, bool actual, const char *message)
-assertEquals(const std::string& expected, const std::string& actual, const char *message)
-````
-
-Checks if there's an exact match between an expectation and an actual value.
-
-### Boolean shorthands
-````
-assertTrue(bool actual, const char* message)
-assertFalse(bool actual, const char* message)
-````
-Used to directly test if an actual boolean value is true or false.
-
-### Assert count
-````
-assertCount(unsigned int expected, std::vector<T> vector, const char* message)
-assertCount(unsigned int expected, std::map<K, V> map, const char* message)
-````
-Checks if the number of items in a vector or a map match the expectation.
-
-### Assert empty
-````
-assertEmpty(std::vector<T> vector, const char* message)
-assertEmpty(std::map<K, V> map, const char* message)
-````
-
-Shorthand of ``assertCount`` which directly verifies if there are 0 elements.
-
 ## Structuring test code :wrench:
 It's generally recommended to code your test in a separate program/executable.
 It's not required, but recommended.
@@ -102,9 +70,3 @@ the test suite only compiles when a given environment variable is true.
 ## CMakeLists.txt :page_with_curl:
 The included ``CMakeLists.txt`` compiles an executable, which 
 tests the library itself.
-
-## Roadmap :blue_car:
-- Improved test runner class
-- Test for thrown exceptions
-- Test for contents of a collection type (vector, map, etc.)
-- Improved capabilities to collect cases in suites
