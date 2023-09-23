@@ -1,17 +1,18 @@
 #ifndef TESTLIB_TEST_BBUNIT_HPP
 #define TESTLIB_TEST_BBUNIT_HPP
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <map>
 #include <tuple>
 #include <functional>
-
-#ifdef _WIN32
-#include <windows.h>
 #include <algorithm>
-
-#endif
+#include <memory>
 
 #ifdef _WIN32
 const int FOREGROUND_RESET = 7;
@@ -48,35 +49,30 @@ namespace BBUnit {
         std::string message;
     };
 
+    struct TestSummary {
+        unsigned int assertions = 0, passed = 0;
+    };
+
     class MustBeSelfTestingException : public std::exception {
     public:
-        const char* what() const noexcept override {
+        [[nodiscard]] const char* what() const noexcept override {
             return "Test case must be in self-testing mode to use this function.";
         }
     };
 
     class TestCase {
     public:
-        TestCase* run()
-        {
-            test();
-
-            return this;
-        }
-
-        unsigned int getAssertions() const
+        [[nodiscard]] unsigned int getAssertions() const
         {
             return assertions;
         }
 
-        unsigned int getPassed() const
+        [[nodiscard]] unsigned int getPassed() const
         {
             return passed;
         }
 
     protected:
-        virtual void test() = 0;
-
         void setMode(TestMode toMode)
         {
             mode = toMode;
@@ -240,7 +236,7 @@ namespace BBUnit {
     private:
         TestMode mode = TestMode::Standard;
 
-        PrintMode printMode = PrintMochde::FocusOnFail;
+        PrintMode printMode = PrintMode::FocusOnFail;
 
         bool selfTestingScope = false;
 
@@ -308,25 +304,64 @@ namespace BBUnit {
 
     };
 
-    class Dispatcher {
+    template<typename TC>
+    class TestSuite {
     public:
-        template<typename... TestCases>
-        static void dispatch(TestCases... testCases)
+        template <typename... Funcs>
+        explicit TestSuite(Funcs... funcs) : current(TC())
         {
-            std::initializer_list<TestCase*> list = {testCases.run()...};
-
-            unsigned int assertions = 0,
-                passed = 0;
-
-            for (auto item : list) {
-                assertions += item->getAssertions();
-                passed += item->getPassed();
-            }
-
-            summarize(assertions, passed);
+            (functions.push_back([this, funcs]() {
+                (current.*funcs)();
+                return TestSummary {
+                    .assertions = current.getAssertions(),
+                    .passed = current.getPassed()
+                };
+            }), ...);
         }
 
-        static void summarize(int assertions, int passed)
+        TestSummary run()
+        {
+            TestSummary total;
+
+            for (const auto& testFunc : functions) {
+                TestSummary summary = testFunc();
+
+                total.assertions = summary.assertions;
+                total.passed = summary.passed;
+            }
+
+            return total;
+        }
+
+    private:
+        TC current;
+
+        std::vector<std::function<TestSummary()>> functions;
+    };
+
+    class TestRunner {
+    private:
+        unsigned int assertions = 0, passed = 0;
+
+        template <typename TCD>
+        void runSuite(TestSuite<TCD> testSuite)
+        {
+            TestSummary summary = testSuite.run();
+
+            assertions += summary.assertions;
+            passed += summary.passed;
+        }
+
+    public:
+        template<typename... TestSuites>
+        void run(TestSuites... suites)
+        {
+            (runSuite(suites), ...);
+
+            summarize();
+        }
+
+        void summarize() const
         {
             std::cout << "\n-------------------------------------------------\n";
 

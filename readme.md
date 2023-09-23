@@ -3,7 +3,7 @@
 **C++ BBUnit** is a small header-only unit testing library, inspired
 by PHPUnit.
 
-To learn everything about installing and operating the library, check the documentaiton at: https://cpp-bbunit.readthedocs.io
+To learn everything about installing and operating the library, check the documentation at: https://cpp-bbunit.readthedocs.io
 
 ## Don't use in production :guardsman:
 

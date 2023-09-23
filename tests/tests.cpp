@@ -1,20 +1,19 @@
 #include "../lib/bbunit/bbunit.hpp"
 
 class MyTest : public BBUnit::TestCase {
-protected:
-    void test() override
+public:
+    MyTest()
     {
         setMode(BBUnit::TestMode::SelfTest);
+    }
 
-        numbers();
-        greaterThan();
-        lessThan();
-        bools();
-        constChar();
-        strings();
-        contains();
-        containsCI();
-        countAndEmpty();
+    void numbers()
+    {
+        assertFalse(assertEquals(2, 5, "Must be 2 (integer)"));
+        assertTrue(assertEquals(5, 5, "Must be 5 (integer)"));
+
+        assertFalse(assertEquals(2.0f, 5.0f, "Must be 2 (float)"));
+        assertTrue(assertEquals(5.0f, 5.0f, "Must be 5 (float)"));
     }
 
     void greaterThan()
@@ -37,15 +36,6 @@ protected:
         assertFalse(assertLessThanOrEqual(2, 5, "5 is less than or equal to 2"));
         assertTrue(assertLessThanOrEqual(5, 5, "5 is less than or equal to 5"));
         assertTrue(assertLessThanOrEqual(8, 5, "5 is NOT less than or equal to 8"));
-    }
-
-    void numbers()
-    {
-        assertFalse(assertEquals(2, 5, "Must be 2 (integer)"));
-        assertTrue(assertEquals(5, 5, "Must be 5 (integer)"));
-
-        assertFalse(assertEquals(2.0f, 5.0f, "Must be 2 (float)"));
-        assertTrue(assertEquals(5.0f, 5.0f, "Must be 5 (float)"));
     }
 
     void bools()
@@ -118,7 +108,12 @@ protected:
 
 int main()
 {
-    BBUnit::Dispatcher::dispatch(MyTest());
+    BBUnit::TestSuite<MyTest> numbers(&MyTest::numbers, &MyTest::greaterThan, &MyTest::lessThan);
+    BBUnit::TestSuite<MyTest> strings(&MyTest::constChar, &MyTest::strings, &MyTest::contains, &MyTest::containsCI);
+    BBUnit::TestSuite<MyTest> bools(&MyTest::bools);
+    BBUnit::TestSuite<MyTest> sets(&MyTest::countAndEmpty);
+
+    BBUnit::TestRunner().run(numbers, strings, bools, sets);
 
     return 0;
 }
