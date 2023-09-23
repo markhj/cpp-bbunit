@@ -193,11 +193,11 @@ public:
             throw std::runtime_error("Hello world");
         }, "assertExceptionMessageContains with wrong content (const char)"));
 
-        assertTrue(assertExceptionOfTypeContains<std::runtime_error>("world", []() {
+        assertTrue(assertExceptionMessageContains<std::runtime_error>("world", []() {
             throw std::runtime_error("Hello world");
         }, "assertExceptionMessageContains with correct content (const char)"));
 
-        assertFalse(assertExceptionOfTypeContains<CustomException>("world", []() {
+        assertFalse(assertExceptionMessageContains<CustomException>("world", []() {
             throw std::runtime_error("Hello world");
         }, "assertExceptionOfTypeContains with right content but wrong class (const char)"));
     }
@@ -212,11 +212,11 @@ public:
             throw std::runtime_error("Hello world");
         }, "assertExceptionMessageContains with wrong content (const char)"));
 
-        assertTrue(assertExceptionOfTypeContains<std::runtime_error>(std::string("world"), []() {
+        assertTrue(assertExceptionMessageContains<std::runtime_error>(std::string("world"), []() {
             throw std::runtime_error("Hello world");
         }, "assertExceptionMessageContains with correct content (const char)"));
 
-        assertFalse(assertExceptionOfTypeContains<CustomException>(std::string("world"), []() {
+        assertFalse(assertExceptionMessageContains<CustomException>(std::string("world"), []() {
             throw std::runtime_error("Hello world");
         }, "assertExceptionOfTypeContains with right content but wrong class (const char)"));
     }

@@ -293,15 +293,15 @@ namespace BBUnit {
         }
 
         template <typename ExceptionType>
-        TestResult assertExceptionOfTypeContains(const char* contains,
+        TestResult assertExceptionMessageContains(const char* contains,
             const std::function<void()>& func,
             const char* message)
         {
-            return assertExceptionOfTypeContains<ExceptionType>(std::string(contains), func, message);
+            return assertExceptionMessageContains<ExceptionType>(std::string(contains), func, message);
         }
 
         template <typename ExceptionType>
-        TestResult assertExceptionOfTypeContains(const std::string& contains,
+        TestResult assertExceptionMessageContains(const std::string& contains,
             const std::function<void()>& func,
             const char* message)
         {
