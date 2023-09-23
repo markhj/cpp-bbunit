@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <array>
 #include <tuple>
 #include <functional>
 #include <algorithm>
@@ -210,6 +211,50 @@ namespace BBUnit {
             std::transform(lwActual.begin(), lwActual.end(), lwActual.begin(), ::tolower);
 
             return assert(lwActual.find(lwContains) != std::string::npos, message);
+        }
+
+        TestResult assertException(std::function<void()> func, const char* message)
+        {
+            bool caught = false;
+            try {
+                func();
+            } catch (...) {
+                caught = true;
+            }
+
+            return assert(caught, message);
+        }
+
+        TestResult assertExceptionMessage(const char* expected, std::function<void()> func, const char* message)
+        {
+            return assertExceptionMessage(std::string(expected), func, message);
+        }
+
+        TestResult assertExceptionMessage(std::string expected, std::function<void()> func, const char* message)
+        {
+            std::string msg;
+            try {
+                func();
+            } catch (std::exception& e) {
+                msg = e.what();
+            }
+
+            return assert(msg == expected, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionOfType(std::function<void()> func, const char* message)
+        {
+            bool caught = false;
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                caught = true;
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(caught, message);
         }
 
         void assertTrue(const TestResult& testResult)

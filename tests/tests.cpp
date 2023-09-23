@@ -1,5 +1,9 @@
 #include "../lib/bbunit/bbunit.hpp"
 
+class CustomException : public std::exception {
+
+};
+
 class MyTest : public BBUnit::TestCase {
 public:
     MyTest()
@@ -104,16 +108,76 @@ public:
         assertFalse(assertEmpty(map, "assertEmpty on non-empty map"));
         assertFalse(assertEmpty(vec, "assertEmpty on non-empty vector"));
     }
+
+    void exceptions()
+    {
+        assertTrue(assertException([]() {
+            throw std::exception();
+        }, "assertException when exception is thrown"));
+
+        assertFalse(assertException([]() {
+        }, "assertException when no exception thrown"));
+
+        assertTrue(assertException([]() {
+            throw std::runtime_error("Some error");
+        }, "assertException when runtime_error is thrown"));
+
+        assertTrue(assertExceptionOfType<CustomException>([]() {
+            throw CustomException();
+            }, "CustomException thrown and expected"));
+
+        assertFalse(assertExceptionOfType<CustomException>([]() {
+            throw std::exception();
+        }, "Normal exception thrown, but CustomException expected"));
+    }
+
+    void exceptionMessages()
+    {
+        // Const char
+        assertTrue(assertExceptionMessage("Some error", []() {
+            throw std::runtime_error("Some error");
+        }, "assertExceptionMessage with correct message"));
+
+        assertFalse(assertExceptionMessage("Incorrect", []() {
+            throw std::runtime_error("Some error");
+        }, "assertExceptionMessage with wrong message"));
+
+        // std::string
+        assertTrue(assertExceptionMessage(std::string("Hello"), []() {
+            throw std::runtime_error("Hello");
+        }, "assertExceptionMessage with correct message"));
+
+        assertFalse(assertExceptionMessage(std::string("Incorrect"), []() {
+            throw std::runtime_error("Hello");
+        }, "assertExceptionMessage with wrong message"));
+    }
+
+    void exceptionMessageContains()
+    {
+
+    }
 };
 
 int main()
 {
-    BBUnit::TestSuite<MyTest> numbers(&MyTest::numbers, &MyTest::greaterThan, &MyTest::lessThan);
-    BBUnit::TestSuite<MyTest> strings(&MyTest::constChar, &MyTest::strings, &MyTest::contains, &MyTest::containsCI);
+    BBUnit::TestSuite<MyTest> numbers(&MyTest::numbers,
+        &MyTest::greaterThan,
+        &MyTest::lessThan);
+
+    BBUnit::TestSuite<MyTest> strings(&MyTest::constChar,
+        &MyTest::strings,
+        &MyTest::contains,
+        &MyTest::containsCI);
+
     BBUnit::TestSuite<MyTest> bools(&MyTest::bools);
+
     BBUnit::TestSuite<MyTest> sets(&MyTest::countAndEmpty);
 
-    BBUnit::TestRunner().setPrintMode(BBUnit::PrintMode::FullList).run(numbers, strings, bools, sets);
+    BBUnit::TestSuite<MyTest> exceptions(&MyTest::exceptions,
+        &MyTest::exceptionMessages,
+        &MyTest::exceptionMessageContains);
+
+    BBUnit::TestRunner().run(numbers, strings, bools, sets, exceptions);
 
     return 0;
 }
