@@ -292,6 +292,32 @@ namespace BBUnit {
             return assert(msg.find(contains) != std::string::npos, message);
         }
 
+        TestResult assertExceptionMessageContainsCI(const char* contains,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            return assertExceptionMessageContainsCI(std::string(contains), func, message);
+        }
+
+        TestResult assertExceptionMessageContainsCI(const std::string& contains,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            std::string msg;
+            try {
+                func();
+            } catch (std::exception& e) {
+                std::string lwContains = contains, lwActual = e.what();
+
+                std::transform(lwContains.begin(), lwContains.end(), lwContains.begin(), ::tolower);
+                std::transform(lwActual.begin(), lwActual.end(), lwActual.begin(), ::tolower);
+
+                return assert(lwActual.find(lwContains) != std::string::npos, message);
+            }
+
+            return assert(false, message);
+        }
+
         template <typename ExceptionType>
         TestResult assertExceptionMessageContains(const char* contains,
             const std::function<void()>& func,
@@ -310,6 +336,36 @@ namespace BBUnit {
                 func();
             } catch (ExceptionType& e) {
                 return assert(std::string(e.what()).find(contains) != std::string::npos, message);
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(false, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageContainsCI(const char* contains,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            return assertExceptionMessageContainsCI<ExceptionType>(std::string(contains), func, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageContainsCI(const std::string& contains,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            bool caught = false;
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                std::string lwContains = contains, lwActual = e.what();
+
+                std::transform(lwContains.begin(), lwContains.end(), lwContains.begin(), ::tolower);
+                std::transform(lwActual.begin(), lwActual.end(), lwActual.begin(), ::tolower);
+
+                return assert(lwActual.find(lwContains) != std::string::npos, message);
             } catch (...) {
                 // Do nothing
             }

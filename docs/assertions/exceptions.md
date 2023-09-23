@@ -66,3 +66,7 @@ assertExceptionMessageContains<std::runtime_error>("world", []() {
     throw std::runtime_error("Hello world");
 }, "Message")
 ````
+
+## ``assertExceptionMessageContainsCI``
+
+The case-insensitive variant of ``assertExceptionMessageContains``.
