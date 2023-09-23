@@ -187,21 +187,9 @@ namespace BBUnit {
             return assert(map.size() == 0, message);
         }
 
-        TestResult assertContains(const char *contains, const char* actual, const char* message)
-        {
-            std::string a = actual;
-            return assertContains(contains, a, message);
-        }
-
         TestResult assertContains(const char *contains, const std::string& actual, const char* message)
         {
             return assert(actual.find(contains) != std::string::npos, message);
-        }
-
-        TestResult assertContainsCI(const char *contains, const char* actual, const char* message)
-        {
-            std::string a = actual;
-            return assertContainsCI(contains, a, message);
         }
 
         TestResult assertContainsCI(const char *contains, const std::string& actual, const char* message)
