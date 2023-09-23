@@ -9,3 +9,4 @@ nav:
     - First test: getting-started/first-test.md
   - Assertions:
     - List of assertions: assertions/list-assertions.md
+  - Code structure: misc/structure.mod
