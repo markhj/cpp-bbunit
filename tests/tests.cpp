@@ -1,7 +1,16 @@
 #include "../lib/bbunit/bbunit.hpp"
 
 class CustomException : public std::exception {
+public:
+    CustomException() : msg("Default message") {}
 
+    explicit CustomException(const char *message) : msg(message) { }
+
+    [[nodiscard]] const char* what() const noexcept override {
+        return msg;
+    }
+private:
+    const char *msg;
 };
 
 class MyTest : public BBUnit::TestCase {
@@ -136,25 +145,80 @@ public:
         // Const char
         assertTrue(assertExceptionMessage("Some error", []() {
             throw std::runtime_error("Some error");
-        }, "assertExceptionMessage with correct message"));
+        }, "assertExceptionMessage with correct message (const char)"));
 
         assertFalse(assertExceptionMessage("Incorrect", []() {
             throw std::runtime_error("Some error");
-        }, "assertExceptionMessage with wrong message"));
+        }, "assertExceptionMessage with wrong message (const char)"));
 
         // std::string
         assertTrue(assertExceptionMessage(std::string("Hello"), []() {
             throw std::runtime_error("Hello");
-        }, "assertExceptionMessage with correct message"));
+        }, "assertExceptionMessage with correct message (string)"));
 
         assertFalse(assertExceptionMessage(std::string("Incorrect"), []() {
             throw std::runtime_error("Hello");
-        }, "assertExceptionMessage with wrong message"));
+        }, "assertExceptionMessage with wrong message (string)"));
+
+        // By type (const char)
+        assertTrue(assertExceptionMessage<CustomException>("Some error", []() {
+            throw CustomException("Some error");
+        }, "assertExceptionMessage with correct message (const char)"));
+
+        assertFalse(assertExceptionMessage<CustomException>("Some error", []() {
+            throw std::runtime_error("Some error");
+        }, "assertExceptionMessage with correct message but wrong type (const char)"));
+
+        // By type (string)
+        assertTrue(assertExceptionMessage<CustomException>(std::string("Some error"), []() {
+            throw CustomException("Some error");
+        }, "assertExceptionMessage with correct message (string)"));
+
+        assertFalse(assertExceptionMessage<CustomException>(std::string("Some error"), []() {
+            throw std::runtime_error("Some error");
+        }, "assertExceptionMessage with correct message but wrong type (string)"));
+
+        assertFalse(assertExceptionMessage<CustomException>(std::string("False message"), []() {
+            throw CustomException("Some error");
+        }, "assertExceptionMessage with right type, but wrong content (string)"));
     }
 
-    void exceptionMessageContains()
+    void exceptionMessageContainsConstChar()
     {
+        assertTrue(assertExceptionMessageContains("world", []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionMessageContains with correct content (const char)"));
 
+        assertFalse(assertExceptionMessageContains("Incorrect", []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionMessageContains with wrong content (const char)"));
+
+        assertTrue(assertExceptionOfTypeContains<std::runtime_error>("world", []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionMessageContains with correct content (const char)"));
+
+        assertFalse(assertExceptionOfTypeContains<CustomException>("world", []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionOfTypeContains with right content but wrong class (const char)"));
+    }
+
+    void exceptionMessageContainsString()
+    {
+        assertTrue(assertExceptionMessageContains(std::string("world"), []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionMessageContains with correct content (const char)"));
+
+        assertFalse(assertExceptionMessageContains(std::string("Incorrect"), []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionMessageContains with wrong content (const char)"));
+
+        assertTrue(assertExceptionOfTypeContains<std::runtime_error>(std::string("world"), []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionMessageContains with correct content (const char)"));
+
+        assertFalse(assertExceptionOfTypeContains<CustomException>(std::string("world"), []() {
+            throw std::runtime_error("Hello world");
+        }, "assertExceptionOfTypeContains with right content but wrong class (const char)"));
     }
 };
 
@@ -175,7 +239,8 @@ int main()
 
     BBUnit::TestSuite<MyTest> exceptions(&MyTest::exceptions,
         &MyTest::exceptionMessages,
-        &MyTest::exceptionMessageContains);
+        &MyTest::exceptionMessageContainsConstChar,
+        &MyTest::exceptionMessageContainsString);
 
     BBUnit::TestRunner().run(numbers, strings, bools, sets, exceptions);
 

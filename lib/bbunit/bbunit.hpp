@@ -225,12 +225,16 @@ namespace BBUnit {
             return assert(caught, message);
         }
 
-        TestResult assertExceptionMessage(const char* expected, std::function<void()> func, const char* message)
+        TestResult assertExceptionMessage(const char* expected,
+            const std::function<void()>& func,
+            const char* message)
         {
             return assertExceptionMessage(std::string(expected), func, message);
         }
 
-        TestResult assertExceptionMessage(std::string expected, std::function<void()> func, const char* message)
+        TestResult assertExceptionMessage(const std::string& expected,
+            const std::function<void()>& func,
+            const char* message)
         {
             std::string msg;
             try {
@@ -240,6 +244,77 @@ namespace BBUnit {
             }
 
             return assert(msg == expected, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionMessage(const char* expected,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            return assertExceptionMessage<ExceptionType>(std::string(expected), func, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionMessage(const std::string& expected,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            std::string msg;
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                return assert(e.what() == expected, message);
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(false, message);
+        }
+
+        TestResult assertExceptionMessageContains(const char* contains,
+              const std::function<void()>& func,
+              const char* message)
+        {
+            return assertExceptionMessageContains(std::string(contains), func, message);
+        }
+
+        TestResult assertExceptionMessageContains(const std::string& contains,
+              const std::function<void()>& func,
+              const char* message)
+        {
+            std::string msg;
+            try {
+                func();
+            } catch (std::exception& e) {
+                msg = e.what();
+            }
+
+            return assert(msg.find(contains) != std::string::npos, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionOfTypeContains(const char* contains,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            return assertExceptionOfTypeContains<ExceptionType>(std::string(contains), func, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionOfTypeContains(const std::string& contains,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            bool caught = false;
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                return assert(std::string(e.what()).find(contains) != std::string::npos, message);
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(false, message);
         }
 
         template <typename ExceptionType>
