@@ -10,7 +10,6 @@
 #include <vector>
 #include <map>
 #include <array>
-#include <tuple>
 #include <functional>
 #include <algorithm>
 #include <memory>
@@ -82,11 +81,26 @@ namespace BBUnit {
         }
 
     protected:
+        /**
+         * Set the testing mode.
+         * For most use-cases this method doesn't need to be called, but for
+         * testing of the TestCase class itself it is required.
+         *
+         * @param toMode
+         */
         void setMode(TestMode toMode)
         {
             mode = toMode;
         }
 
+        /**
+         * Assert that two integers are equal.
+         * Generate a standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
         TestResult assertEquals(int expected, int actual)
         {
             return assertEquals(expected,
@@ -94,11 +108,27 @@ namespace BBUnit {
                                 std::format("Assert that int {} matches {}", expected, actual).c_str());
         }
 
+        /**
+         * Assert that two integer values are identical
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertEquals(int expected, int actual, const char *message)
         {
             return assert(expected == actual, message);
         }
 
+        /**
+         * Assert that two doubles (or floats) are equal.
+         * Generate a standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
         TestResult assertEquals(double expected, double actual)
         {
             return assertEquals(expected,
@@ -106,11 +136,27 @@ namespace BBUnit {
                           std::format("Assert that float/double {} matches {}", expected, actual).c_str());
         }
 
+        /**
+         * Assert that two double (or floats) are equal.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertEquals(double expected, double actual, const char *message)
         {
             return assert(expected == actual, message);
         }
 
+        /**
+         * Assert that two boolean values are identical.
+         * Generate standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
         TestResult assertEquals(bool expected, bool actual)
         {
             return assertEquals(expected,
@@ -118,6 +164,14 @@ namespace BBUnit {
                           std::format("Assert that bool {} matches {}", expected, actual).c_str());
         }
 
+        /**
+         * Assert that two boolean values are identical.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @returnTestResult
+         */
         TestResult assertEquals(bool expected, bool actual, const char *message)
         {
             return assert(expected == actual, message);
@@ -175,21 +229,49 @@ namespace BBUnit {
             return assert(actual <= compare, message);
         }
 
+        /**
+         * Assert that a boolean value is true.
+         *
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertTrue(bool actual, const char* message)
         {
             return assert(actual, message);
         }
 
+        /**
+         * Assert that a boolean is true.
+         * Generate a standardized message.
+         * 
+         * @param actual
+         * @return TestResult
+         */
         TestResult assertTrue(bool actual)
         {
             return assertTrue(actual, "Assert that bool is true");
         }
 
+        /**
+         * Assert that a boolean value is false.
+         *
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertFalse(bool actual, const char* message)
         {
             return assert(!actual, message);
         }
 
+        /**
+         * Assert that a boolean is false.
+         * Generate a standardized message.
+         *
+         * @param actual
+         * @return TestResult
+         */
         TestResult assertFalse(bool actual)
         {
             return assertFalse(actual, "Assert that bool is false");
