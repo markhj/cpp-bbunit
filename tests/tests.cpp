@@ -251,6 +251,33 @@ public:
                 assertRegex(R"(^\d+$)", std::string("12345"), "Valid regex")
         );
     }
+
+    void regexExceptions()
+    {
+        assertTrue(
+                assertExceptionMessageRegex(R"(^Hello \d+$)", []() {
+                    throw std::runtime_error("Hello 123");
+                }, "Exception with valid regex")
+                );
+
+        assertFalse(
+                assertExceptionMessageRegex(R"(^Hello \d+$)", []() {
+                    throw std::runtime_error("Hello world");
+                }, "Exception with invalid regex")
+        );
+
+        assertTrue(
+                assertExceptionMessageRegex<CustomException>(R"(^Hello \d+$)", []() {
+                    throw CustomException("Hello 123");
+                }, "Exception with valid regex")
+        );
+
+        assertFalse(
+                assertExceptionMessageRegex<CustomException>(R"(^Hello \d+$)", []() {
+                    throw std::runtime_error("Hello 123");
+                }, "Exception with valid regex")
+        );
+    }
 };
 
 int main()
@@ -273,7 +300,8 @@ int main()
     BBUnit::TestSuite<MyTest> exceptions(&MyTest::exceptions,
         &MyTest::exceptionMessages,
         &MyTest::exceptionMessageContainsConstChar,
-        &MyTest::exceptionMessageContainsString);
+        &MyTest::exceptionMessageContainsString,
+        &MyTest::regexExceptions);
 
     BBUnit::TestRunner().run(numbers,
                              strings,

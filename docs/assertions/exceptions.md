@@ -70,3 +70,14 @@ assertExceptionMessageContains<std::runtime_error>("world", []() {
 ## ``assertExceptionMessageContainsCI``
 
 The case-insensitive variant of ``assertExceptionMessageContains``.
+
+## ``assertExceptionMessageRegex``
+
+You can assert that the exception message matches a regular expression pattern using
+``assertExceptionMessageRegex``.
+
+For example:
+
+````c++
+assertRegex(R"(^Error no. \d+ was encountered$)", errorMessage, "Test general error message");
+````

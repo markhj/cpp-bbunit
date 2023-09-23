@@ -14,3 +14,8 @@ You can test with raw string literals like this:
 ````c++
 assertRegex(R"(^Order \d+$)", "Order 12345", "Checking order number regex");
 ````
+
+## Exception assertions
+
+For exception assertions with regular expression capabilities, please
+read the [Exceptions chapter](/assertions/exceptions).

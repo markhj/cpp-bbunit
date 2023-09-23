@@ -293,6 +293,40 @@ namespace BBUnit {
             return assert(msg.find(contains) != std::string::npos, message);
         }
 
+        TestResult assertExceptionMessageRegex(const char *regex,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            std::string msg;
+            try {
+                func();
+            } catch (std::exception& e) {
+                msg = e.what();
+            }
+
+            if (msg.empty()) {
+                return assert(false, message);
+            }
+
+            return assertRegex(regex, msg, message);
+        }
+
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageRegex(const char *regex,
+            const std::function<void()>& func,
+            const char* message)
+        {
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                return assertRegex(regex, e.what(), message);
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(false, message);
+        }
+
         TestResult assertExceptionMessageContainsCI(const char* contains,
             const std::function<void()>& func,
             const char* message)
