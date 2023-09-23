@@ -5,5 +5,7 @@ nav:
   - Home: index.md
   - Installation:
     - Include library: installation/include.md
+  - Getting started:
+    - First test: getting-started/first-test.md
   - Assertions:
     - List of assertions: assertions/list-assertions.md
