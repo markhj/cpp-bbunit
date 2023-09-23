@@ -240,7 +240,7 @@ namespace BBUnit {
     private:
         TestMode mode = TestMode::Standard;
 
-        PrintMode printMode = PrintMode::FocusOnFail;
+        PrintMode printMode = PrintMochde::FocusOnFail;
 
         bool selfTestingScope = false;
 
