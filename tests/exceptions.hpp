@@ -1,4 +1,7 @@
-#include "../lib/bbunit/bbunit.hpp"
+#ifndef BBUNIT_TEST_EXCEPTIONS_HPP
+#define BBUNIT_TEST_EXCEPTIONS_HPP
+
+#include "bbunit.hpp"
 
 class CustomException : public std::exception {
 public:
@@ -13,125 +16,10 @@ private:
     const char *msg;
 };
 
-class MyTest : public BBUnit::TestCase {
+class ExceptionsTest : public BBUnit::TestCase {
 public:
-    MyTest()
-    {
+    ExceptionsTest() {
         setMode(BBUnit::TestMode::SelfTest);
-    }
-
-    void numbers()
-    {
-        assertFalse(assertEquals(2, 5));
-        assertTrue(assertEquals(5, 5));
-
-        assertFalse(assertEquals(2.0f, 5.0f));
-        assertTrue(assertEquals(5.0f, 5.0f));
-    }
-
-    void greaterThan()
-    {
-        assertTrue(assertGreaterThan(2, 5));
-        assertFalse(assertGreaterThan(5, 5));
-        assertFalse(assertGreaterThan(8, 5));
-
-        assertTrue(assertGreaterThan(2.0, 5.0));
-        assertFalse(assertGreaterThan(5.0, 5.0));
-        assertFalse(assertGreaterThan(8.0, 5.0));
-
-        assertTrue(assertGreaterThanOrEqual(2, 5));
-        assertTrue(assertGreaterThanOrEqual(5, 5));
-        assertFalse(assertGreaterThanOrEqual(8, 5));
-
-        assertTrue(assertGreaterThanOrEqual(2.0, 5.0));
-        assertTrue(assertGreaterThanOrEqual(5.0, 5.0));
-        assertFalse(assertGreaterThanOrEqual(8.0, 5.0));
-    }
-
-    void lessThan()
-    {
-        assertFalse(assertLessThan(2, 5));
-        assertFalse(assertLessThan(5, 5));
-        assertTrue(assertLessThan(8, 5));
-
-        assertFalse(assertLessThan(2.0, 5.0));
-        assertFalse(assertLessThan(5.0, 5.0));
-        assertTrue(assertLessThan(8.0, 5.0));
-
-        assertFalse(assertLessThanOrEqual(2, 5));
-        assertTrue(assertLessThanOrEqual(5, 5));
-        assertTrue(assertLessThanOrEqual(8, 5));
-
-        assertFalse(assertLessThanOrEqual(2.0, 5.0));
-        assertTrue(assertLessThanOrEqual(5.0, 5.0));
-        assertTrue(assertLessThanOrEqual(8.0, 5.0));
-    }
-
-    void bools()
-    {
-        assertTrue(assertTrue(true));
-        assertFalse(assertTrue(false));
-        assertFalse(assertFalse(true));
-        assertTrue(assertFalse(false));
-
-        assertFalse(assertEquals(false, true));
-        assertTrue(assertEquals(true, true));
-    }
-
-    void constChar()
-    {
-        assertFalse(assertEquals("See you later, world", "Hello world"));
-        assertTrue(assertEquals("Hello world", "Hello world"));
-    }
-
-    void strings()
-    {
-        std::string a = "Hello world";
-        std::string b = "See you later, world";
-
-        assertFalse(assertEquals(b, a));
-        assertTrue(assertEquals(a, a));
-    }
-
-    void contains()
-    {
-        std::string str = "Hello world";
-
-        assertTrue(assertContains("world", "Hello world", "Contains 'Hello world'"));
-        assertTrue(assertContains("world", str, "Contains 'Hello world'"));
-
-        assertFalse(assertContains("nothing", "Hello world", "Contains 'Hello world'"));
-        assertFalse(assertContains("nothing", str, "Contains 'Hello world'"));
-    }
-
-    void containsCI()
-    {
-        std::string str = "Hello World";
-
-        assertTrue(assertContainsCI("WORLD", "Hello World", "Contains 'Hello World' (const char)"));
-        assertTrue(assertContainsCI("WORLD", str, "Contains 'Hello World' (string)"));
-
-        assertFalse(assertContainsCI("nothing", "Hello world", "Does not contain 'Hello world'"));
-        assertFalse(assertContainsCI("nothing", str, "Does not contain 'Hello world'"));
-    }
-
-    void countAndEmpty()
-    {
-        std::map<int, const char*> map = { {0, "A"}, {1, "B"}, {2, "C"} };
-        std::map<int, int> emptyMap = {};
-        std::vector<int> emptyVec = {};
-        std::vector<int> vec = { 1, 2, 3 };
-
-        assertFalse(assertCount(2, vec, "Vector with 2 elements"));
-        assertTrue(assertCount(3, vec, "Vector with 3 elements"));
-
-        assertFalse(assertCount(2, map, "Map with 2 elements"));
-        assertTrue(assertCount(3, map, "Map with 3 elements"));
-
-        assertTrue(assertEmpty(emptyMap, "assertEmpty on empty map"));
-        assertTrue(assertEmpty(emptyVec, "assertEmpty on empty vector"));
-        assertFalse(assertEmpty(map, "assertEmpty on non-empty map"));
-        assertFalse(assertEmpty(vec, "assertEmpty on non-empty vector"));
     }
 
     void exceptions()
@@ -146,10 +34,13 @@ public:
         assertTrue(assertException([]() {
             throw std::runtime_error("Some error");
         }, "assertException when runtime_error is thrown"));
+    }
 
+    void exceptionsOfType()
+    {
         assertTrue(assertException<CustomException>([]() {
             throw CustomException();
-            }, "CustomException thrown and expected"));
+        }, "CustomException thrown and expected"));
 
         assertFalse(assertException<CustomException>([]() {
             throw std::exception();
@@ -253,28 +144,13 @@ public:
         }, "assertExceptionOfTypeContains with right content but wrong class (const char)"));
     }
 
-    void regex()
-    {
-        assertTrue(
-                assertRegex(R"(^\d+$)", "12345", "Valid regex")
-                );
-
-        assertFalse(
-                assertRegex(R"(^\d+$)", "abcdef", "Invalid regex")
-        );
-
-        assertTrue(
-                assertRegex(R"(^\d+$)", std::string("12345"), "Valid regex")
-        );
-    }
-
     void regexExceptions()
     {
         assertTrue(
                 assertExceptionMessageRegex(R"(^Hello \d+$)", []() {
                     throw std::runtime_error("Hello 123");
                 }, "Exception with valid regex")
-                );
+        );
 
         assertFalse(
                 assertExceptionMessageRegex(R"(^Hello \d+$)", []() {
@@ -296,35 +172,5 @@ public:
     }
 };
 
-int main()
-{
-    BBUnit::TestSuite<MyTest> numbers(&MyTest::numbers,
-        &MyTest::greaterThan,
-        &MyTest::lessThan);
 
-    BBUnit::TestSuite<MyTest> strings(&MyTest::constChar,
-        &MyTest::strings,
-        &MyTest::contains,
-        &MyTest::containsCI);
-
-    BBUnit::TestSuite<MyTest> regex(&MyTest::regex);
-
-    BBUnit::TestSuite<MyTest> bools(&MyTest::bools);
-
-    BBUnit::TestSuite<MyTest> sets(&MyTest::countAndEmpty);
-
-    BBUnit::TestSuite<MyTest> exceptions(&MyTest::exceptions,
-        &MyTest::exceptionMessages,
-        &MyTest::exceptionMessageContainsConstChar,
-        &MyTest::exceptionMessageContainsString,
-        &MyTest::regexExceptions);
-
-    BBUnit::TestRunner().run(numbers,
-                             strings,
-                             bools,
-                             sets,
-                             exceptions,
-                             regex);
-
-    return 0;
-}
+#endif

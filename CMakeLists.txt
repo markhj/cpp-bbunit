@@ -6,4 +6,11 @@ project(bbunit_test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(bbunit_test tests/tests.cpp)
+include_directories(lib/bbunit)
+
+add_executable(bbunit_test tests/main.cpp
+        tests/comparison.hpp
+        tests/equals.hpp
+        tests/strings.hpp
+        tests/collections.hpp
+        tests/exceptions.hpp)
