@@ -15,6 +15,7 @@
 #include <memory>
 #include <regex>
 #include <format>
+#include <cstring>
 
 #ifdef _WIN32
 const int FOREGROUND_RESET = 7;
@@ -716,6 +717,25 @@ namespace BBUnit {
             return assert(lwActual.find(lwContains) != std::string::npos, message);
         }
 
+        /**
+         * Assert (any type of) exception is thrown.
+         * Generates standard message.
+         *
+         * @param func
+         * @return TestResult
+         */
+        TestResult assertException(std::function<void()> func)
+        {
+            return assertException(func, "Assert that (any) exception is thrown");
+        }
+
+        /**
+         * Assert (any type of) exception is thrown.
+         *
+         * @param func
+         * @param message
+         * @return TestResult
+         */
         TestResult assertException(std::function<void()> func, const char* message)
         {
             bool caught = false;
@@ -728,6 +748,29 @@ namespace BBUnit {
             return assert(caught, message);
         }
 
+        /**
+         * Assert an exception of a specific type is thrown.
+         * Generates standard message.
+         *
+         * @tparam ExceptionType
+         * @param func
+         * @return TestResult
+         */
+        template <typename ExceptionType>
+        TestResult assertException(std::function<void()> func)
+        {
+            return assertException<ExceptionType>(func,
+                  std::format(R"(Assert exception of type {} is thrown)", getClassName<ExceptionType>()).c_str());
+        }
+
+        /**
+         * Assert that exception of specific type is thrown.
+         *
+         * @tparam ExceptionType
+         * @param func
+         * @param message
+         * @return TestResult
+         */
         template <typename ExceptionType>
         TestResult assertException(std::function<void()> func, const char* message)
         {
@@ -743,6 +786,30 @@ namespace BBUnit {
             return assert(caught, message);
         }
 
+        /**
+         * Assert exception message.
+         * Generates standard message.
+         *
+         * @param expected
+         * @param func
+         * @return TestResult
+         */
+        TestResult assertExceptionMessage(const std::string& expected,
+                                          const std::function<void()>& func)
+        {
+            return assertExceptionMessage(expected,
+                                   func,
+                                   std::format(R"(Assert exception message is: {})", expected).c_str());
+        }
+
+        /**
+         * Assert exception message.
+         *
+         * @param expected
+         * @param func
+         * @param message
+         * @return TestResult
+         */
         TestResult assertExceptionMessage(const std::string& expected,
             const std::function<void()>& func,
             const char* message)
@@ -757,6 +824,35 @@ namespace BBUnit {
             return assert(msg == expected, message);
         }
 
+        /**
+         * Assert exception message and exception class type.
+         * Generates standard message.
+         *
+         * @tparam ExceptionType
+         * @param expected
+         * @param func
+         * @return TestResult
+         */
+        template <typename ExceptionType>
+        TestResult assertExceptionMessage(const std::string& expected,
+                                          const std::function<void()>& func)
+        {
+            return assertExceptionMessage<ExceptionType>(expected,
+                                   func,
+                                   std::format(R"(Assert exception is of type {} and message is: {})",
+                                               getClassName<ExceptionType>(),
+                                               expected).c_str());
+        }
+
+        /**
+         * Assert exception message and type of exception class
+         *
+         * @tparam ExceptionType
+         * @param expected
+         * @param func
+         * @param message
+         * @return TestResult
+         */
         template <typename ExceptionType>
         TestResult assertExceptionMessage(const std::string& expected,
             const std::function<void()>& func,
@@ -774,6 +870,31 @@ namespace BBUnit {
             return assert(false, message);
         }
 
+        /**
+         * Assert that exception messages contains a specified string.
+         * Generates standard message.
+         *
+         * @param contains
+         * @param func
+         * @return TestResult
+         */
+        TestResult assertExceptionMessageContains(const std::string& contains,
+                                                  const std::function<void()>& func)
+        {
+            return assertExceptionMessageContains(contains,
+                                                  func,
+                                                  std::format(R"(Assert exception message contains: {})",
+                                                  contains).c_str());
+        }
+
+        /**
+         * Assert that exception message contains a specified string.
+         *
+         * @param contains
+         * @param func
+         * @param message
+         * @return TestResult
+         */
         TestResult assertExceptionMessageContains(const std::string& contains,
               const std::function<void()>& func,
               const char* message)
@@ -788,40 +909,31 @@ namespace BBUnit {
             return assert(msg.find(contains) != std::string::npos, message);
         }
 
-        TestResult assertExceptionMessageRegex(const char *regex,
-            const std::function<void()>& func,
-            const char* message)
+        /**
+         * Case-insensitive version of assertExceptionMessageContains.
+         * Generates standard message.
+         *
+         * @param contains
+         * @param func
+         * @return TestResult
+         */
+        TestResult assertExceptionMessageContainsCI(const std::string& contains,
+                                                  const std::function<void()>& func)
         {
-            std::string msg;
-            try {
-                func();
-            } catch (std::exception& e) {
-                msg = e.what();
-            }
-
-            if (msg.empty()) {
-                return assert(false, message);
-            }
-
-            return assertRegex(regex, msg, message);
+            return assertExceptionMessageContainsCI(contains,
+              func,
+              std::format(R"(Assert exception message contains (case-insensitive): {})",
+                          contains).c_str());
         }
 
-        template <typename ExceptionType>
-        TestResult assertExceptionMessageRegex(const char *regex,
-            const std::function<void()>& func,
-            const char* message)
-        {
-            try {
-                func();
-            } catch (ExceptionType& e) {
-                return assertRegex(regex, e.what(), message);
-            } catch (...) {
-                // Do nothing
-            }
-
-            return assert(false, message);
-        }
-
+        /**
+         * Case-insensitive version of assertExceptionMessageContains.
+         *
+         * @param contains
+         * @param func
+         * @param message
+         * @return TestResult
+         */
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
             const std::function<void()>& func,
             const char* message)
@@ -841,6 +953,37 @@ namespace BBUnit {
             return assert(false, message);
         }
 
+        /**
+         * Asert that exception message contains a specified string and is of a
+         * specified type.
+         *
+         * Generates standard message.
+         *
+         * @tparam ExceptionType
+         * @param contains
+         * @param func
+         * @return TestResult
+         */
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageContains(const std::string& contains,
+                                                  const std::function<void()>& func)
+        {
+            return assertExceptionMessageContains<ExceptionType>(contains,
+                func,
+                std::format(R"(Assert exception is of type {} and message contains: {})",
+                getClassName<ExceptionType>(),
+                contains).c_str());
+        }
+
+        /**
+         * Asert that exception message contains a specified string and is of a
+         * specified type.
+         *
+         * @tparam ExceptionType
+         * @param contains
+         * @param func
+         * @return TestResult
+         */
         template <typename ExceptionType>
         TestResult assertExceptionMessageContains(const std::string& contains,
             const std::function<void()>& func,
@@ -858,6 +1001,37 @@ namespace BBUnit {
             return assert(false, message);
         }
 
+        /**
+         * Case-insensitive version of assertExceptionMessageContains.
+         *
+         * Generates standard message.
+         *
+         * @tparam ExceptionType
+         * @param contains
+         * @param func
+         * @return TestResult
+         */
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageContainsCI(const std::string& contains,
+                                                  const std::function<void()>& func)
+        {
+            return assertExceptionMessageContainsCI<ExceptionType>(contains,
+                  func,
+                  std::format(R"(Assert exception is of type {} and message contains (case-insensitive): {})",
+                              getClassName<ExceptionType>(),
+                              contains).c_str());
+        }
+
+        /**
+         * Case-insensitive version of assertExceptionMessageContains (with template argument).
+         *
+         * Generates standard message.
+         *
+         * @tparam ExceptionType
+         * @param contains
+         * @param func
+         * @return TestResult
+         */
         template <typename ExceptionType>
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
             const std::function<void()>& func,
@@ -873,6 +1047,96 @@ namespace BBUnit {
                 std::transform(lwActual.begin(), lwActual.end(), lwActual.begin(), ::tolower);
 
                 return assert(lwActual.find(lwContains) != std::string::npos, message);
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(false, message);
+        }
+
+        /**
+         * Assert that an exception message satisfies a regular expression.
+         *
+         * Generates standard message.
+         *
+         * @param regex
+         * @param func
+         * @return TestResult
+         */
+        TestResult assertExceptionMessageRegex(const char *regex,
+                                               const std::function<void()>& func)
+        {
+            return assertExceptionMessageRegex(regex,
+                                               func,
+                                               std::format(R"(Assert exception satisfies regex: {})",
+                                                           regex).c_str());
+        }
+
+        /**
+         * Assert that an exception message satisfies a regular expression.
+         *
+         * @param regex
+         * @param func
+         * @return TestResult
+         */
+        TestResult assertExceptionMessageRegex(const char *regex,
+                                               const std::function<void()>& func,
+                                               const char* message)
+        {
+            std::string msg;
+            try {
+                func();
+            } catch (std::exception& e) {
+                msg = e.what();
+            }
+
+            if (msg.empty()) {
+                return assert(false, message);
+            }
+
+            return assertRegex(regex, msg, message);
+        }
+
+        /**
+         * Assert that exception message satisfies regular expression, and
+         * that the exception is of a specified type.
+         *
+         * Generates standard message.
+         *
+         * @tparam ExceptionType
+         * @param regex
+         * @param func
+         * @return TestResult
+         */
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageRegex(const char *regex,
+                                               const std::function<void()>& func)
+        {
+            return assertExceptionMessageRegex<ExceptionType>(regex,
+                               func,
+                               std::format(R"(Assert exception is of type {} and satisfies regex: {})",
+                                           getClassName<ExceptionType>(),
+                                           regex).c_str());
+        }
+
+        /**
+         * Assert that exception message satisfies regular expression, and
+         * that the exception is of a specified type.
+         *
+         * @tparam ExceptionType
+         * @param regex
+         * @param func
+         * @return TestResult
+         */
+        template <typename ExceptionType>
+        TestResult assertExceptionMessageRegex(const char *regex,
+                                               const std::function<void()>& func,
+                                               const char* message)
+        {
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                return assertRegex(regex, e.what(), message);
             } catch (...) {
                 // Do nothing
             }
@@ -908,6 +1172,13 @@ namespace BBUnit {
             return assert(std::regex_match(actual, std::regex(regex)), message);
         }
 
+        /**
+         * Asserts that a TestResult is true.
+         *
+         * Mainly used for self-testing this library.
+         *
+         * @param testResult
+         */
         void assertTrue(const TestResult& testResult)
         {
             selfTesting([&]() {
@@ -915,6 +1186,13 @@ namespace BBUnit {
             });
         }
 
+        /**
+         * Asserts that a TestResult is false.
+         *
+         * Mainly used for self-testing this library.
+         *
+         * @param testResult
+         */
         void assertFalse(const TestResult& testResult)
         {
             selfTesting([&]() {
@@ -922,6 +1200,12 @@ namespace BBUnit {
             });
         }
 
+        /**
+         * Helper function for carrying out self-testing, in essence
+         * managing that tested assertions are not printed.
+         *
+         * @param func
+         */
         void selfTesting(const std::function<void()>& func)
         {
             if (mode != TestMode::SelfTest) {
@@ -983,6 +1267,12 @@ namespace BBUnit {
 
             setColor(FOREGROUND_RESET | BACKGROUND_RESET);
             std::cout << " " << message << std::endl;
+        }
+
+        template <typename ClassName>
+        std::string getClassName()
+        {
+            return typeid(ClassName).name();
         }
 
         TestResult assert(bool testPassed, const std::string& message)

@@ -3,8 +3,9 @@
 You can assert the contents of strings more dynamically with regular expressions using the 
 ``assertRegex`` function.
 
-Its signature is:
+Its signatures (with default or custom message) are:
 ````c++
+TestResult assertRegex(const char* regex, std::string actual)
 TestResult assertRegex(const char* regex, std::string actual, const char* message)
 ````
 

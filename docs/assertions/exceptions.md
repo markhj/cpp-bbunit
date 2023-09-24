@@ -6,6 +6,13 @@ All ``assertException*`` methods take a lambda function in which it's check if
 an exception is thrown (or not). Optionally they take template arguments,
 if you want to verify that a specific exception class is thrown.
 
+## Default messages
+
+Like with all other assertion methods, the ``message`` parameter is optional.
+All functions demonstrated below can be used with or without it.
+
+If you don't specify a message the library generates a standardized one.
+
 ## ``assertException``
 Assert that an exception is thrown (regardless of what message is given).
 
