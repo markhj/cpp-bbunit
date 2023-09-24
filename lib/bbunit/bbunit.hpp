@@ -653,11 +653,59 @@ namespace BBUnit {
             return assert(map.size() == 0, message);
         }
 
+        /**
+         * Assert a string contains another string.
+         * Generates standard message.
+         *
+         * @param contains
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertContains(const std::string& contains, const std::string& actual)
+        {
+            return assertContains(contains,
+                                  actual,
+                                  std::format(R"(String contains "{}")", contains).c_str());
+        }
+
+        /**
+         * Assert that a string contains another string.
+         *
+         * @param contains
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertContains(const std::string& contains, const std::string& actual, const char* message)
         {
             return assert(actual.find(contains) != std::string::npos, message);
         }
 
+        /**
+         * Assert that a string contains another string.
+         * Case-insensitive version.
+         * Generates standard message.
+         *
+         * @param contains
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertContainsCI(const std::string& contains, const std::string& actual)
+        {
+            return assertContainsCI(contains,
+                                  actual,
+                                  std::format(R"(String contains (case-insensitive) "{}")", contains).c_str());
+        }
+
+        /**
+         * Assert that a string contains another string.
+         * Case-insensitive version.
+         *
+         * @param contains
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertContainsCI(const std::string& contains, const std::string& actual, const char* message)
         {
             std::string lwContains = contains, lwActual = actual;
@@ -680,11 +728,19 @@ namespace BBUnit {
             return assert(caught, message);
         }
 
-        TestResult assertExceptionMessage(const char* expected,
-            const std::function<void()>& func,
-            const char* message)
+        template <typename ExceptionType>
+        TestResult assertException(std::function<void()> func, const char* message)
         {
-            return assertExceptionMessage(std::string(expected), func, message);
+            bool caught = false;
+            try {
+                func();
+            } catch (ExceptionType& e) {
+                caught = true;
+            } catch (...) {
+                // Do nothing
+            }
+
+            return assert(caught, message);
         }
 
         TestResult assertExceptionMessage(const std::string& expected,
@@ -702,14 +758,6 @@ namespace BBUnit {
         }
 
         template <typename ExceptionType>
-        TestResult assertExceptionMessage(const char* expected,
-            const std::function<void()>& func,
-            const char* message)
-        {
-            return assertExceptionMessage<ExceptionType>(std::string(expected), func, message);
-        }
-
-        template <typename ExceptionType>
         TestResult assertExceptionMessage(const std::string& expected,
             const std::function<void()>& func,
             const char* message)
@@ -724,13 +772,6 @@ namespace BBUnit {
             }
 
             return assert(false, message);
-        }
-
-        TestResult assertExceptionMessageContains(const char* contains,
-              const std::function<void()>& func,
-              const char* message)
-        {
-            return assertExceptionMessageContains(std::string(contains), func, message);
         }
 
         TestResult assertExceptionMessageContains(const std::string& contains,
@@ -781,13 +822,6 @@ namespace BBUnit {
             return assert(false, message);
         }
 
-        TestResult assertExceptionMessageContainsCI(const char* contains,
-            const std::function<void()>& func,
-            const char* message)
-        {
-            return assertExceptionMessageContainsCI(std::string(contains), func, message);
-        }
-
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
             const std::function<void()>& func,
             const char* message)
@@ -808,14 +842,6 @@ namespace BBUnit {
         }
 
         template <typename ExceptionType>
-        TestResult assertExceptionMessageContains(const char* contains,
-            const std::function<void()>& func,
-            const char* message)
-        {
-            return assertExceptionMessageContains<ExceptionType>(std::string(contains), func, message);
-        }
-
-        template <typename ExceptionType>
         TestResult assertExceptionMessageContains(const std::string& contains,
             const std::function<void()>& func,
             const char* message)
@@ -830,14 +856,6 @@ namespace BBUnit {
             }
 
             return assert(false, message);
-        }
-
-        template <typename ExceptionType>
-        TestResult assertExceptionMessageContainsCI(const char* contains,
-            const std::function<void()>& func,
-            const char* message)
-        {
-            return assertExceptionMessageContainsCI<ExceptionType>(std::string(contains), func, message);
         }
 
         template <typename ExceptionType>
@@ -862,21 +880,29 @@ namespace BBUnit {
             return assert(false, message);
         }
 
-        template <typename ExceptionType>
-        TestResult assertException(std::function<void()> func, const char* message)
+        /**
+         * Assert that string satisfies regular expression.
+         * Generates standard message.
+         *
+         * @param regex
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertRegex(const char* regex, std::string actual)
         {
-            bool caught = false;
-            try {
-                func();
-            } catch (ExceptionType& e) {
-                caught = true;
-            } catch (...) {
-                // Do nothing
-            }
-
-            return assert(caught, message);
+            return assertRegex(regex,
+                               actual,
+                               std::format(R"(Assert that string satisfies regex: {})", regex).c_str());
         }
 
+        /**
+         * Assert that string satisfies regular expression.
+         *
+         * @param regex
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertRegex(const char* regex, std::string actual, const char* message)
         {
             return assert(std::regex_match(actual, std::regex(regex)), message);

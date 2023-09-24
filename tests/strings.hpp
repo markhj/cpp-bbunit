@@ -13,36 +13,36 @@ public:
     {
         std::string str = "Hello world";
 
-        assertTrue(assertContains("world", "Hello world", "Contains 'Hello world'"));
-        assertTrue(assertContains("world", str, "Contains 'Hello world'"));
+        assertTrue(assertContains("world", "Hello world"));
+        assertTrue(assertContains("world", str));
 
-        assertFalse(assertContains("nothing", "Hello world", "Contains 'Hello world'"));
-        assertFalse(assertContains("nothing", str, "Contains 'Hello world'"));
+        assertFalse(assertContains("nothing", "Hello world"));
+        assertFalse(assertContains("nothing", str));
     }
 
     void containsCI()
     {
         std::string str = "Hello World";
 
-        assertTrue(assertContainsCI("WORLD", "Hello World", "Contains 'Hello World' (const char)"));
-        assertTrue(assertContainsCI("WORLD", str, "Contains 'Hello World' (string)"));
+        assertTrue(assertContainsCI("WORLD", "Hello World"));
+        assertTrue(assertContainsCI("WORLD", str));
 
-        assertFalse(assertContainsCI("nothing", "Hello world", "Does not contain 'Hello world'"));
-        assertFalse(assertContainsCI("nothing", str, "Does not contain 'Hello world'"));
+        assertFalse(assertContainsCI("nothing", "Hello world"));
+        assertFalse(assertContainsCI("nothing", str));
     }
 
     void regex()
     {
         assertTrue(
-                assertRegex(R"(^\d+$)", "12345", "Valid regex")
+                assertRegex(R"(^\d+$)", "12345")
         );
 
         assertFalse(
-                assertRegex(R"(^\d+$)", "abcdef", "Invalid regex")
+                assertRegex(R"(^\d+$)", "abcdef")
         );
 
         assertTrue(
-                assertRegex(R"(^\d+$)", std::string("12345"), "Valid regex")
+                assertRegex(R"(^\d+$)", std::string("12345"))
         );
     }
 
