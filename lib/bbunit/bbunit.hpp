@@ -527,24 +527,126 @@ namespace BBUnit {
             return assertFalse(actual, "Assert that bool is false");
         }
 
+        /**
+         * Assert that a vector has a certain number of items.
+         * Generates standard message.
+         *
+         * @tparam T
+         * @param expected
+         * @param vector
+         * @return TestResult
+         */
+        template <typename T>
+        TestResult assertCount(unsigned int expected, std::vector<T> vector)
+        {
+            return assertCount(expected,
+                               vector,
+                               std::format(R"(Assert that vector contains {} items)", expected).c_str());
+        }
+
+        /**
+         * Assert that vector contains a certain number of items.
+         *
+         * @tparam T
+         * @param expected
+         * @param vector
+         * @param message
+         * @return TestResult
+         */
         template <typename T>
         TestResult assertCount(unsigned int expected, std::vector<T> vector, const char* message)
         {
             return assert(expected == vector.size(), message);
         }
 
-        template <typename T>
-        TestResult assertEmpty(std::vector<T> vector, const char* message)
+        /**
+         * Assert that map contains a certain number of items.
+         * Generates standard message.
+         *
+         * @tparam K
+         * @tparam V
+         * @param expected
+         * @param map
+         * @return TestResult
+         */
+        template <typename K, typename V>
+        TestResult assertCount(unsigned int expected, std::map<K, V> map)
         {
-            return assert(vector.size() == 0, message);
+            return assertCount(expected,
+                               map,
+                               std::format(R"(Assert that map contains {} items)", expected).c_str());
         }
 
+        /**
+         * Assert that map contains a specified number of items.
+         *
+         * @tparam K
+         * @tparam V
+         * @param expected
+         * @param map
+         * @param message
+         * @return TestResult
+         */
         template <typename K, typename V>
         TestResult assertCount(unsigned int expected, std::map<K, V> map, const char* message)
         {
             return assert(expected == map.size(), message);
         }
 
+        /**
+         * Assert that vector is empty.
+         * Generates standard message.
+         *
+         * @tparam T
+         * @param vector
+         * @return TestResult
+         */
+        template <typename T>
+        TestResult assertEmpty(std::vector<T> vector)
+        {
+            return assertEmpty(vector,
+                               std::format(R"(Assert that vector is empty)").c_str());
+        }
+
+        /**
+         * Assert that vector is empty.
+         *
+         * @tparam T
+         * @param vector
+         * @param message
+         * @return TestResult
+         */
+        template <typename T>
+        TestResult assertEmpty(std::vector<T> vector, const char* message)
+        {
+            return assert(vector.size() == 0, message);
+        }
+
+        /**
+         * Assert that map is empty.
+         * Generates standard message.
+         *
+         * @tparam K
+         * @tparam V
+         * @param map
+         * @return TestResult
+         */
+        template <typename K, typename V>
+        TestResult assertEmpty(std::map<K, V> map)
+        {
+            return assertEmpty(map,
+                               std::format(R"(Assert that map is empty)").c_str());
+        }
+
+        /**
+         * Assert that map is empty.
+         *
+         * @tparam K
+         * @tparam V
+         * @param map
+         * @param message
+         * @return TestResult
+         */
         template <typename K, typename V>
         TestResult assertEmpty(std::map<K, V> map, const char* message)
         {
