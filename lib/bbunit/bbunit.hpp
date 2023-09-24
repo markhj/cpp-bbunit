@@ -161,7 +161,9 @@ namespace BBUnit {
         {
             return assertEquals(expected,
                                 actual,
-                          std::format("Assert that bool {} matches {}", expected, actual).c_str());
+                          std::format("Assert that bool {} matches {}",
+                                      expected,
+                                      actual).c_str());
         }
 
         /**
@@ -177,6 +179,31 @@ namespace BBUnit {
             return assert(expected == actual, message);
         }
 
+        /**
+         * Assert that two const char match.
+         * Generates standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertEquals(const char *expected, const char *actual)
+        {
+            return assertEquals(expected,
+                                actual,
+                                std::format(R"(Assert that "{}" matches "{}")",
+                                            expected,
+                                            actual).c_str());
+        }
+
+        /**
+         * Assert that two const char are identical.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertEquals(const char *expected, const char *actual, const char *message)
         {
             std::string a = expected,
@@ -184,46 +211,269 @@ namespace BBUnit {
             return assert(a == b, message);
         }
 
+        /**
+         * Assert that two std::string match.
+         * Generates standard message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertEquals(const std::string& expected, const std::string& actual)
+        {
+            return assertEquals(expected,
+                                actual,
+                                std::format(R"(Assert that "{}" matches "{}")",
+                                            expected,
+                                            actual).c_str());
+        }
+
+        /**
+         * Assert that two std::string match.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertEquals(const std::string& expected, const std::string& actual, const char *message)
         {
             return assert(expected == actual, message);
         }
 
+        /**
+         * Assert than an integer is greater than another.
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertGreaterThan(int compare, int actual)
+        {
+            return assertGreaterThan(compare,
+                                     actual,
+                                     std::format(R"(Assert that int {} is greater than {})",
+                                                 actual,
+                                                 compare).c_str());
+        }
+
+        /**
+         * Assert than an integer is greater than another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertGreaterThan(int compare, int actual, const char *message)
         {
             return assert(actual > compare, message);
         }
 
+        /**
+         * Assert that double (or float) is greater than another
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertGreaterThan(double compare, double actual)
+        {
+            return assertGreaterThan(compare,
+                                     actual,
+                                     std::format(R"(Assert that double/float {} is greater than {})",
+                                                 actual,
+                                                 compare).c_str());
+        }
+
+        /**
+         * Assert that double (or float) is greater than another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertGreaterThan(double compare, double actual, const char *message)
         {
             return assert(actual > compare, message);
         }
 
+        /**
+         * Assert that an integer is greater than or equal to another.
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertGreaterThanOrEqual(int compare, int actual)
+        {
+            return assertGreaterThanOrEqual(compare,
+                                            actual,
+                                            std::format(R"(Assert that int {} is greater than or equal to {})",
+                                                        actual,
+                                                        compare).c_str());
+        }
+
+        /**
+         * Assert than an integer is greater than or equal to another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertGreaterThanOrEqual(int compare, int actual, const char *message)
         {
             return assert(actual >= compare, message);
         }
 
+        /**
+         * Assert that a double (or float) is greater than or equal to another.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertGreaterThanOrEqual(double compare, double actual)
+        {
+            return assertGreaterThanOrEqual(compare,
+                          actual,
+                          std::format(R"(Assert that double/float {} is greater than or equal to {})",
+                                      actual,
+                                      compare).c_str());
+        }
+
+        /**
+         * Assert that a float/double is greater than or equal to another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertGreaterThanOrEqual(double compare, double actual, const char *message)
         {
             return assert(actual >= compare, message);
         }
 
+        /**
+         * Assert that an integer is less than another.
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertLessThan(int compare, int actual)
+        {
+            return assertLessThan(compare,
+                                  actual,
+                                  std::format(R"(Assert that int {} is less than {})",
+                                              actual,
+                                              compare).c_str());
+        }
+
+        /**
+         * Assert that an integer is less than another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertLessThan(int compare, int actual, const char *message)
         {
             return assert(actual < compare, message);
         }
 
+        /**
+         * Assert that a double (or float) is less than another.
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertLessThan(double compare, double actual)
+        {
+            return assertLessThan(compare,
+                                  actual,
+                                  std::format(R"(Assert that double/float {} is less than {})",
+                                              actual,
+                                              compare).c_str());
+        }
+
+        /**
+         * Assert that a double (or float) is less than another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertLessThan(double compare, double actual, const char *message)
         {
             return assert(actual < compare, message);
         }
 
+        /**
+         * Assert than an integer is less than or equal to another.
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertLessThanOrEqual(int compare, int actual)
+        {
+            return assertLessThanOrEqual(compare,
+                                  actual,
+                                  std::format(R"(Assert that int {} is less than or equal {})",
+                                              actual,
+                                              compare).c_str());
+        }
+
+        /**
+         * Assert that an integer is less than or equal to another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertLessThanOrEqual(int compare, int actual, const char *message)
         {
             return assert(actual <= compare, message);
         }
 
+        /**
+         * Assert that a double (or float) is less than or equal to another.
+         * Generates standard message.
+         *
+         * @param compare
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertLessThanOrEqual(double compare, double actual)
+        {
+            return assertLessThanOrEqual(compare, actual,
+             std::format(R"(Assert that double/float {} is less than or equal {})",
+                         actual,
+                         compare).c_str());
+        }
+
+        /**
+         * Assert that a double (or float) is less than or equal to another.
+         *
+         * @param compare
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
         TestResult assertLessThanOrEqual(double compare, double actual, const char *message)
         {
             return assert(actual <= compare, message);

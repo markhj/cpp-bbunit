@@ -31,24 +31,40 @@ public:
 
     void greaterThan()
     {
-        assertTrue(assertGreaterThan(2, 5, "5 is greater than 2"));
-        assertFalse(assertGreaterThan(5, 5, "5 is not greater than 5"));
-        assertFalse(assertGreaterThan(8, 5, "5 is not greater than 8"));
+        assertTrue(assertGreaterThan(2, 5));
+        assertFalse(assertGreaterThan(5, 5));
+        assertFalse(assertGreaterThan(8, 5));
 
-        assertTrue(assertGreaterThanOrEqual(2, 5, "5 is greater than or equal to 2"));
-        assertTrue(assertGreaterThanOrEqual(5, 5, "5 is greater than or equal to 5"));
-        assertFalse(assertGreaterThanOrEqual(8, 5, "5 is NOT greater than or equal to 8"));
+        assertTrue(assertGreaterThan(2.0, 5.0));
+        assertFalse(assertGreaterThan(5.0, 5.0));
+        assertFalse(assertGreaterThan(8.0, 5.0));
+
+        assertTrue(assertGreaterThanOrEqual(2, 5));
+        assertTrue(assertGreaterThanOrEqual(5, 5));
+        assertFalse(assertGreaterThanOrEqual(8, 5));
+
+        assertTrue(assertGreaterThanOrEqual(2.0, 5.0));
+        assertTrue(assertGreaterThanOrEqual(5.0, 5.0));
+        assertFalse(assertGreaterThanOrEqual(8.0, 5.0));
     }
 
     void lessThan()
     {
-        assertFalse(assertLessThan(2, 5, "5 is less than 2"));
-        assertFalse(assertLessThan(5, 5, "5 is not less than 5"));
-        assertTrue(assertLessThan(8, 5, "5 is not less than 8"));
+        assertFalse(assertLessThan(2, 5));
+        assertFalse(assertLessThan(5, 5));
+        assertTrue(assertLessThan(8, 5));
 
-        assertFalse(assertLessThanOrEqual(2, 5, "5 is less than or equal to 2"));
-        assertTrue(assertLessThanOrEqual(5, 5, "5 is less than or equal to 5"));
-        assertTrue(assertLessThanOrEqual(8, 5, "5 is NOT less than or equal to 8"));
+        assertFalse(assertLessThan(2.0, 5.0));
+        assertFalse(assertLessThan(5.0, 5.0));
+        assertTrue(assertLessThan(8.0, 5.0));
+
+        assertFalse(assertLessThanOrEqual(2, 5));
+        assertTrue(assertLessThanOrEqual(5, 5));
+        assertTrue(assertLessThanOrEqual(8, 5));
+
+        assertFalse(assertLessThanOrEqual(2.0, 5.0));
+        assertTrue(assertLessThanOrEqual(5.0, 5.0));
+        assertTrue(assertLessThanOrEqual(8.0, 5.0));
     }
 
     void bools()
@@ -64,8 +80,8 @@ public:
 
     void constChar()
     {
-        assertFalse(assertEquals("See you later, world", "Hello world", "Different const chars"));
-        assertTrue(assertEquals("Hello world", "Hello world", "Identical const chars"));
+        assertFalse(assertEquals("See you later, world", "Hello world"));
+        assertTrue(assertEquals("Hello world", "Hello world"));
     }
 
     void strings()
@@ -73,8 +89,8 @@ public:
         std::string a = "Hello world";
         std::string b = "See you later, world";
 
-        assertFalse(assertEquals(b, a, "Different strings"));
-        assertTrue(assertEquals(a, a, "Identical strings"));
+        assertFalse(assertEquals(b, a));
+        assertTrue(assertEquals(a, a));
     }
 
     void contains()
