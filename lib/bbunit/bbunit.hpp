@@ -110,6 +110,22 @@ namespace BBUnit {
         }
 
         /**
+         * Assert that two integers are not equal.
+         * Generate a standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertNotEquals(int expected, int actual)
+        {
+            return assertNotEquals(expected,
+                                actual,
+                                std::format("Assert that int {} does not match {}",
+                                            expected, actual).c_str());
+        }
+
+        /**
          * Assert that two integer values are identical
          *
          * @param expected
@@ -120,6 +136,19 @@ namespace BBUnit {
         TestResult assertEquals(int expected, int actual, const char *message)
         {
             return assert(expected == actual, message);
+        }
+
+        /**
+         * Assert that two integer values are not identical
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
+        TestResult assertNotEquals(int expected, int actual, const char *message)
+        {
+            return assert(expected != actual, message);
         }
 
         /**
@@ -134,7 +163,24 @@ namespace BBUnit {
         {
             return assertEquals(expected,
                           actual,
-                          std::format("Assert that float/double {} matches {}", expected, actual).c_str());
+                          std::format("Assert that float/double {} matches {}",
+                                      expected, actual).c_str());
+        }
+
+        /**
+         * Assert that two doubles (or floats) are not equal.
+         * Generate a standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertNotEquals(double expected, double actual)
+        {
+            return assertNotEquals(expected,
+                                actual,
+                                std::format("Assert that float/double {} does not match {}",
+                                            expected, actual).c_str());
         }
 
         /**
@@ -148,6 +194,19 @@ namespace BBUnit {
         TestResult assertEquals(double expected, double actual, const char *message)
         {
             return assert(expected == actual, message);
+        }
+
+        /**
+         * Assert that two double (or floats) are not equal.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
+        TestResult assertNotEquals(double expected, double actual, const char *message)
+        {
+            return assert(expected != actual, message);
         }
 
         /**
@@ -169,6 +228,23 @@ namespace BBUnit {
 
         /**
          * Assert that two boolean values are identical.
+         * Generate standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertNotEquals(bool expected, bool actual)
+        {
+            return assertNotEquals(expected,
+                                actual,
+                                std::format("Assert that bool {} does not match {}",
+                                            expected,
+                                            actual).c_str());
+        }
+
+        /**
+         * Assert that two boolean values are identical.
          *
          * @param expected
          * @param actual
@@ -178,6 +254,19 @@ namespace BBUnit {
         TestResult assertEquals(bool expected, bool actual, const char *message)
         {
             return assert(expected == actual, message);
+        }
+
+        /**
+         * Assert that two boolean values are identical.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @returnTestResult
+         */
+        TestResult assertNotEquals(bool expected, bool actual, const char *message)
+        {
+            return assert(expected != actual, message);
         }
 
         /**
@@ -193,8 +282,25 @@ namespace BBUnit {
             return assertEquals(expected,
                                 actual,
                                 std::format(R"(Assert that "{}" matches "{}")",
-                                            expected,
-                                            actual).c_str());
+                                            shorten(expected),
+                                            shorten(actual)).c_str());
+        }
+
+        /**
+         * Assert that two const char don't match.
+         * Generates standardized message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertNotEquals(const char *expected, const char *actual)
+        {
+            return assertNotEquals(expected,
+                                actual,
+                                std::format(R"(Assert that "{}" does not match "{}")",
+                                            shorten(expected),
+                                            shorten(actual)).c_str());
         }
 
         /**
@@ -210,6 +316,21 @@ namespace BBUnit {
             std::string a = expected,
                 b = actual;
             return assert(a == b, message);
+        }
+
+        /**
+         * Assert that two const char are not identical.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
+        TestResult assertNotEquals(const char *expected, const char *actual, const char *message)
+        {
+            std::string a = expected,
+                    b = actual;
+            return assert(a != b, message);
         }
 
         /**
@@ -230,6 +351,23 @@ namespace BBUnit {
         }
 
         /**
+         * Assert that two std::string don't match.
+         * Generates standard message.
+         *
+         * @param expected
+         * @param actual
+         * @return TestResult
+         */
+        TestResult assertNotEquals(const std::string& expected, const std::string& actual)
+        {
+            return assertNotEquals(expected,
+                                actual,
+                                std::format(R"(Assert that "{}" does not match "{}")",
+                                            shorten(expected),
+                                            shorten(actual)).c_str());
+        }
+
+        /**
          * Assert that two std::string match.
          *
          * @param expected
@@ -240,6 +378,19 @@ namespace BBUnit {
         TestResult assertEquals(const std::string& expected, const std::string& actual, const char *message)
         {
             return assert(expected == actual, message);
+        }
+
+        /**
+         * Assert that two std::string don't match.
+         *
+         * @param expected
+         * @param actual
+         * @param message
+         * @return TestResult
+         */
+        TestResult assertNotEquals(const std::string& expected, const std::string& actual, const char *message)
+        {
+            return assert(expected != actual, message);
         }
 
         /**

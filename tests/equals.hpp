@@ -43,6 +43,27 @@ public:
         assertFalse(assertEquals(false, true));
         assertTrue(assertEquals(true, true));
     }
+
+    void notEquals()
+    {
+        assertTrue(assertNotEquals(2, 5));
+        assertFalse(assertNotEquals(5, 5));
+
+        assertTrue(assertNotEquals(2.0f, 5.0f));
+        assertFalse(assertNotEquals(5.0f, 5.0f));
+
+        assertTrue(assertNotEquals(false, true));
+        assertFalse(assertNotEquals(true, true));
+
+        assertTrue(assertNotEquals("See you later, world", "Hello world"));
+        assertFalse(assertNotEquals("Hello world", "Hello world"));
+
+        std::string a = "Hello world";
+        std::string b = "See you later, world";
+
+        assertTrue(assertNotEquals(b, a));
+        assertFalse(assertNotEquals(a, a));
+    }
 };
 
 #endif

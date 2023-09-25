@@ -16,21 +16,16 @@ needed for more complex testing suites.
 
 Test passes if the two values are an exact match.
 
-### Default message versions
 ````c++
 TestResult assertEquals(int expected, int actual)
-TestResult assertEquals(double expected, double actual)
-TestResult assertEquals(bool expected, bool actual)
-TestResult assertEquals(const char *expected, const char *actual)
-TestResult assertEquals(const std::string& expected, const std::string& actual)
-````
-
-### Message versions
-````c++
 TestResult assertEquals(int expected, int actual, const char *message)
+TestResult assertEquals(double expected, double actual)
 TestResult assertEquals(double expected, double actual, const char *message)
+TestResult assertEquals(bool expected, bool actual)
 TestResult assertEquals(bool expected, bool actual, const char *message)
+TestResult assertEquals(const char *expected, const char *actual)
 TestResult assertEquals(const char *expected, const char *actual, const char *message)
+TestResult assertEquals(const std::string& expected, const std::string& actual)
 TestResult assertEquals(const std::string& expected, const std::string& actual, const char *message)
 ````
 
@@ -39,6 +34,23 @@ TestResult assertEquals(const std::string& expected, const std::string& actual, 
 assertEquals(5, 2, "Comparing integers");
 assertEquals(5.0f, 5.0f, "Comparing floats");
 assertEquals("foo", "bar", "Comparing const chars");
+````
+
+## ``assertNotEquals``
+
+Test passes if the two values do not match.
+
+````c++
+TestResult assertNotEquals(int expected, int actual)
+TestResult assertNotEquals(int expected, int actual, const char *message)
+TestResult assertNotEquals(double expected, double actual)
+TestResult assertNotEquals(double expected, double actual, const char *message)
+TestResult assertNotEquals(bool expected, bool actual)
+TestResult assertNotEquals(bool expected, bool actual, const char *message)
+TestResult assertNotEquals(const char *expected, const char *actual)
+TestResult assertNotEquals(const char *expected, const char *actual, const char *message)
+TestResult assertNotEquals(const std::string& expected, const std::string& actual)
+TestResult assertNotEquals(const std::string& expected, const std::string& actual, const char *message)
 ````
 
 ## ``assertGreaterThan``

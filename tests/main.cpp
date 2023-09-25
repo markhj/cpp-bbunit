@@ -10,7 +10,8 @@ int main()
     BBUnit::TestSuite<EqualsTest> equals(&EqualsTest::numbers,
         &EqualsTest::constChar,
         &EqualsTest::strings,
-        &EqualsTest::bools);
+        &EqualsTest::bools,
+        &EqualsTest::notEquals);
 
     BBUnit::TestSuite<ComparisonOperatorTest> comparison(
         &ComparisonOperatorTest::greaterThan,
