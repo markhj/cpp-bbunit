@@ -666,7 +666,8 @@ namespace BBUnit {
         {
             return assertContains(contains,
                                   actual,
-                                  std::format(R"(String contains "{}")", contains).c_str());
+                                  std::format(R"(String contains "{}")",
+                                              shorten(contains)).c_str());
         }
 
         /**
@@ -695,7 +696,8 @@ namespace BBUnit {
         {
             return assertContainsCI(contains,
                                   actual,
-                                  std::format(R"(String contains (case-insensitive) "{}")", contains).c_str());
+                                  std::format(R"(String contains (case-insensitive) "{}")",
+                                              shorten(contains)).c_str());
         }
 
         /**
@@ -799,7 +801,8 @@ namespace BBUnit {
         {
             return assertExceptionMessage(expected,
                                    func,
-                                   std::format(R"(Assert exception message is: {})", expected).c_str());
+                                   std::format(R"(Assert exception message is: {})",
+                                               shorten(expected)).c_str());
         }
 
         /**
@@ -841,7 +844,7 @@ namespace BBUnit {
                                    func,
                                    std::format(R"(Assert exception is of type {} and message is: {})",
                                                getClassName<ExceptionType>(),
-                                               expected).c_str());
+                                               shorten(expected)).c_str());
         }
 
         /**
@@ -884,7 +887,7 @@ namespace BBUnit {
             return assertExceptionMessageContains(contains,
                                                   func,
                                                   std::format(R"(Assert exception message contains: {})",
-                                                  contains).c_str());
+                                                  shorten(contains)).c_str());
         }
 
         /**
@@ -923,7 +926,7 @@ namespace BBUnit {
             return assertExceptionMessageContainsCI(contains,
               func,
               std::format(R"(Assert exception message contains (case-insensitive): {})",
-                          contains).c_str());
+                          shorten(contains)).c_str());
         }
 
         /**
@@ -972,7 +975,7 @@ namespace BBUnit {
                 func,
                 std::format(R"(Assert exception is of type {} and message contains: {})",
                 getClassName<ExceptionType>(),
-                contains).c_str());
+                shorten(contains)).c_str());
         }
 
         /**
@@ -1019,7 +1022,7 @@ namespace BBUnit {
                   func,
                   std::format(R"(Assert exception is of type {} and message contains (case-insensitive): {})",
                               getClassName<ExceptionType>(),
-                              contains).c_str());
+                              shorten(contains)).c_str());
         }
 
         /**
@@ -1228,6 +1231,15 @@ namespace BBUnit {
 
         unsigned int assertions = 0,
             passed = 0;
+
+        std::string shorten(std::string input) const
+        {
+            int maxLen = 20;
+            if (input.length() <= maxLen)
+                return input;
+
+            return input.substr(0, maxLen - 4) + "...";
+        }
 
         void printResult(bool testPassed, const std::string& message)
         {
