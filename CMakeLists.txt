@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(lib/bbunit)
 
-add_executable(bbunit_test tests/main.cpp
+add_executable(bbunit_test
+        lib/bbunit/bbunit.hpp
+        tests/main.cpp
         tests/comparison.hpp
         tests/equals.hpp
         tests/strings.hpp

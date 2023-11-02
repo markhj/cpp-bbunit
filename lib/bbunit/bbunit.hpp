@@ -1,3 +1,14 @@
+/**
+ * C++ BBUnit
+ * Version 0.6.2
+ *
+ * Github repo:
+ * https://github.com/markhj/cpp-bbunit
+ *
+ * Documentation:
+ * https://cpp-bbunit.readthedocs.io/en/latest/
+ */
+
 #ifndef TESTLIB_TEST_BBUNIT_HPP
 #define TESTLIB_TEST_BBUNIT_HPP
 
@@ -17,25 +28,20 @@
 #include <format>
 #include <cstring>
 
-#ifdef _WIN32
 const int FOREGROUND_RESET = 7;
 const int BACKGROUND_RESET = 0;
 
-void setColor(int colorCode)
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorCode);
-}
-#else
-const int FOREGROUND_GREEN = 0;
-const int BACKGROUND_RED = 0;
-
-void setColor(int colorCode)
-{
-    // @todo To be implemented
-}
-#endif
-
 namespace BBUnit {
+
+    class Console {
+    public:
+        void static setColor(int colorCode)
+        {
+            #ifdef _WIN32
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorCode);
+            #endif
+        }
+    };
 
     enum TestMode {
         Standard = 1,
@@ -1394,7 +1400,7 @@ namespace BBUnit {
 
         void printResult(bool testPassed, const std::string& message)
         {
-            setColor(FOREGROUND_RESET | BACKGROUND_RESET);
+            Console::setColor(FOREGROUND_RESET | BACKGROUND_RESET);
 
             switch (printMode) {
                 case PrintMode::FocusOnFail:
@@ -1412,23 +1418,23 @@ namespace BBUnit {
                 return;
             }
 
-            setColor(BACKGROUND_RED);
+            Console::setColor(BACKGROUND_RED);
             std::cout << "\n FAILED ";
-            setColor(FOREGROUND_RESET | BACKGROUND_RESET);
+            Console::setColor(FOREGROUND_RESET | BACKGROUND_RESET);
             std::cout << " " << message << std::endl;
         }
 
         void printFullList(bool testPassed, const std::string& message)
         {
             if (testPassed) {
-                setColor(FOREGROUND_GREEN);
+                Console::setColor(FOREGROUND_GREEN);
                 std::cout << "  OK  ";
             } else {
-                setColor(BACKGROUND_RED);
+                Console::setColor(BACKGROUND_RED);
                 std::cout << " FAIL ";
             }
 
-            setColor(FOREGROUND_RESET | BACKGROUND_RESET);
+            Console::setColor(FOREGROUND_RESET | BACKGROUND_RESET);
             std::cout << " " << message << std::endl;
         }
 
@@ -1520,18 +1526,18 @@ namespace BBUnit {
             std::cout << "\n-------------------------------------------------\n";
 
             if (passed == assertions) {
-                setColor(BACKGROUND_GREEN);
+                Console::setColor(BACKGROUND_GREEN);
                 std::cout << " NICE! ";
-                setColor(BACKGROUND_RESET);
+                Console::setColor(BACKGROUND_RESET);
                 std::cout << " ";
             } else {
-                setColor(FOREGROUND_RED);
+                Console::setColor(FOREGROUND_RED);
                 std::cout << "Failed: " << (assertions - passed);
-                setColor(FOREGROUND_RESET);
+                Console::setColor(FOREGROUND_RESET);
                 std::cout << " | ";
             }
 
-            setColor(BACKGROUND_RESET | FOREGROUND_RESET);
+            Console::setColor(BACKGROUND_RESET | FOREGROUND_RESET);
             std::cout << "Passed: " << passed << " | Total: " << assertions << std::endl;
         }
 
