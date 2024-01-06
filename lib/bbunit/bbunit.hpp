@@ -1,6 +1,5 @@
 /**
  * C++ BBUnit
- * Version 0.6.2
  *
  * Github repo:
  * https://github.com/markhj/cpp-bbunit

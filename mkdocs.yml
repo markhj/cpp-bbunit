@@ -4,7 +4,8 @@ theme:
 nav:
   - Home: index.md
   - Installation:
-    - Include library: installation/include.md
+    - Include as header file: installation/include.md
+    - CMake's find_package: installation/find_package.md
   - Getting started:
     - First test: getting-started/first-test.md
   - Assertions:
