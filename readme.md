@@ -18,7 +18,7 @@ C++ BBUnit offers:
 
 ## 📌 Requirements
 
--   C++ 20 or higher
+-   C++17 or higher
 -   CMake 3.26 or higher
 
 ## 📘 Documentation
