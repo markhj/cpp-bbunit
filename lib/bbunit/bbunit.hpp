@@ -65,12 +65,6 @@ namespace BBUnit {
         return result;
     }
 
-    std::string sformat(const char* base, const std::vector<std::string>& parameters)
-    {
-        std::string asStr = base;
-        return sformat(asStr, parameters);
-    }
-
     class Console {
     public:
         void static setColor(int colorCode)
