@@ -42,7 +42,7 @@ namespace BBUnit {
      * @param std::vector<std::string>& parameters
      * @return std::string
      */
-    std::string format(const std::string& base, const std::vector<std::string>& parameters)
+    std::string sformat(const std::string& base, const std::vector<std::string>& parameters)
     {
         std::string result;
 
@@ -65,10 +65,10 @@ namespace BBUnit {
         return result;
     }
 
-    std::string format(const char* base, const std::vector<std::string>& parameters)
+    std::string sformat(const char* base, const std::vector<std::string>& parameters)
     {
         std::string asStr = base;
-        return format(asStr, parameters);
+        return sformat(asStr, parameters);
     }
 
     class Console {
@@ -151,7 +151,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertEquals(expected,
                                 actual,
-                                format("Assert that int {} matches {}", args).c_str());
+                                sformat("Assert that int {} matches {}", args).c_str());
         }
 
         /**
@@ -167,7 +167,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertNotEquals(expected,
                                 actual,
-                                format("Assert that int {} does not match {}", args).c_str());
+                                sformat("Assert that int {} does not match {}", args).c_str());
         }
 
         /**
@@ -209,7 +209,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertEquals(expected,
                           actual,
-                          format("Assert that float/double {} matches {}", args).c_str());
+                          sformat("Assert that float/double {} matches {}", args).c_str());
         }
 
         /**
@@ -225,7 +225,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertNotEquals(expected,
                                 actual,
-                                format("Assert that float/double {} does not match {}", args).c_str());
+                                   sformat("Assert that float/double {} does not match {}", args).c_str());
         }
 
         /**
@@ -267,7 +267,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertEquals(expected,
                                 actual,
-                          format("Assert that bool {} matches {}", args).c_str());
+                                sformat("Assert that bool {} matches {}", args).c_str());
         }
 
         /**
@@ -283,7 +283,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertNotEquals(expected,
                                 actual,
-                                format("Assert that bool {} does not match {}", args).c_str());
+                                   sformat("Assert that bool {} does not match {}", args).c_str());
         }
 
         /**
@@ -324,7 +324,7 @@ namespace BBUnit {
         {
             return assertEquals(expected,
                                 actual,
-                                format(R"(Assert that "{}" matches "{}")",
+                                sformat(R"(Assert that "{}" matches "{}")",
                                        {shorten(expected),
                                             shorten(actual)}
                                             ).c_str());
@@ -342,7 +342,7 @@ namespace BBUnit {
         {
             return assertNotEquals(expected,
                                 actual,
-                                format(R"(Assert that "{}" does not match "{}")",
+                                   sformat(R"(Assert that "{}" does not match "{}")",
                                        {shorten(expected),
                                             shorten(actual)}).c_str());
         }
@@ -389,7 +389,7 @@ namespace BBUnit {
         {
             return assertEquals(expected,
                                 actual,
-                                format(R"(Assert that "{}" matches "{}")",
+                                sformat(R"(Assert that "{}" matches "{}")",
                                        {expected,
                                             actual}).c_str());
         }
@@ -406,7 +406,7 @@ namespace BBUnit {
         {
             return assertNotEquals(expected,
                                 actual,
-                                format(R"(Assert that "{}" does not match "{}")",
+                                   sformat(R"(Assert that "{}" does not match "{}")",
                                        {shorten(expected),
                                             shorten(actual)}).c_str());
         }
@@ -450,7 +450,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThan(compare,
                                      actual,
-                                     format(R"(Assert that int {} is greater than {})", args).c_str());
+                                     sformat("(Assert that int {} is greater than {})", args).c_str());
         }
 
         /**
@@ -479,7 +479,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThan(compare,
                                      actual,
-                                     format(R"(Assert that double/float {} is greater than {})", args).c_str());
+                                     sformat(R"(Assert that double/float {} is greater than {})", args).c_str());
         }
 
         /**
@@ -508,7 +508,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThanOrEqual(compare,
                                             actual,
-                                            format(R"(Assert that int {} is greater than or equal to {})", args).c_str());
+                                            sformat(R"(Assert that int {} is greater than or equal to {})", args).c_str());
         }
 
         /**
@@ -536,7 +536,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThanOrEqual(compare,
                           actual,
-                          format(R"(Assert that double/float {} is greater than or equal to {})", args).c_str());
+                          sformat(R"(Assert that double/float {} is greater than or equal to {})", args).c_str());
         }
 
         /**
@@ -565,7 +565,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThan(compare,
                                   actual,
-                                  format(R"(Assert that int {} is less than {})", args).c_str());
+                                  sformat(R"(Assert that int {} is less than {})", args).c_str());
         }
 
         /**
@@ -594,7 +594,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThan(compare,
                                   actual,
-                                  format(R"(Assert that double/float {} is less than {})", args).c_str());
+                                  sformat(R"(Assert that double/float {} is less than {})", args).c_str());
         }
 
         /**
@@ -623,7 +623,7 @@ namespace BBUnit {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThanOrEqual(compare,
                                   actual,
-                                  format(R"(Assert that int {} is less than or equal {})", args).c_str());
+                                  sformat("(Assert that int {} is less than or equal {})", args).c_str());
         }
 
         /**
@@ -651,7 +651,7 @@ namespace BBUnit {
         {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThanOrEqual(compare, actual,
-             format(R"(Assert that double/float {} is less than or equal {})", args).c_str());
+                                         sformat(R"(Assert that double/float {} is less than or equal {})", args).c_str());
         }
 
         /**
@@ -729,7 +729,7 @@ namespace BBUnit {
         {
             return assertCount(expected,
                                vector,
-                               format(R"(Assert that vector contains {} items)",
+                               sformat(R"(Assert that vector contains {} items)",
                                       { std::to_string(expected) }).c_str());
         }
 
@@ -763,7 +763,7 @@ namespace BBUnit {
         {
             return assertCount(expected,
                                map,
-                               format(R"(Assert that map contains {} items)", { std::to_string(expected) }).c_str());
+                               sformat(R"(Assert that map contains {} items)", { std::to_string(expected) }).c_str());
         }
 
         /**
@@ -794,7 +794,7 @@ namespace BBUnit {
         TestResult assertEmpty(std::vector<T> vector)
         {
             return assertEmpty(vector,
-                               format(R"(Assert that vector is empty)", {}).c_str());
+                               sformat(R"(Assert that vector is empty)", {}).c_str());
         }
 
         /**
@@ -824,7 +824,7 @@ namespace BBUnit {
         TestResult assertEmpty(std::map<K, V> map)
         {
             return assertEmpty(map,
-                               format(R"(Assert that map is empty)", {}).c_str());
+                               sformat(R"(Assert that map is empty)", {}).c_str());
         }
 
         /**
@@ -854,7 +854,7 @@ namespace BBUnit {
         {
             return assertContains(contains,
                                   actual,
-                                  format(R"(String contains "{}")",
+                                  sformat(R"(String contains "{}")",
                                          { shorten(contains) }).c_str());
         }
 
@@ -884,7 +884,7 @@ namespace BBUnit {
         {
             return assertContainsCI(contains,
                                   actual,
-                                  format(R"(String contains (case-insensitive) "{}")",
+                                    sformat(R"(String contains (case-insensitive) "{}")",
                                          { shorten(contains) }).c_str());
         }
 
@@ -950,7 +950,7 @@ namespace BBUnit {
         TestResult assertException(std::function<void()> func)
         {
             return assertException<ExceptionType>(func,
-                  format(R"(Assert exception of type {} is thrown)", { getClassName<ExceptionType>() }).c_str());
+                                                  sformat(R"(Assert exception of type {} is thrown)", { getClassName<ExceptionType>() }).c_str());
         }
 
         /**
@@ -989,7 +989,7 @@ namespace BBUnit {
         {
             return assertExceptionMessage(expected,
                                    func,
-                                   format(R"(Assert exception message is: {})",
+                                          sformat(R"(Assert exception message is: {})",
                                           { shorten(expected) }).c_str());
         }
 
@@ -1030,7 +1030,7 @@ namespace BBUnit {
         {
             return assertExceptionMessage<ExceptionType>(expected,
                                    func,
-                                   format(R"(Assert exception is of type {} and message is: {})",
+                                                         sformat(R"(Assert exception is of type {} and message is: {})",
                                           { getClassName<ExceptionType>(),
                                                shorten(expected) }).c_str());
         }
@@ -1074,7 +1074,7 @@ namespace BBUnit {
         {
             return assertExceptionMessageContains(contains,
                                                   func,
-                                                  format(R"(Assert exception message contains: {})",
+                                                  sformat(R"(Assert exception message contains: {})",
                                                          { shorten(contains) }).c_str());
         }
 
@@ -1113,7 +1113,7 @@ namespace BBUnit {
         {
             return assertExceptionMessageContainsCI(contains,
               func,
-              format(R"(Assert exception message contains (case-insensitive): {})",
+                                                    sformat(R"(Assert exception message contains (case-insensitive): {})",
                      { shorten(contains) }).c_str());
         }
 
@@ -1161,7 +1161,7 @@ namespace BBUnit {
         {
             return assertExceptionMessageContains<ExceptionType>(contains,
                 func,
-                format(R"(Assert exception is of type {} and message contains: {})",
+                                                                 sformat(R"(Assert exception is of type {} and message contains: {})",
                        {getClassName<ExceptionType>(),
                 shorten(contains) }).c_str());
         }
@@ -1208,7 +1208,7 @@ namespace BBUnit {
         {
             return assertExceptionMessageContainsCI<ExceptionType>(contains,
                   func,
-                  format(R"(Assert exception is of type {} and message contains (case-insensitive): {})",
+                                                                   sformat(R"(Assert exception is of type {} and message contains (case-insensitive): {})",
                          { getClassName<ExceptionType>(),
                               shorten(contains) }).c_str());
         }
@@ -1259,7 +1259,7 @@ namespace BBUnit {
         {
             return assertExceptionMessageRegex(regex,
                                                func,
-                                               format(R"(Assert exception satisfies regex: {})",
+                                               sformat(R"(Assert exception satisfies regex: {})",
                                                       { regex }).c_str());
         }
 
@@ -1305,7 +1305,7 @@ namespace BBUnit {
         {
             return assertExceptionMessageRegex<ExceptionType>(regex,
                                func,
-                               format(R"(Assert exception is of type {} and satisfies regex: {})",
+                                                              sformat(R"(Assert exception is of type {} and satisfies regex: {})",
                                       { getClassName<ExceptionType>(),
                                            regex }).c_str());
         }
@@ -1347,7 +1347,7 @@ namespace BBUnit {
         {
             return assertRegex(regex,
                                actual,
-                               format(R"(Assert that string satisfies regex: {})", { regex }).c_str());
+                               sformat(R"(Assert that string satisfies regex: {})", { regex }).c_str());
         }
 
         /**
