@@ -113,18 +113,15 @@ namespace BBUnit {
 
     class TestCase : protected FormatsStrings {
     public:
-        [[nodiscard]] unsigned int getAssertions() const
-        {
+        [[nodiscard]] unsigned int getAssertions() const {
             return assertions;
         }
 
-        [[nodiscard]] unsigned int getPassed() const
-        {
+        [[nodiscard]] unsigned int getPassed() const {
             return passed;
         }
 
-        TestCase& setPrintMode(PrintMode newPrintMode)
-        {
+        TestCase& setPrintMode(PrintMode newPrintMode) {
             printMode = newPrintMode;
             return *this;
         }
@@ -137,8 +134,7 @@ namespace BBUnit {
          *
          * @param toMode
          */
-        void setMode(TestMode toMode)
-        {
+        void setMode(TestMode toMode) {
             mode = toMode;
         }
 
@@ -150,12 +146,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertEquals(int expected, int actual)
-        {
+        TestResult assertEquals(int expected, int actual) {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertEquals(expected,
-                                actual,
-                                strFormat("Assert that int {} matches {}", args).c_str());
+                actual,
+                strFormat("Assert that int {} matches {}", args).c_str()
+                );
         }
 
         /**
@@ -166,12 +162,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertNotEquals(int expected, int actual)
-        {
+        TestResult assertNotEquals(int expected, int actual) {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertNotEquals(expected,
-                                actual,
-                                   strFormat("Assert that int {} does not match {}", args).c_str());
+                actual,
+                strFormat("Assert that int {} does not match {}", args).c_str()
+                );
         }
 
         /**
@@ -182,8 +178,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertEquals(int expected, int actual, const char *message)
-        {
+        TestResult assertEquals(int expected, int actual, const char *message) {
             return assert(expected == actual, message);
         }
 
@@ -195,8 +190,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertNotEquals(int expected, int actual, const char *message)
-        {
+        TestResult assertNotEquals(int expected, int actual, const char *message) {
             return assert(expected != actual, message);
         }
 
@@ -208,12 +202,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertEquals(double expected, double actual)
-        {
+        TestResult assertEquals(double expected, double actual) {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertEquals(expected,
-                          actual,
-                                strFormat("Assert that float/double {} matches {}", args).c_str());
+                actual,
+                strFormat("Assert that float/double {} matches {}", args).c_str()
+                );
         }
 
         /**
@@ -224,12 +218,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertNotEquals(double expected, double actual)
-        {
+        TestResult assertNotEquals(double expected, double actual) {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertNotEquals(expected,
-                                actual,
-                                   strFormat("Assert that float/double {} does not match {}", args).c_str());
+                actual,
+                strFormat("Assert that float/double {} does not match {}", args).c_str()
+                );
         }
 
         /**
@@ -240,8 +234,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertEquals(double expected, double actual, const char *message)
-        {
+        TestResult assertEquals(double expected, double actual, const char *message) {
             return assert(expected == actual, message);
         }
 
@@ -253,8 +246,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertNotEquals(double expected, double actual, const char *message)
-        {
+        TestResult assertNotEquals(double expected, double actual, const char *message) {
             return assert(expected != actual, message);
         }
 
@@ -266,12 +258,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertEquals(bool expected, bool actual)
-        {
+        TestResult assertEquals(bool expected, bool actual) {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertEquals(expected,
-                                actual,
-                                strFormat("Assert that bool {} matches {}", args).c_str());
+                actual,
+                strFormat("Assert that bool {} matches {}", args).c_str()
+                );
         }
 
         /**
@@ -282,12 +274,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertNotEquals(bool expected, bool actual)
-        {
+        TestResult assertNotEquals(bool expected, bool actual) {
             std::vector<std::string> args = {std::to_string(expected), std::to_string(actual)};
             return assertNotEquals(expected,
-                                actual,
-                                   strFormat("Assert that bool {} does not match {}", args).c_str());
+                actual,
+                strFormat("Assert that bool {} does not match {}", args).c_str()
+                );
         }
 
         /**
@@ -296,10 +288,9 @@ namespace BBUnit {
          * @param expected
          * @param actual
          * @param message
-         * @returnTestResult
+         * @return TestResult
          */
-        TestResult assertEquals(bool expected, bool actual, const char *message)
-        {
+        TestResult assertEquals(bool expected, bool actual, const char *message) {
             return assert(expected == actual, message);
         }
 
@@ -309,10 +300,9 @@ namespace BBUnit {
          * @param expected
          * @param actual
          * @param message
-         * @returnTestResult
+         * @return TestResult
          */
-        TestResult assertNotEquals(bool expected, bool actual, const char *message)
-        {
+        TestResult assertNotEquals(bool expected, bool actual, const char *message) {
             return assert(expected != actual, message);
         }
 
@@ -324,14 +314,17 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertEquals(const char *expected, const char *actual)
-        {
+        TestResult assertEquals(const char *expected, const char *actual) {
             return assertEquals(expected,
-                                actual,
-                                strFormat(R"(Assert that "{}" matches "{}")",
-                                       {shorten(expected),
-                                            shorten(actual)}
-                                            ).c_str());
+                actual,
+                strFormat(
+                        R"(Assert that "{}" matches "{}")",
+               {
+                            shorten(expected),
+                            shorten(actual)
+                        }
+                    ).c_str()
+                );
         }
 
         /**
@@ -342,8 +335,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertNotEquals(const char *expected, const char *actual)
-        {
+        TestResult assertNotEquals(const char *expected, const char *actual) {
             return assertNotEquals(expected,
                                 actual,
                                    strFormat(R"(Assert that "{}" does not match "{}")",
@@ -359,8 +351,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertEquals(const char *expected, const char *actual, const char *message)
-        {
+        TestResult assertEquals(const char *expected, const char *actual, const char *message) {
             std::string a = expected,
                 b = actual;
             return assert(a == b, message);
@@ -374,8 +365,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertNotEquals(const char *expected, const char *actual, const char *message)
-        {
+        TestResult assertNotEquals(const char *expected, const char *actual, const char *message) {
             std::string a = expected,
                     b = actual;
             return assert(a != b, message);
@@ -389,8 +379,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertEquals(const std::string& expected, const std::string& actual)
-        {
+        TestResult assertEquals(const std::string& expected, const std::string& actual) {
             return assertEquals(expected,
                                 actual,
                                 strFormat(R"(Assert that "{}" matches "{}")",
@@ -406,8 +395,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertNotEquals(const std::string& expected, const std::string& actual)
-        {
+        TestResult assertNotEquals(const std::string& expected, const std::string& actual) {
             return assertNotEquals(expected,
                                 actual,
                                    strFormat(R"(Assert that "{}" does not match "{}")",
@@ -423,8 +411,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertEquals(const std::string& expected, const std::string& actual, const char *message)
-        {
+        TestResult assertEquals(const std::string& expected, const std::string& actual, const char *message) {
             return assert(expected == actual, message);
         }
 
@@ -436,8 +423,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertNotEquals(const std::string& expected, const std::string& actual, const char *message)
-        {
+        TestResult assertNotEquals(const std::string& expected, const std::string& actual, const char *message) {
             return assert(expected != actual, message);
         }
 
@@ -449,12 +435,12 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertGreaterThan(int compare, int actual)
-        {
+        TestResult assertGreaterThan(int compare, int actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThan(compare,
-                                     actual,
-                                     strFormat("(Assert that int {} is greater than {})", args).c_str());
+                actual,
+                strFormat("(Assert that int {} is greater than {})", args).c_str()
+                );
         }
 
         /**
@@ -465,8 +451,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertGreaterThan(int compare, int actual, const char *message)
-        {
+        TestResult assertGreaterThan(int compare, int actual, const char *message) {
             return assert(actual > compare, message);
         }
 
@@ -478,8 +463,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertGreaterThan(double compare, double actual)
-        {
+        TestResult assertGreaterThan(double compare, double actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThan(compare,
                                      actual,
@@ -494,8 +478,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertGreaterThan(double compare, double actual, const char *message)
-        {
+        TestResult assertGreaterThan(double compare, double actual, const char *message) {
             return assert(actual > compare, message);
         }
 
@@ -507,8 +490,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertGreaterThanOrEqual(int compare, int actual)
-        {
+        TestResult assertGreaterThanOrEqual(int compare, int actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThanOrEqual(compare,
                                             actual,
@@ -523,8 +505,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertGreaterThanOrEqual(int compare, int actual, const char *message)
-        {
+        TestResult assertGreaterThanOrEqual(int compare, int actual, const char *message) {
             return assert(actual >= compare, message);
         }
 
@@ -535,8 +516,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertGreaterThanOrEqual(double compare, double actual)
-        {
+        TestResult assertGreaterThanOrEqual(double compare, double actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertGreaterThanOrEqual(compare,
                           actual,
@@ -551,8 +531,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertGreaterThanOrEqual(double compare, double actual, const char *message)
-        {
+        TestResult assertGreaterThanOrEqual(double compare, double actual, const char *message) {
             return assert(actual >= compare, message);
         }
 
@@ -564,8 +543,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertLessThan(int compare, int actual)
-        {
+        TestResult assertLessThan(int compare, int actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThan(compare,
                                   actual,
@@ -580,8 +558,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertLessThan(int compare, int actual, const char *message)
-        {
+        TestResult assertLessThan(int compare, int actual, const char *message) {
             return assert(actual < compare, message);
         }
 
@@ -593,8 +570,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertLessThan(double compare, double actual)
-        {
+        TestResult assertLessThan(double compare, double actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThan(compare,
                                   actual,
@@ -609,8 +585,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertLessThan(double compare, double actual, const char *message)
-        {
+        TestResult assertLessThan(double compare, double actual, const char *message) {
             return assert(actual < compare, message);
         }
 
@@ -622,8 +597,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertLessThanOrEqual(int compare, int actual)
-        {
+        TestResult assertLessThanOrEqual(int compare, int actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThanOrEqual(compare,
                                   actual,
@@ -638,8 +612,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertLessThanOrEqual(int compare, int actual, const char *message)
-        {
+        TestResult assertLessThanOrEqual(int compare, int actual, const char *message) {
             return assert(actual <= compare, message);
         }
 
@@ -651,8 +624,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertLessThanOrEqual(double compare, double actual)
-        {
+        TestResult assertLessThanOrEqual(double compare, double actual) {
             std::vector<std::string> args = {std::to_string(compare), std::to_string(actual)};
             return assertLessThanOrEqual(compare, actual,
                                          strFormat(R"(Assert that double/float {} is less than or equal {})", args).c_str());
@@ -666,8 +638,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertLessThanOrEqual(double compare, double actual, const char *message)
-        {
+        TestResult assertLessThanOrEqual(double compare, double actual, const char *message) {
             return assert(actual <= compare, message);
         }
 
@@ -678,8 +649,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertTrue(bool actual, const char* message)
-        {
+        TestResult assertTrue(bool actual, const char* message) {
             return assert(actual, message);
         }
 
@@ -690,8 +660,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertTrue(bool actual)
-        {
+        TestResult assertTrue(bool actual) {
             return assertTrue(actual, "Assert that bool is true");
         }
 
@@ -702,8 +671,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertFalse(bool actual, const char* message)
-        {
+        TestResult assertFalse(bool actual, const char* message) {
             return assert(!actual, message);
         }
 
@@ -714,8 +682,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertFalse(bool actual)
-        {
+        TestResult assertFalse(bool actual) {
             return assertFalse(actual, "Assert that bool is false");
         }
 
@@ -729,8 +696,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename T>
-        TestResult assertCount(unsigned int expected, std::vector<T> vector)
-        {
+        TestResult assertCount(unsigned int expected, std::vector<T> vector) {
             return assertCount(expected,
                                vector,
                                strFormat(R"(Assert that vector contains {} items)",
@@ -747,8 +713,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename T>
-        TestResult assertCount(unsigned int expected, std::vector<T> vector, const char* message)
-        {
+        TestResult assertCount(unsigned int expected, std::vector<T> vector, const char* message) {
             return assert(expected == vector.size(), message);
         }
 
@@ -763,8 +728,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename K, typename V>
-        TestResult assertCount(unsigned int expected, std::map<K, V> map)
-        {
+        TestResult assertCount(unsigned int expected, std::map<K, V> map) {
             return assertCount(expected,
                                map,
                                strFormat(R"(Assert that map contains {} items)", { std::to_string(expected) }).c_str());
@@ -781,8 +745,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename K, typename V>
-        TestResult assertCount(unsigned int expected, std::map<K, V> map, const char* message)
-        {
+        TestResult assertCount(unsigned int expected, std::map<K, V> map, const char* message) {
             return assert(expected == map.size(), message);
         }
 
@@ -795,8 +758,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename T>
-        TestResult assertEmpty(std::vector<T> vector)
-        {
+        TestResult assertEmpty(std::vector<T> vector) {
             return assertEmpty(vector,
                                strFormat(R"(Assert that vector is empty)", {}).c_str());
         }
@@ -810,8 +772,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename T>
-        TestResult assertEmpty(std::vector<T> vector, const char* message)
-        {
+        TestResult assertEmpty(std::vector<T> vector, const char* message) {
             return assert(vector.size() == 0, message);
         }
 
@@ -825,8 +786,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename K, typename V>
-        TestResult assertEmpty(std::map<K, V> map)
-        {
+        TestResult assertEmpty(std::map<K, V> map) {
             return assertEmpty(map,
                                strFormat(R"(Assert that map is empty)", {}).c_str());
         }
@@ -841,8 +801,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename K, typename V>
-        TestResult assertEmpty(std::map<K, V> map, const char* message)
-        {
+        TestResult assertEmpty(std::map<K, V> map, const char* message) {
             return assert(map.size() == 0, message);
         }
 
@@ -854,8 +813,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertContains(const std::string& contains, const std::string& actual)
-        {
+        TestResult assertContains(const std::string& contains, const std::string& actual) {
             return assertContains(contains,
                                   actual,
                                   strFormat(R"(String contains "{}")",
@@ -870,8 +828,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertContains(const std::string& contains, const std::string& actual, const char* message)
-        {
+        TestResult assertContains(const std::string& contains, const std::string& actual, const char* message) {
             return assert(actual.find(contains) != std::string::npos, message);
         }
 
@@ -884,8 +841,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertContainsCI(const std::string& contains, const std::string& actual)
-        {
+        TestResult assertContainsCI(const std::string& contains, const std::string& actual) {
             return assertContainsCI(contains,
                                   actual,
                                     strFormat(R"(String contains (case-insensitive) "{}")",
@@ -901,8 +857,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertContainsCI(const std::string& contains, const std::string& actual, const char* message)
-        {
+        TestResult assertContainsCI(const std::string& contains, const std::string& actual, const char* message) {
             std::string lwContains = contains, lwActual = actual;
 
             std::transform(lwContains.begin(), lwContains.end(), lwContains.begin(), ::tolower);
@@ -918,8 +873,7 @@ namespace BBUnit {
          * @param func
          * @return TestResult
          */
-        TestResult assertException(std::function<void()> func)
-        {
+        TestResult assertException(std::function<void()> func) {
             return assertException(func, "Assert that (any) exception is thrown");
         }
 
@@ -930,8 +884,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertException(std::function<void()> func, const char* message)
-        {
+        TestResult assertException(std::function<void()> func, const char* message) {
             bool caught = false;
             try {
                 func();
@@ -951,8 +904,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename ExceptionType>
-        TestResult assertException(std::function<void()> func)
-        {
+        TestResult assertException(std::function<void()> func) {
             return assertException<ExceptionType>(func,
                                                   strFormat(R"(Assert exception of type {} is thrown)", { getClassName<ExceptionType>() }).c_str());
         }
@@ -966,8 +918,7 @@ namespace BBUnit {
          * @return TestResult
          */
         template <typename ExceptionType>
-        TestResult assertException(std::function<void()> func, const char* message)
-        {
+        TestResult assertException(std::function<void()> func, const char* message) {
             bool caught = false;
             try {
                 func();
@@ -989,8 +940,7 @@ namespace BBUnit {
          * @return TestResult
          */
         TestResult assertExceptionMessage(const std::string& expected,
-                                          const std::function<void()>& func)
-        {
+                                          const std::function<void()>& func) {
             return assertExceptionMessage(expected,
                                    func,
                                           strFormat(R"(Assert exception message is: {})",
@@ -1007,8 +957,7 @@ namespace BBUnit {
          */
         TestResult assertExceptionMessage(const std::string& expected,
             const std::function<void()>& func,
-            const char* message)
-        {
+            const char* message) {
             std::string msg;
             try {
                 func();
@@ -1030,8 +979,7 @@ namespace BBUnit {
          */
         template <typename ExceptionType>
         TestResult assertExceptionMessage(const std::string& expected,
-                                          const std::function<void()>& func)
-        {
+                                          const std::function<void()>& func) {
             return assertExceptionMessage<ExceptionType>(expected,
                                    func,
                                                          strFormat(R"(Assert exception is of type {} and message is: {})",
@@ -1051,8 +999,7 @@ namespace BBUnit {
         template <typename ExceptionType>
         TestResult assertExceptionMessage(const std::string& expected,
             const std::function<void()>& func,
-            const char* message)
-        {
+            const char* message) {
             std::string msg;
             try {
                 func();
@@ -1074,8 +1021,7 @@ namespace BBUnit {
          * @return TestResult
          */
         TestResult assertExceptionMessageContains(const std::string& contains,
-                                                  const std::function<void()>& func)
-        {
+                                                  const std::function<void()>& func) {
             return assertExceptionMessageContains(contains,
                                                   func,
                                                   strFormat(R"(Assert exception message contains: {})",
@@ -1092,8 +1038,7 @@ namespace BBUnit {
          */
         TestResult assertExceptionMessageContains(const std::string& contains,
               const std::function<void()>& func,
-              const char* message)
-        {
+              const char* message) {
             std::string msg;
             try {
                 func();
@@ -1113,8 +1058,7 @@ namespace BBUnit {
          * @return TestResult
          */
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
-                                                  const std::function<void()>& func)
-        {
+                                                  const std::function<void()>& func) {
             return assertExceptionMessageContainsCI(contains,
               func,
                                                     strFormat(R"(Assert exception message contains (case-insensitive): {})",
@@ -1131,8 +1075,7 @@ namespace BBUnit {
          */
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
             const std::function<void()>& func,
-            const char* message)
-        {
+            const char* message) {
             std::string msg;
             try {
                 func();
@@ -1161,13 +1104,16 @@ namespace BBUnit {
          */
         template <typename ExceptionType>
         TestResult assertExceptionMessageContains(const std::string& contains,
-                                                  const std::function<void()>& func)
-        {
+                                                  const std::function<void()>& func) {
             return assertExceptionMessageContains<ExceptionType>(contains,
                 func,
-                                                                 strFormat(R"(Assert exception is of type {} and message contains: {})",
-                       {getClassName<ExceptionType>(),
-                shorten(contains) }).c_str());
+                strFormat(
+                        R"(Assert exception is of type {} and message contains: {})",
+                       {
+                            getClassName<ExceptionType>(),
+                            shorten(contains)
+                       }
+                ).c_str());
         }
 
         /**
@@ -1182,8 +1128,7 @@ namespace BBUnit {
         template <typename ExceptionType>
         TestResult assertExceptionMessageContains(const std::string& contains,
             const std::function<void()>& func,
-            const char* message)
-        {
+            const char* message) {
             bool caught = false;
             try {
                 func();
@@ -1208,8 +1153,7 @@ namespace BBUnit {
          */
         template <typename ExceptionType>
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
-                                                  const std::function<void()>& func)
-        {
+                                                  const std::function<void()>& func) {
             return assertExceptionMessageContainsCI<ExceptionType>(contains,
                   func,
                                                                    strFormat(R"(Assert exception is of type {} and message contains (case-insensitive): {})",
@@ -1230,8 +1174,7 @@ namespace BBUnit {
         template <typename ExceptionType>
         TestResult assertExceptionMessageContainsCI(const std::string& contains,
             const std::function<void()>& func,
-            const char* message)
-        {
+            const char* message) {
             bool caught = false;
             try {
                 func();
@@ -1259,8 +1202,7 @@ namespace BBUnit {
          * @return TestResult
          */
         TestResult assertExceptionMessageRegex(const char *regex,
-                                               const std::function<void()>& func)
-        {
+                                               const std::function<void()>& func) {
             return assertExceptionMessageRegex(regex,
                                                func,
                                                strFormat(R"(Assert exception satisfies regex: {})",
@@ -1276,8 +1218,7 @@ namespace BBUnit {
          */
         TestResult assertExceptionMessageRegex(const char *regex,
                                                const std::function<void()>& func,
-                                               const char* message)
-        {
+                                               const char* message) {
             std::string msg;
             try {
                 func();
@@ -1305,8 +1246,7 @@ namespace BBUnit {
          */
         template <typename ExceptionType>
         TestResult assertExceptionMessageRegex(const char *regex,
-                                               const std::function<void()>& func)
-        {
+                                               const std::function<void()>& func) {
             return assertExceptionMessageRegex<ExceptionType>(regex,
                                func,
                                                               strFormat(R"(Assert exception is of type {} and satisfies regex: {})",
@@ -1326,8 +1266,7 @@ namespace BBUnit {
         template <typename ExceptionType>
         TestResult assertExceptionMessageRegex(const char *regex,
                                                const std::function<void()>& func,
-                                               const char* message)
-        {
+                                               const char* message) {
             try {
                 func();
             } catch (ExceptionType& e) {
@@ -1347,8 +1286,7 @@ namespace BBUnit {
          * @param actual
          * @return TestResult
          */
-        TestResult assertRegex(const char* regex, std::string actual)
-        {
+        TestResult assertRegex(const char* regex, std::string actual) {
             return assertRegex(regex,
                                actual,
                                strFormat(R"(Assert that string satisfies regex: {})", { regex }).c_str());
@@ -1362,8 +1300,7 @@ namespace BBUnit {
          * @param message
          * @return TestResult
          */
-        TestResult assertRegex(const char* regex, std::string actual, const char* message)
-        {
+        TestResult assertRegex(const char* regex, std::string actual, const char* message) {
             return assert(std::regex_match(actual, std::regex(regex)), message);
         }
 
@@ -1374,8 +1311,7 @@ namespace BBUnit {
          *
          * @param testResult
          */
-        void assertTrue(const TestResult& testResult)
-        {
+        void assertTrue(const TestResult& testResult) {
             selfTesting([&]() {
                 assert(testResult.passed, testResult.message);
             });
@@ -1388,8 +1324,7 @@ namespace BBUnit {
          *
          * @param testResult
          */
-        void assertFalse(const TestResult& testResult)
-        {
+        void assertFalse(const TestResult& testResult) {
             selfTesting([&]() {
                 assert(!testResult.passed, testResult.message);
             });
@@ -1401,8 +1336,7 @@ namespace BBUnit {
          *
          * @param func
          */
-        void selfTesting(const std::function<void()>& func)
-        {
+        void selfTesting(const std::function<void()>& func) {
             if (mode != TestMode::SelfTest) {
                 throw MustBeSelfTestingException();
             }
@@ -1424,8 +1358,7 @@ namespace BBUnit {
         unsigned int assertions = 0,
             passed = 0;
 
-        std::string shorten(std::string input) const
-        {
+        [[nodiscard]] std::string shorten(std::string input) const {
             int maxLen = 20;
             if (input.length() <= maxLen)
                 return input;
@@ -1433,8 +1366,7 @@ namespace BBUnit {
             return input.substr(0, maxLen - 4) + "...";
         }
 
-        void printResult(bool testPassed, const std::string& message)
-        {
+        void printResult(bool testPassed, const std::string& message) {
             Console::setColor(FOREGROUND_RESET | BACKGROUND_RESET);
 
             switch (printMode) {
@@ -1447,8 +1379,7 @@ namespace BBUnit {
             }
         }
 
-        void printFocusOnFail(bool testPassed, const std::string& message)
-        {
+        void printFocusOnFail(bool testPassed, const std::string& message) {
             if (testPassed) {
                 return;
             }
@@ -1459,8 +1390,7 @@ namespace BBUnit {
             std::cout << " " << message << std::endl;
         }
 
-        void printFullList(bool testPassed, const std::string& message)
-        {
+        void printFullList(bool testPassed, const std::string& message) {
             if (testPassed) {
                 Console::setColor(FOREGROUND_GREEN);
                 std::cout << "  OK  ";
@@ -1474,13 +1404,11 @@ namespace BBUnit {
         }
 
         template <typename ClassName>
-        std::string getClassName()
-        {
+        std::string getClassName() {
             return typeid(ClassName).name();
         }
 
-        TestResult assert(bool testPassed, const std::string& message)
-        {
+        TestResult assert(bool testPassed, const std::string& message) {
             if (mode == TestMode::Standard
                 || (mode == TestMode::SelfTest && selfTestingScope)
                 ) {
@@ -1504,8 +1432,7 @@ namespace BBUnit {
     class TestSuite {
     public:
         template <typename... Funcs>
-        explicit TestSuite(Funcs... funcs) : current(TC())
-        {
+        explicit TestSuite(Funcs... funcs) : current(TC()) {
             (functions.push_back([&, funcs](PrintMode pMode) {
                 current.setPrintMode(pMode);
                 (current.*funcs)();
@@ -1516,8 +1443,7 @@ namespace BBUnit {
             }), ...);
         }
 
-        TestSummary run()
-        {
+        TestSummary run() {
             TestSummary total;
 
             for (const auto& testFunc : functions) {
@@ -1530,8 +1456,7 @@ namespace BBUnit {
             return total;
         }
 
-        TestSuite& setPrintMode(PrintMode newPrintMode)
-        {
+        TestSuite& setPrintMode(PrintMode newPrintMode) {
             printMode = newPrintMode;
             return *this;
         }
@@ -1547,8 +1472,7 @@ namespace BBUnit {
     class TestRunner {
     public:
         template<typename... TestSuites>
-        void run(TestSuites... suites)
-        {
+        void run(TestSuites... suites) {
             std::cout << "C++ BBUnit" << std::endl;
 
             (runSuite(suites), ...);
@@ -1556,8 +1480,7 @@ namespace BBUnit {
             summarize();
         }
 
-        void summarize() const
-        {
+        void summarize() const {
             std::cout << "\n-------------------------------------------------\n";
 
             if (passed == assertions) {
@@ -1576,8 +1499,7 @@ namespace BBUnit {
             std::cout << "Passed: " << passed << " | Total: " << assertions << std::endl;
         }
 
-        TestRunner& setPrintMode(PrintMode newPrintMode)
-        {
+        TestRunner& setPrintMode(PrintMode newPrintMode) {
             printMode = newPrintMode;
             return *this;
         }
@@ -1588,8 +1510,7 @@ namespace BBUnit {
         PrintMode printMode = PrintMode::FocusOnFail;
 
         template <typename TCD>
-        void runSuite(TestSuite<TCD> testSuite)
-        {
+        void runSuite(TestSuite<TCD> testSuite) {
             TestSummary summary = testSuite.setPrintMode(printMode).run();
 
             assertions += summary.assertions;
