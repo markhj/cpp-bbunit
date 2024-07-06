@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['whilesilent_55',['whileSilent',['../classBBUnit_1_1TestCase.html#ab7eebad3cf241d59ea060bb14c4f3641',1,'BBUnit::TestCase']]],
-  ['withsettings_56',['withSettings',['../classBBUnit_1_1ProvidesAssertions.html#a24d66d5506884a50c8d017bbbe086fcd',1,'BBUnit::ProvidesAssertions']]]
+  ['using_20_22because_22_61',['Using &quot;because&quot;',['../because.html',1,'tutorials']]]
 ];
