@@ -1,7 +1,6 @@
 ![](https://res.cloudinary.com/drfztvfdh/image/upload/v1720248334/Github/cpp-bbunit2_ecwel6.jpg)
 
 ![GitHub Tag](https://img.shields.io/github/v/tag/markhj/cpp-bbunit?label=version)
-[![Documentation Status](https://readthedocs.org/projects/cpp-bbunit/badge/?version=latest)](https://cpp-bbunit.readthedocs.io/en/latest/?badge=latest)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f3ae939dbe5c4b1f894a14e00ec60b56)](https://app.codacy.com/gh/markhj/cpp-bbunit/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?label=license)
 
