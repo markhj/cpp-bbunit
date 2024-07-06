@@ -1,42 +1,23 @@
-#include "../lib/bbunit/bbunit.hpp"
-#include "comparison.hpp"
-#include "equals.hpp"
-#include "strings.hpp"
-#include "collections.hpp"
-#include "exceptions.hpp"
+/**
+ * C++ BBUnit: Self-test
+ *
+ * In this file, C++ BBUnit will be testing itself :-)
+ *
+ * A set of features are built into BBUnit, making it possible or the library
+ * to test itself.
+ */
 
-int main()
-{
-    BBUnit::TestSuite<EqualsTest> equals(&EqualsTest::numbers,
-        &EqualsTest::constChar,
-        &EqualsTest::strings,
-        &EqualsTest::bools,
-        &EqualsTest::notEquals);
+#include <bbunit/bbunit.hpp>
+#include <bbunit/utilities/printer.hpp>
 
-    BBUnit::TestSuite<ComparisonOperatorTest> comparison(
-        &ComparisonOperatorTest::greaterThan,
-        &ComparisonOperatorTest::lessThan);
+#include "./bbunit-test.cpp"
 
-    BBUnit::TestSuite<StringsTest> strings(
-        &StringsTest::contains,
-        &StringsTest::containsCI,
-        &StringsTest::regex);
+using namespace BBUnit;
+using namespace BBUnit::Tests;
 
-    BBUnit::TestSuite<CollectionsTest> collections(&CollectionsTest::count,
-        &CollectionsTest::empty);
+int main() {
+    TestResults results = TestRunner::run({std::make_shared<BBUnitTest>(BBUnitTest())});
 
-    BBUnit::TestSuite<ExceptionsTest> exceptions(&ExceptionsTest::exceptions,
-        &ExceptionsTest::exceptionsOfType,
-        &ExceptionsTest::exceptionMessages,
-        &ExceptionsTest::exceptionMessageContainsConstChar,
-        &ExceptionsTest::exceptionMessageContainsString,
-        &ExceptionsTest::regexExceptions);
-
-    BBUnit::TestRunner().run(equals,
-                             comparison,
-                             strings,
-                             collections,
-                             exceptions);
-
-    return 0;
+    Utilities::Printer::print(results, {});
 }
+
