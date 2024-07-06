@@ -87,7 +87,15 @@ $(document).ready(function(){initNavTree('because.html',''); initResizable(); })
 <div class="title">Using "because" </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><p>You can provide additional description on a per-assertion basis, using <code>because</code>.</p>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Example</h2>
+<div class="fragment"><div class="line">it(<span class="stringliteral">&quot;Tests some integers&quot;</span>, [&amp;]() {</div>
+<div class="line">    assertEquals&lt;int&gt;(2, someIntValue).because(<span class="stringliteral">&quot;It must be 2&quot;</span>);</div>
+<div class="line">    assertEquals&lt;int&gt;(10, someIntValue).because(<span class="stringliteral">&quot;It must be 10&quot;</span>);</div>
+<div class="line">});</div>
+</div><!-- fragment --><p>When tests fail, and they are printed to the console, this additional information will also be present, making it much easier to identify exactly which assertion failed. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

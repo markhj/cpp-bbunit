@@ -87,7 +87,17 @@ $(document).ready(function(){initNavTree('assert-count.html',''); initResizable(
 <div class="title">Counting elements </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><p>When you want to assert the number of elements in objects like <code>std::vector</code>, <code>std::map</code> or <code>std::array</code>, you can use <code>assertCount</code>.</p>
+<dl class="section note"><dt>Note</dt><dd><code>assertCount</code> works with any object type which has a method named <code>size</code> that returns <code>size_t</code>.</dd></dl>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Example</h2>
+<div class="fragment"><div class="line">std::vector a = { 1, 2, 3 };</div>
+<div class="line"> </div>
+<div class="line">assertCount&lt;std::vector&gt;(3, a);   <span class="comment">// True, because there are 3 elements</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+See also</h2>
+<p><a class="el" href="classBBUnit_1_1ProvidesAssertions.html#adfdb920c486010220a0680605ee8bd7b">BBUnit::ProvidesAssertions::assertCount</a> </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

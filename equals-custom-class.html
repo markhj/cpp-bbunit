@@ -87,7 +87,30 @@ $(document).ready(function(){initNavTree('equals-custom-class.html',''); initRes
 <div class="title">assertEquals and custom classes </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><p>You can use <code>assertEquals</code> on any class which has comparison operator.</p>
+<p>This means that you can make it possible for C++ <a class="el" href="namespaceBBUnit.html">BBUnit</a> to test entire custom classes.</p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Diving in</h2>
+<p>This would normally not work:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>A {</div>
+<div class="line">    <span class="keywordtype">int</span> x;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line">A one, two;</div>
+<div class="line"> </div>
+<div class="line">it (<span class="stringliteral">&quot;Tests A&quot;</span>, [&amp;]() {</div>
+<div class="line">    assertEquals&lt;A&gt;(one, two);    </div>
+<div class="line">});</div>
+</div><!-- fragment --><p>Because C++, and by extension BBunit, is not instructed on how to compare them.</p>
+<p>However, you can implement an operator overloader, like this:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>A {</div>
+<div class="line">    <span class="keywordtype">int</span> x;</div>
+<div class="line">    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> A &amp;other)<span class="keyword"> const </span>{</div>
+<div class="line">        <span class="keywordflow">return</span> x == other.x;</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+</div><!-- fragment --><p>And now <a class="el" href="namespaceBBUnit.html">BBUnit</a> will be able to compare two instances of <code>A</code>. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

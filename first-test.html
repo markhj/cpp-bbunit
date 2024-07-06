@@ -87,7 +87,60 @@ $(document).ready(function(){initNavTree('first-test.html',''); initResizable();
 <div class="title">Your first test </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><p>When you have installed C++ <a class="el" href="namespaceBBUnit.html">BBUnit</a>, you should be able to include it using:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;bbunit/bbunit.hpp&gt;</span></div>
+</div><!-- fragment --><p>If this doesn't work, you need to review your installation.</p>
+<h2><a class="anchor" id="autotoc_md15"></a>
+First test</h2>
+<p>A very basic test case looks like this:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>Mytest : <span class="keyword">public</span> <a class="code" href="classBBUnit_1_1TestCase.html">BBUnit::TestCase</a> {</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code" href="classBBUnit_1_1TestCase.html#a2112e2f91cba9949935ed0670014d2f2">test</a>()<span class="keyword"> override </span>{</div>
+<div class="line">        </div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="ttc" id="aclassBBUnit_1_1TestCase_html"><div class="ttname"><a href="classBBUnit_1_1TestCase.html">BBUnit::TestCase</a></div><div class="ttdef"><b>Definition:</b> bbunit.hpp:619</div></div>
+<div class="ttc" id="aclassBBUnit_1_1TestCase_html_a2112e2f91cba9949935ed0670014d2f2"><div class="ttname"><a href="classBBUnit_1_1TestCase.html#a2112e2f91cba9949935ed0670014d2f2">BBUnit::TestCase::test</a></div><div class="ttdeci">virtual void test()=0</div></div>
+</div><!-- fragment --><p>Every child of <code>TestCase</code> must define the <code>test</code> method. This is where you add all your assertions.</p>
+<p>Let's zoom in on this method, and make a simple assertion.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> test()<span class="keyword"> override </span>{</div>
+<div class="line">    it(<span class="stringliteral">&quot;Tests that two integers match&quot;</span>, [&amp;]() {</div>
+<div class="line">        assertEquals&lt;int&gt;(10, 10);</div>
+<div class="line">    });</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Okay, so there's a bit to unpack here.</p>
+<p>First, notice the use of <code>it</code>. This method groups one or several assertions together.</p>
+<p>Within this scope, we perform a single assertion: We check if two integers, 10 and 10, are equal. And since they are, the test will pass.</p>
+<p>The idea is of course that you replace one of the hard-coded value with something your program has calculated. For example:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> test()<span class="keyword"> override </span>{</div>
+<div class="line">    it(<span class="stringliteral">&quot;Check when customer&#39;s bank balance is positive&quot;</span>, [&amp;]() {</div>
+<div class="line">        <span class="comment">// Set up scenario which creates a positive bank balance</span></div>
+<div class="line">        </div>
+<div class="line">        assertEquals&lt;float&gt;(500.0, calculateBankBalance());</div>
+<div class="line">    });</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+Other types</h3>
+<p>When you look at <code>assertEquals&lt;T&gt;</code> it means you can compare a wide array of types. You can also compare booleans, strings, other numeric types, enumerators, etc.</p>
+<h2><a class="anchor" id="autotoc_md17"></a>
+Run test</h2>
+<p>Next step is to run the test. For this, we use the <a class="el" href="classBBUnit_1_1TestRunner.html">BBUnit::TestRunner</a>.</p>
+<div class="fragment"><div class="line">std::vector&lt;std::shared_ptr&lt;TestCase&gt;&gt; testCases = {</div>
+<div class="line">        std::make_shared&lt;MyTest&gt;(MyTest())</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line">TestResults results = TestRunner::run(testCases);</div>
+</div><!-- fragment --><p><code>TestRunner</code> evaluates all the tests, and gathers the results in <a class="el" href="classBBUnit_1_1TestResults.html">BBUnit::TestResults</a>.</p>
+<h2><a class="anchor" id="autotoc_md18"></a>
+Printing results</h2>
+<p>That's all great and dandy, but how do you see the results?</p>
+<p>For this, you can use the aptly named <a class="el" href="classBBUnit_1_1Utilities_1_1Printer.html">BBUnit::Utilities::Printer</a>.</p>
+<p>Start by including it:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;bbunit/utilities/printer.hpp&gt;</span></div>
+</div><!-- fragment --><p>And then call:</p>
+<div class="fragment"><div class="line"><a class="code" href="classBBUnit_1_1Utilities_1_1Printer.html#a4bf23e8ee17149b67cecd139026ed6f1">BBUnit::Utilities::Printer::print</a>(results, {});</div>
+<div class="ttc" id="aclassBBUnit_1_1Utilities_1_1Printer_html_a4bf23e8ee17149b67cecd139026ed6f1"><div class="ttname"><a href="classBBUnit_1_1Utilities_1_1Printer.html#a4bf23e8ee17149b67cecd139026ed6f1">BBUnit::Utilities::Printer::print</a></div><div class="ttdeci">static void print(const TestResults &amp;results, const PrinterSettings &amp;settings)</div><div class="ttdef"><b>Definition:</b> printer.hpp:37</div></div>
+</div><!-- fragment --><p>When you run the program, you should see the results printed to the console. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

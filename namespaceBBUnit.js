@@ -1,5 +1,22 @@
 var namespaceBBUnit =
 [
+    [ "First test", "first-test.html#autotoc_md15", [
+      [ "Other types", "first-test.html#autotoc_md16", null ]
+    ] ],
+    [ "Run test", "first-test.html#autotoc_md17", null ],
+    [ "Printing results", "first-test.html#autotoc_md18", null ],
+    [ "Example", "assert-count.html#autotoc_md6", null ],
+    [ "See also", "assert-count.html#autotoc_md7", null ],
+    [ "Boolean tests", "shorthands.html#autotoc_md19", null ],
+    [ "Example", "because.html#autotoc_md8", null ],
+    [ "Basics", "exceptions.html#autotoc_md10", [
+      [ "Behavior", "exceptions.html#autotoc_md11", null ]
+    ] ],
+    [ "Message", "exceptions.html#autotoc_md12", [
+      [ "Behavior", "exceptions.html#autotoc_md13", null ]
+    ] ],
+    [ "Technical notes", "exceptions.html#autotoc_md14", null ],
+    [ "Diving in", "equals-custom-class.html#autotoc_md9", null ],
     [ "Utilities", "namespaceBBUnit_1_1Utilities.html", "namespaceBBUnit_1_1Utilities" ],
     [ "Settings", "structBBUnit_1_1Settings.html", "structBBUnit_1_1Settings" ],
     [ "TestResult", "structBBUnit_1_1TestResult.html", "structBBUnit_1_1TestResult" ],
