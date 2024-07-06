@@ -2,8 +2,6 @@
 
 ## Install project
 
-There are different ways to install and consume the library:
-
 @subpage install-submodule (Recommended)
 
 @subpage install-as-part

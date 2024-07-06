@@ -1,6 +1,7 @@
 ![](https://res.cloudinary.com/drfztvfdh/image/upload/v1720248334/Github/cpp-bbunit2_ecwel6.jpg)
 
 ![GitHub Tag](https://img.shields.io/github/v/tag/markhj/cpp-bbunit?label=version)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/markhj/cpp-bbunit/doxygen.yml?label=docs)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f3ae939dbe5c4b1f894a14e00ec60b56)](https://app.codacy.com/gh/markhj/cpp-bbunit/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?label=license)
 
@@ -39,4 +40,5 @@ a much improved structure.
 
 ## 📘 Documentation
 
-[ To be re-added soon ]
+The documentation and tutorials are available here:
+[C++ BBUnit on GitHub Pages](https://markhj.github.io/cpp-bbunit)
