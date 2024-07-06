@@ -1,18 +1,14 @@
-# This CMake file is used to compile the self-test of the library
+# C++ BBUnit
+# CMake for self-testing executable
 
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.28)
+project(cpp_bbunit)
 
-project(bbunit_test)
+# Due to use of std::format and concepts, C++20 is required.
+set(CMAKE_CXX_STANDARD 20)
 
-set(CMAKE_CXX_STANDARD 17)
+# Make "include" directory visible
+include_directories(include)
 
-include_directories(lib/bbunit)
-
-add_executable(bbunit_test
-        lib/bbunit/bbunit.hpp
-        tests/main.cpp
-        tests/comparison.hpp
-        tests/equals.hpp
-        tests/strings.hpp
-        tests/collections.hpp
-        tests/exceptions.hpp)
+# Create the "tests" executable
+add_executable(tests tests/main.cpp)

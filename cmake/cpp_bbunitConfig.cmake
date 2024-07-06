@@ -4,13 +4,13 @@ get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../" ABSOLU
 
 add_library(cpp_bbunit
         INTERFACE
-        ${PACKAGE_PREFIX_DIR}/lib/bbunit/bbunit.hpp
+        ${PACKAGE_PREFIX_DIR}/include/bbunit/bbunit.hpp
 )
 
 target_include_directories(cpp_bbunit
         INTERFACE
-        $<BUILD_INTERFACE:${PACKAGE_PREFIX_DIR}/lib>
-        $<INSTALL_INTERFACE:lib>
+        $<BUILD_INTERFACE:${PACKAGE_PREFIX_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 export(TARGETS cpp_bbunit
