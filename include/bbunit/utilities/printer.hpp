@@ -24,6 +24,12 @@ namespace BBUnit::Utilities {
         * as it clutters the results.
         */
         bool printPassed = false;
+
+        /**
+         * When true, "Previous case failed" will not be printed to the
+         * results.
+         */
+        bool silencePrevAssertionFailed = true;
     };
 
     class Printer {
@@ -47,6 +53,10 @@ namespace BBUnit::Utilities {
                     ++errors;
 
                     Error err = std::get<Error>(result);
+
+                    if (settings.silencePrevAssertionFailed && err.errorCode == ErrorCode::PrevAssertionFailed) {
+                        return;
+                    }
 
                     if (!settings.printPassed) {
                         std::cout << "\n";
