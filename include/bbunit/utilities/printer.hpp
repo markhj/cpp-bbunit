@@ -1,9 +1,9 @@
 /**
- * C++ BBUnit - Printer utility
- *
- * This ``Printer`` is the default "out-of-the-box" result visualizer
- * for C++ BBUnit.
- */
+* C++ BBUnit - Printer utility
+*
+* This ``Printer`` is the default "out-of-the-box" result visualizer
+* for C++ BBUnit.
+*/
 
 #pragma once
 
@@ -15,25 +15,25 @@
 
 namespace BBUnit::Utilities {
     /**
-     * Printer settings
-     */
+    * Printer settings
+    */
     struct PrinterSettings {
         /**
-         * When true, passed tests will also be explicitly shown in the
-         * test results. This is not recommended for larger test suites,
-         * as it clutters the results.
-         */
+        * When true, passed tests will also be explicitly shown in the
+        * test results. This is not recommended for larger test suites,
+        * as it clutters the results.
+        */
         bool printPassed = false;
     };
 
     class Printer {
     public:
         /**
-         * Print the test results with the specified settings.
-         *
-         * @param results
-         * @param settings
-         */
+        * Print the test results with the specified settings.
+        *
+        * @param results
+        * @param settings
+        */
         static void print(const TestResults &results,
                           const PrinterSettings &settings) {
             // Keep track of passed, failed and erroneous assertions for the summary
@@ -48,13 +48,21 @@ namespace BBUnit::Utilities {
 
                     Error err = std::get<Error>(result);
 
+                    if (!settings.printPassed) {
+                        std::cout << "\n";
+                    }
+
+                    setColor(Color::Red);
+                    std::cout << " ERR  ";
+                    setColor(Color::Blank);
+
                     // Convert the error code into a human-readable message
                     switch (err.errorCode) {
                         case ErrorCode::PrevAssertionFailed:
-                            std::cout << "Previous case failed.";
+                            std::cout << " Previous case failed";
                             break;
                         case ErrorCode::ExceptionCaught:
-                            std::cout << "Exception caught: " + (!err.message.empty() ? err.message : "");
+                            std::cout << " Exception caught";
                             break;
                         default:
                             // This is a message to developers of BBUnit :-)
@@ -62,6 +70,10 @@ namespace BBUnit::Utilities {
                             // indicate that something hasn't been properly tested on our end
                             assert(false && "Mapping of error codes is incomplete.");
                     }
+
+                    if (!err.message.empty()) {
+                        std::cout << ": " << err.message;
+                    };
 
                     if (!err.additional.empty()) {
                         std::cout << " >> " << err.additional;
@@ -116,8 +128,8 @@ namespace BBUnit::Utilities {
 
     private:
         /**
-         * Available color schemes for console output.
-         */
+        * Available color schemes for console output.
+        */
         enum class Color {
             Blank,
             Green,
@@ -125,12 +137,12 @@ namespace BBUnit::Utilities {
         };
 
         /**
-         * Create a string that consists of X characters.
-         *
-         * @param len
-         * @param c
-         * @return
-         */
+        * Create a string that consists of X characters.
+        *
+        * @param len
+        * @param c
+        * @return
+        */
         static std::string strRepeat(uint8_t len, char c) {
             std::string s;
             while (s.length() < len) {
@@ -140,13 +152,13 @@ namespace BBUnit::Utilities {
         }
 
         /**
-         * Append character ``c`` until the text has the desired size.
-         *
-         * @param target
-         * @param size
-         * @param c
-         * @return
-         */
+        * Append character ``c`` until the text has the desired size.
+        *
+        * @param target
+        * @param size
+        * @param c
+        * @return
+        */
         static std::string pad(const std::string &target, uint8_t size, char c = ' ') {
             if (target.length() > size) {
                 return target.substr(0, size);
@@ -155,12 +167,12 @@ namespace BBUnit::Utilities {
         }
 
         /**
-         * Print the summarized results.
-         *
-         * @param passed
-         * @param failed
-         * @param errors
-         */
+        * Print the summarized results.
+        *
+        * @param passed
+        * @param failed
+        * @param errors
+        */
         static void printSummary(uint16_t passed, uint16_t failed, uint16_t errors) {
             // Max. size of cells, such as "Total: X".
             // Just to pad spacing for nice and aligned look in the summary.
@@ -193,13 +205,13 @@ namespace BBUnit::Utilities {
         }
 
         /**
-         * Set the console output to be a specified background and text color.
-         *
-         * @note Currently only Windows support is added. However, the "consequence"
-         *      on other platforms is simply that the results are printed in all white.
-         *
-         * @param color
-         */
+        * Set the console output to be a specified background and text color.
+        *
+        * @note Currently only Windows support is added. However, the "consequence"
+        *      on other platforms is simply that the results are printed in all white.
+        *
+        * @param color
+        */
         void static setColor(Color color) {
 #ifdef _WIN32
             WORD attr;
@@ -216,6 +228,5 @@ namespace BBUnit::Utilities {
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), attr);
 #endif
         }
-
     };
 }
