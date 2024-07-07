@@ -331,7 +331,7 @@ namespace BBUnit {
         template<typename T>
         std::string castToString(T input) const noexcept {
             if constexpr (std::is_convertible_v<T, std::string>) {
-                return static_cast<std::string>(input);
+                return '"' + static_cast<std::string>(input) + '"';
             } else if constexpr (std::is_convertible_v<T, int> || std::is_convertible_v<T, float>) {
                 return std::to_string(input);
             } else {
