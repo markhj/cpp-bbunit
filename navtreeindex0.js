@@ -102,6 +102,7 @@ var NAVTREEINDEX0 =
 "structBBUnit_1_1TestResult.html#ab9d44ecfffb4a97661f938b9cf79b0e7":[2,0,0,2,0],
 "structBBUnit_1_1TestResult.html#ac3f4afd089ea92ab75049d6f4ba43b5a":[2,0,0,2,4],
 "structBBUnit_1_1Utilities_1_1PrinterSettings.html":[2,0,0,0,0],
+"structBBUnit_1_1Utilities_1_1PrinterSettings.html#a54d4b8ecddeac4d9bd2e96ed6cd4ed73":[2,0,0,0,0,1],
 "structBBUnit_1_1Utilities_1_1PrinterSettings.html#ad8e56634b1d1be1d5de3661c3c59398c":[2,0,0,0,0,0],
 "tutorials.html":[0],
 "tutorials.html#autotoc_md20":[0],
