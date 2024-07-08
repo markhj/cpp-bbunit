@@ -125,8 +125,9 @@ namespace BBUnit::Utilities {
                         std::cout << " - " << r.additional;
                     }
 
-                    if (!r.passed && !r.expected.empty() && !r.actual.empty()) {
-                        std::cout << " (Expected: " << r.expected << ", Actual: " << r.actual << ")";
+                    if (!r.passed) {
+                        std::cout << " (Expected: " << parseResultValue(r.expected);
+                        std::cout << ", Actual: " << parseResultValue(r.actual) << ")";
                     }
 
                     std::cout << "\n";
@@ -137,6 +138,16 @@ namespace BBUnit::Utilities {
         }
 
     private:
+        /**
+         * Helper method to parse expected and actual outputs.
+         *
+         * @param input
+         * @return
+         */
+        static inline std::string parseResultValue(const std::string& input) {
+            return input.empty() ? "<Empty>" : input;
+        }
+
         /**
         * Available color schemes for console output.
         */

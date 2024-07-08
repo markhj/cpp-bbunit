@@ -331,7 +331,7 @@ namespace BBUnit {
         template<typename T>
         std::string castToString(T input) const noexcept {
             if constexpr (std::is_convertible_v<T, std::string>) {
-                return '"' + static_cast<std::string>(input) + '"';
+                return static_cast<std::string>(input);
             } else if constexpr (std::is_convertible_v<T, int> || std::is_convertible_v<T, float>) {
                 return std::to_string(input);
             } else {
@@ -385,15 +385,10 @@ namespace BBUnit {
          */
         template<HasSizeMethod T>
         ProvidesAssertions &assertCount(size_t expected, const T &iter) noexcept(false) {
-            // size_t (surprisingly) doesn't seem to function with std::to_string
-            // Therefore, we explicitly cast it to a similar type that should more
-            // than cover the desired values.
-            typedef unsigned long long castSizeT;
-
             assert([&]() -> InternalResult {
                 return {expected == iter.size(),
-                        std::to_string(static_cast<castSizeT>(expected)),
-                        std::to_string(static_cast<castSizeT>(iter.size()))};
+                        std::to_string(static_cast<size_t>(expected)),
+                        std::to_string(static_cast<size_t>(iter.size()))};
             });
             return *this;
         }
