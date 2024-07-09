@@ -13,30 +13,76 @@ by JUnit and PHPUnit.
 **_C++ BBUnit 2_** presents a total overhaul of the library, bringing not
 only new features, but also a safer and more flexible way of testing.
 
-BBUnit offers:
+### Keep your app in check!
 
-- **Header-only library**: Very easy to integrate in your project
-- **Compare almost any data type**: Make assertions on any data type that has comparable properties
-- **When size matters**: Assert sizes of any data type which offers ``size`` method (vector, map, array, etc.)
-- **Exceptional exceptions**: Assert that exceptions are thrown, and which
-- **^regexp?$**: Assert regular expression patterns on string-types
-- **Safer test environment**: Unintended behaviors are caught and managed, and won't crash the test suite
-- **Better scoping**: It's much easier to know which test cases are failing
+The more complex a project grows, the higher the risk of a change in one
+place, breaking something in another.
+
+This is where unit and feature testing come in, and make your life a lot
+easier. Start covering your code, today!
+
+### Header-only library
+
+Very easy to integrate in your project, and no need to deal with building
+and linking. Just ``#include`` and you're good to go!
+
+### Compare (almost) any data type
+
+With the introduction of a new template-based assertion system, you
+can compare almost any data type. It's as simple as:
+
+````c++
+assertEquals<float>(expected, actual);
+````
+
+And what about classes? If you find yourself frequently asserting
+things about classes, just make sure they have a comparison overloader,
+and they can be checked by BBUnit.
+
+### Size, exceptions and regex
+
+But it doesn't stop there. You can also:
+
+- Assert sizes of any data type which offers ``size`` method (vector, map, array, etc.)
+- Assert that exceptions are thrown and which type
+- Assert regular expression patterns on string-types
+
+### Reporting
+
+The reporting system is more detailed, and miles ahead of the legacy library
+in terms of providing information about _where_ the problem arose.
+
+What you want to see, though, is:
+
+![](https://res.cloudinary.com/drfztvfdh/image/upload/v1720542746/image_2024-07-09_183224216_x6z6ny.png)
+
+And not this:
+
+![](https://res.cloudinary.com/drfztvfdh/image/upload/v1720543024/image_2024-07-09_183703424_so4e4s.png)
+
+### Safe environment
+
+Unintended behaviors, mainly exceptions, are caught and managed, without crashing
+the test suite.
+
+![](https://res.cloudinary.com/drfztvfdh/image/upload/v1720543161/image_2024-07-09_183919882_cgjwk0.png)
+
+### Improved code
 
 On the code-level, there's greater decoupling between test suite components, and
 a much improved structure.
 
 ## 🍃 Version support
 
-| Version line  | Support  |
-|---------------|----------|
-| ``2.0+``      | On-going |
+| Version line     | Support                   |
+|------------------|---------------------------|
+| ``2.x``          | On-going                  |
 | ``0.x``, ``1.x`` | End of life November 2024 | 
 
 ## 📌 Requirements
 
--   C++20 or higher
--   CMake 3.28 or higher
+- C++20 or higher
+- CMake 3.28 or higher
 
 ## 📘 Documentation
 
