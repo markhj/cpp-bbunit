@@ -91,16 +91,16 @@ namespace BBUnit::Utilities {
 
                     std::cout << std::endl;
                 } else {
-                    auto r = std::get<TestResult>(result);
+                    auto testResult = std::get<TestResult>(result);
 
-                    if (r.passed) {
+                    if (testResult.passed) {
                         ++passed;
                     } else {
                         ++failed;
                     }
 
                     // If we don't want to print passed assertions, we skip ahead
-                    if (r.passed && !settings.printPassed) {
+                    if (testResult.passed && !settings.printPassed) {
                         return;
                     }
 
@@ -111,23 +111,22 @@ namespace BBUnit::Utilities {
                     }
 
                     // Box with either "PASS" or "FAIL"
-                    setColor(r.passed ? Color::Green : Color::Red);
-                    std::cout << (r.passed ? " PASS " : " FAIL ");
+                    setColor(testResult.passed ? Color::Green : Color::Red);
+                    std::cout << (testResult.passed ? " PASS " : " FAIL ");
 
                     setColor(Color::Blank);
 
                     // Print the description and the assertion's case number (e.g. if it's the 3rd assertion
                     // in the scope)
-                    std::cout << " " << r.description << " ";
-                    std::cout << "#" << std::to_string(r.caseNo);
+                    std::cout << " " << testResult.description << " ";
+                    std::cout << "#" << std::to_string(testResult.caseNo);
 
-                    if (!r.additional.empty()) {
-                        std::cout << " - " << r.additional;
+                    if (!testResult.additional.empty()) {
+                        std::cout << " - " << testResult.additional;
                     }
 
-                    if (!r.passed) {
-                        std::cout << " (Expected: " << parseResultValue(r.expected);
-                        std::cout << ", Actual: " << parseResultValue(r.actual) << ")";
+                    if (!testResult.passed) {
+                        printExpectedActual(testResult.expected, testResult.actual);
                     }
 
                     std::cout << "\n";
@@ -138,6 +137,25 @@ namespace BBUnit::Utilities {
         }
 
     private:
+        /**
+         * Helper function to manage printing of expected and actual values.
+         *
+         * @param expected
+         * @param actual
+         */
+        static inline void printExpectedActual(const std::string &expected,
+                                               const std::string &actual) {
+            auto indent = "\n" + strRepeat(7, ' ');
+            if (expected.length() > 12 && actual.length() > 12) {
+                std::cout << indent << "Expected: " << parseResultValue(expected);
+                std::cout << indent << "Actual  : " << parseResultValue(actual);
+            } else {
+                std::cout << indent;
+                std::cout << "Expected: " << parseResultValue(expected);
+                std::cout << ", Actual: " << parseResultValue(actual);
+            }
+        }
+
         /**
          * Helper method to parse expected and actual outputs.
          *
