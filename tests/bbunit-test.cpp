@@ -206,12 +206,14 @@ namespace BBUnit::Tests {
          * Various test on the exception catching.
          */
         void exceptions() {
-            // The expected exception (type) is caught. In this example, we
-            // expected ``std::bad_optional_access`` to be thrown, intentionally.
-            assertException<std::bad_optional_access>([]() {
-                std::optional<int> x;
-                x.value();
-            }).thisCase(Must::HavePassed);
+            it("Expects std::bad_optional_access to be thrown, and it is", [&]() {
+                // The expected exception (type) is caught. In this example, we
+                // expected ``std::bad_optional_access`` to be thrown, intentionally.
+                assertException<std::bad_optional_access>([]() {
+                    std::optional<int> x;
+                    x.value();
+                }).thisCase(Must::HavePassed);
+            });
 
             // When we expected an exception, but nothing has been thrown,
             // the case must be considered failed.

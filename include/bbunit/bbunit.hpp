@@ -583,10 +583,13 @@ namespace BBUnit {
          * @param assertionFunc
          */
         inline void assert(const std::function<InternalResult()> &assertionFunc) noexcept(false) {
-            if (m_assertionsActive != AssertionState::Started) {
+            if (m_assertionsActive == AssertionState::Paused) {
                 m_testResults.emplace_back(Error{
                         .errorCode = ErrorCode::PrevAssertionFailed,
                 });
+                return;
+            } else if (m_assertionsActive == AssertionState::NotStarted) {
+                std::cerr << "\nAssertions must be called within \"it\"." << std::endl;
                 return;
             }
 
