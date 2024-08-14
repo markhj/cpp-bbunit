@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C++ BBUnit: BBUnit::TestResult Struct Reference</title>
+<title>C++ BBUnit: BBUnit::TestInfo Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,7 +64,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('structBBUnit_1_1TestResult.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structBBUnit_1_1TestInfo.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -85,76 +85,68 @@ $(document).ready(function(){initNavTree('structBBUnit_1_1TestResult.html',''); 
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structBBUnit_1_1TestResult-members.html">List of all members</a>  </div>
+<a href="structBBUnit_1_1TestInfo-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BBUnit::TestResult Struct Reference</div>  </div>
+<div class="title">BBUnit::TestInfo Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="bbunit_8hpp_source.html">bbunit.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for BBUnit::TestResult:</div>
-<div class="dyncontent">
-<div class="center"><img src="structBBUnit_1_1TestResult__coll__graph.png" border="0" usemap="#aBBUnit_1_1TestResult_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab9399b5aa16d813e849c5a74364c0e04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structBBUnit_1_1TestInfo.html">TestInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBBUnit_1_1TestResult.html#ab9399b5aa16d813e849c5a74364c0e04">info</a></td></tr>
-<tr class="separator:ab9399b5aa16d813e849c5a74364c0e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a245dc55fd4c49d0b62a743fd2a81c74d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBBUnit_1_1TestResult.html#a245dc55fd4c49d0b62a743fd2a81c74d">passed</a> = false</td></tr>
-<tr class="separator:a245dc55fd4c49d0b62a743fd2a81c74d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3f4afd089ea92ab75049d6f4ba43b5a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBBUnit_1_1TestResult.html#ac3f4afd089ea92ab75049d6f4ba43b5a">expected</a></td></tr>
-<tr class="separator:ac3f4afd089ea92ab75049d6f4ba43b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9d44ecfffb4a97661f938b9cf79b0e7"><td class="memItemLeft" align="right" valign="top"><a id="ab9d44ecfffb4a97661f938b9cf79b0e7"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>actual</b></td></tr>
-<tr class="separator:ab9d44ecfffb4a97661f938b9cf79b0e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33194f49efce016e6c5acfc0c4e9db3b"><td class="memItemLeft" align="right" valign="top">CaseNumber&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBBUnit_1_1TestInfo.html#a33194f49efce016e6c5acfc0c4e9db3b">caseNo</a> = 1</td></tr>
+<tr class="separator:a33194f49efce016e6c5acfc0c4e9db3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac650f607240a10b0be2fc396188edad"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBBUnit_1_1TestInfo.html#aac650f607240a10b0be2fc396188edad">description</a></td></tr>
+<tr class="separator:aac650f607240a10b0be2fc396188edad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af08874edcf80b7ecc4400e407c7e2092"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBBUnit_1_1TestInfo.html#af08874edcf80b7ecc4400e407c7e2092">additional</a></td></tr>
+<tr class="separator:af08874edcf80b7ecc4400e407c7e2092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Container for test results of a single assertion. </p>
+<div class="textblock"><p>Basic information to identify and catalog individual test results (whether successful or erroneous). </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac3f4afd089ea92ab75049d6f4ba43b5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3f4afd089ea92ab75049d6f4ba43b5a">&#9670;&nbsp;</a></span>expected</h2>
+<a id="af08874edcf80b7ecc4400e407c7e2092"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af08874edcf80b7ecc4400e407c7e2092">&#9670;&nbsp;</a></span>additional</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string BBUnit::TestResult::expected</td>
+          <td class="memname">std::string BBUnit::TestInfo::additional</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Expected and actual results, provided as strings. </p>
+<p>Additional information provided to a single assertion, using <code>because</code>. </p>
 
 </div>
 </div>
-<a id="ab9399b5aa16d813e849c5a74364c0e04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9399b5aa16d813e849c5a74364c0e04">&#9670;&nbsp;</a></span>info</h2>
+<a id="a33194f49efce016e6c5acfc0c4e9db3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33194f49efce016e6c5acfc0c4e9db3b">&#9670;&nbsp;</a></span>caseNo</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structBBUnit_1_1TestInfo.html">TestInfo</a> BBUnit::TestResult::info</td>
+          <td class="memname">CaseNumber BBUnit::TestInfo::caseNo = 1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Basic information about the assertions such as case number and description. </p>
+<p>The assertions number within the <code>it</code> scope. Useful for identifying exactly which assertion failed, when it might not be clear from descriptions. </p>
 
 </div>
 </div>
-<a id="a245dc55fd4c49d0b62a743fd2a81c74d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a245dc55fd4c49d0b62a743fd2a81c74d">&#9670;&nbsp;</a></span>passed</h2>
+<a id="aac650f607240a10b0be2fc396188edad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac650f607240a10b0be2fc396188edad">&#9670;&nbsp;</a></span>description</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool BBUnit::TestResult::passed = false</td>
+          <td class="memname">std::string BBUnit::TestInfo::description</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If the assertion passed or not. </p>
+<p>Description shown in the result output (as provided by the <code>it</code> method) </p>
 
 </div>
 </div>
@@ -166,7 +158,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>actual</b></td
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceBBUnit.html">BBUnit</a></li><li class="navelem"><a class="el" href="structBBUnit_1_1TestResult.html">TestResult</a></li>
+    <li class="navelem"><a class="el" href="namespaceBBUnit.html">BBUnit</a></li><li class="navelem"><a class="el" href="structBBUnit_1_1TestInfo.html">TestInfo</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

@@ -6,6 +6,7 @@ var annotated_dup =
         [ "Printer", "classBBUnit_1_1Utilities_1_1Printer.html", null ]
       ] ],
       [ "Settings", "structBBUnit_1_1Settings.html", "structBBUnit_1_1Settings" ],
+      [ "TestInfo", "structBBUnit_1_1TestInfo.html", "structBBUnit_1_1TestInfo" ],
       [ "TestResult", "structBBUnit_1_1TestResult.html", "structBBUnit_1_1TestResult" ],
       [ "Error", "structBBUnit_1_1Error.html", "structBBUnit_1_1Error" ],
       [ "Result", "structBBUnit_1_1Result.html", "structBBUnit_1_1Result" ],

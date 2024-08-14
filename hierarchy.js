@@ -8,6 +8,7 @@ var hierarchy =
       [ "BBUnit::TestCase", "classBBUnit_1_1TestCase.html", null ]
     ] ],
     [ "BBUnit::Settings", "structBBUnit_1_1Settings.html", null ],
+    [ "BBUnit::TestInfo", "structBBUnit_1_1TestInfo.html", null ],
     [ "BBUnit::TestResult", "structBBUnit_1_1TestResult.html", null ],
     [ "BBUnit::TestRunner", "classBBUnit_1_1TestRunner.html", null ],
     [ "std::variant", null, [
