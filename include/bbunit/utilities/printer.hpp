@@ -66,6 +66,11 @@ namespace BBUnit::Utilities {
                     std::cout << " ERR  ";
                     setColor(Color::Blank);
 
+                    std::cout << " " << err.info.description << "\n" << strRepeat(6, ' ');
+                    if (!err.info.additional.empty()) {
+                        std::cout << " - " << err.info.additional;
+                    }
+
                     // Convert the error code into a human-readable message
                     switch (err.errorCode) {
                         case ErrorCode::PrevAssertionFailed:
@@ -85,8 +90,8 @@ namespace BBUnit::Utilities {
                         std::cout << ": " << err.message;
                     };
 
-                    if (!err.additional.empty()) {
-                        std::cout << " >> " << err.additional;
+                    if (!err.info.additional.empty()) {
+                        std::cout << " >> " << err.info.additional;
                     }
 
                     std::cout << std::endl;
@@ -118,11 +123,11 @@ namespace BBUnit::Utilities {
 
                     // Print the description and the assertion's case number (e.g. if it's the 3rd assertion
                     // in the scope)
-                    std::cout << " " << testResult.description << " ";
-                    std::cout << "#" << std::to_string(testResult.caseNo);
+                    std::cout << " " << testResult.info.description << " ";
+                    std::cout << "#" << std::to_string(testResult.info.caseNo);
 
-                    if (!testResult.additional.empty()) {
-                        std::cout << " - " << testResult.additional;
+                    if (!testResult.info.additional.empty()) {
+                        std::cout << " - " << testResult.info.additional;
                     }
 
                     if (!testResult.passed) {

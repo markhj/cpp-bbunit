@@ -148,7 +148,7 @@ namespace BBUnit::Tests {
          */
         void catchUnintendedErrors() {
             TestResults res = whileSilent([&]() -> TestResults {
-                return it("", [&]() {
+                return it("Provokes an exception.", [&]() {
                     std::optional<int> x;
                     x.value();
                 });
@@ -156,6 +156,7 @@ namespace BBUnit::Tests {
 
             it("Catch unintended errors and avoid interruption", [&]() {
                 assertEquals(true, res[0].isErr());
+                assertEquals<std::string>("Provokes an exception.", res[0].error().info.description);
             });
         }
 

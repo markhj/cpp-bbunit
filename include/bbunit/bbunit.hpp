@@ -89,14 +89,10 @@ namespace BBUnit {
     };
 
     /**
-     * Container for test results of a single assertion.
+     * Basic information to identify and catalog individual
+     * test results (whether successful or erroneous).
      */
-    struct TestResult {
-        /**
-         * If the assertion passed or not.
-         */
-        bool passed = false;
-
+    struct TestInfo {
         /**
          * The assertions number within the ``it`` scope. Useful for
          * identifying exactly which assertion failed, when it might
@@ -110,20 +106,43 @@ namespace BBUnit {
         std::string description;
 
         /**
-         * Expected and actual results, provided as strings.
-         */
-        std::string expected, actual;
-
-        /**
          * Additional information provided to a single assertion, using ``because``.
          */
         std::string additional;
     };
 
     /**
+     * Container for test results of a single assertion.
+     */
+    struct TestResult {
+        /**
+         * Basic information about the assertions such as case number
+         * and description.
+         */
+        TestInfo info;
+
+        /**
+         * If the assertion passed or not.
+         */
+        bool passed = false;
+
+        /**
+         * Expected and actual results, provided as strings.
+         */
+        std::string expected, actual;
+    };
+
+    /**
      * Container for error information.
      */
     struct Error {
+    public:
+        /**
+         * Basic information about the assertions such as case number
+         * and description.
+         */
+        TestInfo info;
+
         /**
          * A BBUnit-specific error code.
          */
@@ -134,7 +153,7 @@ namespace BBUnit {
          * Can sometimes be decorated with ``additional`` information provided
          * by the ``because`` method.
          */
-        std::string message, additional;
+        std::string message;
     };
 
     /**
@@ -246,11 +265,11 @@ namespace BBUnit {
             Result res = m_testResults[m_testResults.size() - 1];
             if (res.isErr()) {
                 Error tmp = res.error();
-                tmp.additional = msg;
+                tmp.info.additional = msg;
                 m_testResults[m_testResults.size() - 1] = tmp;
             } else {
                 TestResult tmp = res.get();
-                tmp.additional = msg;
+                tmp.info.additional = msg;
                 m_testResults[m_testResults.size() - 1] = tmp;
             }
             return *this;
@@ -284,19 +303,16 @@ namespace BBUnit {
                 // When the test result holds an error, we will transform it to a ``TestResult``,
                 // which checks if we expected an error in this location.
                 m_testResults[m_testResults.size() - 1] = TestResult{
+                        .info = err.info,
                         .passed = mustHave == Must::HaveCausedError,
-                        .description = m_description,
-                        .additional = err.additional,
                 };
             } else {
                 TestResult result = res.get();
                 m_testResults[m_testResults.size() - 1] = TestResult{
+                        .info = result.info,
                         .passed = (mustHave == Must::HavePassed && result.passed) || (mustHave == Must::HaveFailed && !result.passed),
-                        .caseNo = result.caseNo,
-                        .description = result.description,
                         .expected = result.expected,
                         .actual = result.actual,
-                        .additional = result.additional,
                 };
             }
         }
@@ -601,13 +617,17 @@ namespace BBUnit {
                 m_assertionsActive = AssertionState::Paused;
             }
 
-            m_testResults.emplace_back(TestResult{
+            TestResult testResult{
+                    .info = {
+                            .caseNo = ++m_caseNo,
+                            .description = m_description,
+                    },
                     .passed = result.passed,
-                    .caseNo = ++m_caseNo,
-                    .description = m_description,
                     .expected = result.expected,
                     .actual = result.actual,
-            });
+            };
+
+            m_testResults.emplace_back(testResult);
         }
     };
 
@@ -674,14 +694,14 @@ namespace BBUnit {
             // We encapsulate the function in a try/catch block to catch unintended
             // errors. If we didn't do this, a "simple" error like ``std::bad_optional_access``
             // could kill the entire test execution. Instead, we catch it here, and
-            // show it in the result sheet that this error occured.
+            // show it in the result sheet that this error occurred.
             try {
                 userAssertsThat();
                 newResults = getResults();
             } catch (const std::exception &e) {
-                newResults.emplace_back(Error{ErrorCode::ExceptionCaught, e.what()});
+                newResults.emplace_back(generateExceptionError(e.what(), description));
             } catch (...) {
-                newResults.emplace_back(Error{ErrorCode::ExceptionCaught, "Unknown exception."});
+                newResults.emplace_back(generateExceptionError("Unknown exception.", description));
             }
 
             if (!m_silent) {
@@ -694,6 +714,27 @@ namespace BBUnit {
         }
 
     private:
+        /**
+         * Helper function to generate the Error object when
+         * information about an exception has been provided.
+         *
+         * @param message
+         * @param description
+         * @return
+         */
+        [[nodiscard]] inline Error generateExceptionError(const std::string &message,
+                                                   const std::string &description) const {
+            Error err{
+                    .info = {
+                            .description = description,
+                    },
+                    .errorCode = ErrorCode::ExceptionCaught,
+                    .message = message,
+            };
+
+            return err;
+        }
+
         /**
          * Silence results. Typically only used in the library's self-test.
          */
