@@ -18,6 +18,7 @@ namespace BBUnit::Tests {
             exceptions();
             regex();
             catchUnintendedErrors();
+            optional();
         }
 
         /**
@@ -44,8 +45,8 @@ namespace BBUnit::Tests {
             });
 
             it("Assert that strings are equal", [&]() {
-                assertEquals<std::string>("foo", "foo").thisCase(Must::HavePassed);
-                assertEquals<std::string>("foo", "bar").thisCase(Must::HaveFailed);
+                assertEquals("foo", "foo").thisCase(Must::HavePassed);
+                assertEquals("foo", "bar").thisCase(Must::HaveFailed);
             });
 
             // Ensure that a custom class, and it's comparison overload will function
@@ -255,6 +256,32 @@ namespace BBUnit::Tests {
                 },
                                                 "bad optional access")
                         .thisCase(Must::HaveFailed);
+            });
+        }
+
+        /**
+         * Checks the two methods related to making assertions on std::optional,
+         * namely assertOptionalHasNoValue and assertOptionalEquals
+         */
+        void optional() {
+            std::optional<int> empty;
+            std::optional<int> hasValue = 10;
+
+            it("Checks that assertOptionalHasNoValue responds correctly.", [&]() {
+                assertEmpty(empty).thisCase(Must::HavePassed);
+                assertEmpty(hasValue).thisCase(Must::HaveFailed);
+            });
+
+            it("Checks that assertOptionalEquals does not crash when empty.", [&]() {
+                assertEquals(10, empty).thisCase(Must::HaveFailed);
+            });
+
+            it("Checks that assertOptionalEquals fails when contained value is not equal.", [&]() {
+                assertEquals(15, hasValue).thisCase(Must::HaveFailed);
+            });
+
+            it("Checks that assertOptionalEquals succeeds when value is equal.", [&]() {
+                assertEquals(10, hasValue).thisCase(Must::HavePassed);
             });
         }
     };

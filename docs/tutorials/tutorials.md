@@ -12,6 +12,8 @@
 
 @subpage assert-count
 
+$subpage assert-optional
+
 @subpage shorthands
 
 @subpage because

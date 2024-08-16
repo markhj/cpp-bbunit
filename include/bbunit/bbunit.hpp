@@ -199,7 +199,6 @@ namespace BBUnit {
         [[nodiscard]] TestResult get() const noexcept(false) {
             return std::get<TestResult>(*this);
         }
-
     };
 
     /**
@@ -486,6 +485,45 @@ namespace BBUnit {
         }
 
         /**
+         * Assert that a ``std::optional`` contains a specific value.
+         *
+         * Evaluation is safe, and will not crash if the optional has no value.
+         *
+         * @tparam T
+         * @param expected
+         * @param actual
+         * @return
+         */
+        template<typename T>
+        ProvidesAssertions &assertEquals(const T &expected,
+                                         const std::optional<T> &actual) {
+            assert([&]() -> InternalResult {
+                if (!actual.has_value()) {
+                    return {false, castToString(expected), "<No value>"};
+                }
+                return {actual.value() == expected, castToString(expected), castToString(actual.value())};
+            });
+            return *this;
+        }
+
+        /**
+         * Assert that a ``std::optional`` does not contain a value.
+         *
+         * @tparam T
+         * @param actual
+         * @return
+         */
+        template<typename T>
+        ProvidesAssertions &assertEmpty(const std::optional<T> &actual) {
+            assert([&]() -> InternalResult {
+                return {!actual.has_value(),
+                        "<No value>",
+                        actual.has_value() ? castToString(actual.value()) : "<No value>"};
+            });
+            return *this;
+        }
+
+        /**
          * Helper method to extract the class name of an object.
          *
          * The name is not always correctly formed, but it should provide
@@ -723,7 +761,7 @@ namespace BBUnit {
          * @return
          */
         [[nodiscard]] inline Error generateExceptionError(const std::string &message,
-                                                   const std::string &description) const {
+                                                          const std::string &description) const {
             Error err{
                     .info = {
                             .description = description,
