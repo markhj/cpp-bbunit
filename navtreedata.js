@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "C++ BBUnit", "index.html", [
+    [ "Assert std::optional", "assert-optional.html", null ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

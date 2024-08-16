@@ -144,6 +144,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a174e15fff2e82dbddd467e08bfa0c5d4"><td class="memTemplParams" colspan="2">template&lt;HasWhatMethod T&gt; </td></tr>
 <tr class="memitem:a174e15fff2e82dbddd467e08bfa0c5d4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html">ProvidesAssertions</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html#a174e15fff2e82dbddd467e08bfa0c5d4">assertException</a> (const std::function&lt; void()&gt; &amp;func, const std::optional&lt; std::string &gt; &amp;message=std::nullopt) noexcept(false)</td></tr>
 <tr class="separator:a174e15fff2e82dbddd467e08bfa0c5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73773e24ed166685d3c8a8388e95c2c1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a73773e24ed166685d3c8a8388e95c2c1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html">ProvidesAssertions</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html#a73773e24ed166685d3c8a8388e95c2c1">assertEquals</a> (const T &amp;expected, const std::optional&lt; T &gt; &amp;actual)</td></tr>
+<tr class="separator:a73773e24ed166685d3c8a8388e95c2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd2664c0a3da68ce7d5c8da7a43127a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a3bd2664c0a3da68ce7d5c8da7a43127a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html">ProvidesAssertions</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html#a3bd2664c0a3da68ce7d5c8da7a43127a">assertEmpty</a> (const std::optional&lt; T &gt; &amp;actual)</td></tr>
+<tr class="separator:a3bd2664c0a3da68ce7d5c8da7a43127a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a368dad7d16b73b3e1be329127bf700ad"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a368dad7d16b73b3e1be329127bf700ad"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html#a368dad7d16b73b3e1be329127bf700ad">getClassName</a> (T a) const noexcept</td></tr>
 <tr class="separator:a368dad7d16b73b3e1be329127bf700ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,8 +252,104 @@ template&lt;HasSizeMethod T&gt; </div>
 
 </div>
 </div>
+<a id="a3bd2664c0a3da68ce7d5c8da7a43127a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bd2664c0a3da68ce7d5c8da7a43127a">&#9670;&nbsp;</a></span>assertEmpty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html">ProvidesAssertions</a>&amp; BBUnit::ProvidesAssertions::assertEmpty </td>
+          <td>(</td>
+          <td class="paramtype">const std::optional&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>actual</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Assert that a <code>std::optional</code> does not contain a value.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">actual</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a73773e24ed166685d3c8a8388e95c2c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73773e24ed166685d3c8a8388e95c2c1">&#9670;&nbsp;</a></span>assertEquals() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBBUnit_1_1ProvidesAssertions.html">ProvidesAssertions</a>&amp; BBUnit::ProvidesAssertions::assertEquals </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>expected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::optional&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>actual</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Assert that a <code>std::optional</code> contains a specific value.</p>
+<p>Evaluation is safe, and will not crash if the optional has no value.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expected</td><td></td></tr>
+    <tr><td class="paramname">actual</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <a id="aca417c3e8c896a150d034880f88f399f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca417c3e8c896a150d034880f88f399f">&#9670;&nbsp;</a></span>assertEquals()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aca417c3e8c896a150d034880f88f399f">&#9670;&nbsp;</a></span>assertEquals() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

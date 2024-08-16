@@ -7,6 +7,8 @@ var classBBUnit_1_1ProvidesAssertions =
       [ "HaveCausedError", "classBBUnit_1_1ProvidesAssertions.html#ac5bd0be0fae78c87f448e1984c9d5daca8873aa0f7e964f038e2dcad528dc86f4", null ]
     ] ],
     [ "assertCount", "classBBUnit_1_1ProvidesAssertions.html#adfdb920c486010220a0680605ee8bd7b", null ],
+    [ "assertEmpty", "classBBUnit_1_1ProvidesAssertions.html#a3bd2664c0a3da68ce7d5c8da7a43127a", null ],
+    [ "assertEquals", "classBBUnit_1_1ProvidesAssertions.html#a73773e24ed166685d3c8a8388e95c2c1", null ],
     [ "assertEquals", "classBBUnit_1_1ProvidesAssertions.html#aca417c3e8c896a150d034880f88f399f", null ],
     [ "assertException", "classBBUnit_1_1ProvidesAssertions.html#a174e15fff2e82dbddd467e08bfa0c5d4", null ],
     [ "assertFalse", "classBBUnit_1_1ProvidesAssertions.html#a82e050fed009ccba9e356fda0c6542d0", null ],
