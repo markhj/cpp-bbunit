@@ -62,14 +62,16 @@ namespace BBUnit::Utilities {
                         std::cout << "\n";
                     }
 
-                    setColor(Color::Red);
+                    setTextFormat(Color::Red);
                     std::cout << " ERR  ";
-                    setColor(Color::Blank);
+                    setTextFormat(Color::Blank, true);
 
                     std::cout << " " << err.info.description << "\n" << strRepeat(6, ' ');
                     if (!err.info.additional.empty()) {
                         std::cout << " - " << err.info.additional;
                     }
+
+                    setTextFormat(Color::Blank);
 
                     // Convert the error code into a human-readable message
                     switch (err.errorCode) {
@@ -116,10 +118,10 @@ namespace BBUnit::Utilities {
                     }
 
                     // Box with either "PASS" or "FAIL"
-                    setColor(testResult.passed ? Color::Green : Color::Red);
+                    setTextFormat(testResult.passed ? Color::Green : Color::Red);
                     std::cout << (testResult.passed ? " PASS " : " FAIL ");
 
-                    setColor(Color::Blank);
+                    setTextFormat(Color::Blank, true);
 
                     // Print the description and the assertion's case number (e.g. if it's the 3rd assertion
                     // in the scope)
@@ -129,6 +131,8 @@ namespace BBUnit::Utilities {
                     if (!testResult.info.additional.empty()) {
                         std::cout << " - " << testResult.info.additional;
                     }
+
+                    setTextFormat(Color::Blank);
 
                     if (!testResult.passed) {
                         printExpectedActual(testResult.expected, testResult.actual);
@@ -227,14 +231,14 @@ namespace BBUnit::Utilities {
 
             // Print a green or red indicator for whether there were any failed tests
             if (!failed && !errors) {
-                setColor(Color::Green);
+                setTextFormat(Color::Green);
                 std::cout << " NICE ";
             } else {
-                setColor(Color::Red);
+                setTextFormat(Color::Red);
                 std::cout << " FAIL ";
             }
 
-            setColor(Color::Blank);
+            setTextFormat(Color::Blank);
 
             if (!failed && !errors) {
                 std::cout << " Assertions passed: " << std::to_string(passed);
@@ -256,7 +260,7 @@ namespace BBUnit::Utilities {
         *
         * @param color
         */
-        void static setColor(Color color) {
+        void static setTextFormat(Color color, bool bold = false) {
 #ifdef _WIN32
             WORD attr;
             switch (color) {
@@ -267,7 +271,7 @@ namespace BBUnit::Utilities {
                     attr = 0x004F;
                     break;
                 default:
-                    attr = 0x000F;
+                    attr = bold ? 0x000F : 0x0007;
             }
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), attr);
 #endif
