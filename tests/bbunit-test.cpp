@@ -95,10 +95,22 @@ namespace BBUnit::Tests {
          * In this example, case 2 fails, which means case 3 should contain an error.
          */
         void mustCausePrevAssertionFailed() {
-            it("The third case must cause error, because case 2 fails", [&]() {
-                assertEquals<int>(2, 2).thisCase(Must::HavePassed);
-                assertEquals<int>(2, 3).thisCase(Must::HaveFailed);
-                assertEquals<int>(2, 2).thisCase(Must::HaveCausedError);
+            TestResults res = whileSilent([&]() -> TestResults {
+                return it("Creates 3 cases where number 2 fails.", [&]() {
+                    assertEquals<int>(2, 2);
+                    assertEquals<int>(2, 3);
+                    assertEquals<int>(2, 2);
+                });
+            });
+
+            it("Ensures third assertion is an error, because case 2 fails.", [&]() {
+                assertFalse(res[0].isErr());
+                assertFalse(res[1].isErr());
+                assertTrue(res[2].isErr());
+
+                assertTrue(res[0].get().passed);
+                assertFalse(res[1].get().passed);
+                assertEquals(ErrorCode::PrevAssertionFailed, res[2].error().errorCode);
             });
         }
 
@@ -267,20 +279,21 @@ namespace BBUnit::Tests {
             std::optional<int> empty;
             std::optional<int> hasValue = 10;
 
-            it("Checks that assertOptionalHasNoValue responds correctly.", [&]() {
+            it("Checks that assertEmpty responds correctly with options.", [&]() {
                 assertEmpty(empty).thisCase(Must::HavePassed);
                 assertEmpty(hasValue).thisCase(Must::HaveFailed);
             });
 
-            it("Checks that assertOptionalEquals does not crash when empty.", [&]() {
+            it("Checks that assertEquals does not crash when empty.", [&]() {
                 assertEquals(10, empty).thisCase(Must::HaveFailed);
+                assertEquals(15, empty).thisCase(Must::HaveFailed);
             });
 
-            it("Checks that assertOptionalEquals fails when contained value is not equal.", [&]() {
+            it("Checks that assertEquals fails when contained value is not equal.", [&]() {
                 assertEquals(15, hasValue).thisCase(Must::HaveFailed);
             });
 
-            it("Checks that assertOptionalEquals succeeds when value is equal.", [&]() {
+            it("Checks that assertEquals succeeds when value is equal.", [&]() {
                 assertEquals(10, hasValue).thisCase(Must::HavePassed);
             });
         }

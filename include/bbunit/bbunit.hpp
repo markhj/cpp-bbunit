@@ -314,6 +314,8 @@ namespace BBUnit {
                         .actual = result.actual,
                 };
             }
+
+            m_assertionsActive = AssertionState::Started;
         }
 
     protected:
