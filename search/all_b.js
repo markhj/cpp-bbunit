@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['result_50',['Result',['../structBBUnit_1_1Result.html',1,'BBUnit']]],
-  ['run_51',['run',['../classBBUnit_1_1TestCase.html#a0abb5cd954dd10cf328aef6bacf64166',1,'BBUnit::TestCase::run() noexcept(false) final'],['../classBBUnit_1_1TestCase.html#af9f0daa7f6a33c18cb43d507aaee076e',1,'BBUnit::TestCase::run(const Settings settings) noexcept(false) final']]]
+  ['result_51',['Result',['../structBBUnit_1_1Result.html',1,'BBUnit']]],
+  ['run_52',['run',['../classBBUnit_1_1TestCase.html#a0abb5cd954dd10cf328aef6bacf64166',1,'BBUnit::TestCase::run() noexcept(false) final'],['../classBBUnit_1_1TestCase.html#af9f0daa7f6a33c18cb43d507aaee076e',1,'BBUnit::TestCase::run(const Settings settings) noexcept(false) final']]]
 ];

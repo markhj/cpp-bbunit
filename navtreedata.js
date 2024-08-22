@@ -25,7 +25,11 @@
 var NAVTREE =
 [
   [ "C++ BBUnit", "index.html", [
-    [ "Assert std::optional", "assert-optional.html", null ],
+    [ "Welcome to C++ BBUnit!", "index.html", [
+      [ "🚀 Getting started", "index.html#autotoc_md1", null ],
+      [ "📦 A note on version requirement", "index.html#autotoc_md2", null ]
+    ] ],
+    [ "Installing C++ BBUnit", "install.html", "install" ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],

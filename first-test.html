@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('first-test.html',''); initResizable();
 <div class="textblock"><p>When you have installed C++ <a class="el" href="namespaceBBUnit.html">BBUnit</a>, you should be able to include it using:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;bbunit/bbunit.hpp&gt;</span></div>
 </div><!-- fragment --><p>If this doesn't work, you need to review your installation.</p>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 First test</h2>
 <p>A very basic test case looks like this:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>Mytest : <span class="keyword">public</span> <a class="code" href="classBBUnit_1_1TestCase.html">BBUnit::TestCase</a> {</div>
@@ -118,10 +118,10 @@ First test</h2>
 <div class="line">        assertEquals&lt;float&gt;(500.0, calculateBankBalance());</div>
 <div class="line">    });</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
 Other types</h3>
 <p>When you look at <code>assertEquals&lt;T&gt;</code> it means you can compare a wide array of types. You can also compare booleans, strings, other numeric types, enumerators, etc.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 Run test</h2>
 <p>Next step is to run the test. For this, we use the <a class="el" href="classBBUnit_1_1TestRunner.html">BBUnit::TestRunner</a>.</p>
 <div class="fragment"><div class="line">std::vector&lt;std::shared_ptr&lt;TestCase&gt;&gt; testCases = {</div>
@@ -130,7 +130,7 @@ Run test</h2>
 <div class="line"> </div>
 <div class="line">TestResults results = TestRunner::run(testCases);</div>
 </div><!-- fragment --><p><code>TestRunner</code> evaluates all the tests, and gathers the results in <a class="el" href="classBBUnit_1_1TestResults.html">BBUnit::TestResults</a>.</p>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md21"></a>
 Printing results</h2>
 <p>That's all great and dandy, but how do you see the results?</p>
 <p>For this, you can use the aptly named <a class="el" href="classBBUnit_1_1Utilities_1_1Printer.html">BBUnit::Utilities::Printer</a>.</p>

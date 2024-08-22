@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('exceptions.html',''); initResizable();
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>Sometimes you'll want to test if specific exceptions are thrown in different scenarios.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Basics</h2>
 <p>You can test if an exception is thrown, by using <code>assertException</code>.</p>
 <div class="fragment"><div class="line">it(<span class="stringliteral">&quot;Test if std::bad_optional_access is thrown&quot;</span>, [&amp;]() {</div>
@@ -102,13 +102,13 @@ Basics</h2>
 <li>The lambda function body executes the code, which is expected to trigger the exception.</li>
 <li>For this specific example, <code>std::optional&lt;int&gt;().value()</code>, is just a way to trigger the expected exception.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md11"></a>
+<h3><a class="anchor" id="autotoc_md14"></a>
 Behavior</h3>
 <ul>
 <li>If no exception is thrown, the case will fail</li>
 <li>If incorrect exception type is thrown, the case will also fail</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Message</h2>
 <p>Can you can also test if the exception contains a certain message, by adding a string as the second argument to <code>assertException</code>.</p>
 <div class="fragment"><div class="line">it(<span class="stringliteral">&quot;Test if std::bad_optional_access is thrown&quot;</span>, [&amp;]() {</div>
@@ -117,14 +117,14 @@ Message</h2>
 <div class="line">    }, <span class="stringliteral">&quot;bad optional access&quot;</span>);</div>
 <div class="line">});</div>
 </div><!-- fragment --><p>This looks almost identical, but notice the string added as the second argument.</p>
-<h3><a class="anchor" id="autotoc_md13"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Behavior</h3>
 <ul>
 <li>If the exception type is correct and the message matches, the test passes</li>
 <li>If the exception type is correct, but the message doesn't match, the test fails</li>
 <li>If the exception is wrong the test fails, no matter if the message is right or wrong</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 Technical notes</h2>
 <dl class="section note"><dt>Note</dt><dd><code>assertException</code> takes a template can be any class which has a method named <code>what</code> (which <code>std::exception</code> and derivatives do). </dd></dl>
 </div></div><!-- contents -->

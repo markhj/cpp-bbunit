@@ -1,7 +1,7 @@
 var searchData=
 [
   ['additional_0',['additional',['../structBBUnit_1_1TestInfo.html#af08874edcf80b7ecc4400e407c7e2092',1,'BBUnit::TestInfo']]],
-  ['assert_20std_3a_3aoptional_1',['Assert std::optional',['../assert-optional.html',1,'']]],
+  ['assert_20std_3a_3aoptional_1',['Assert std::optional',['../assert-optional.html',1,'tutorials']]],
   ['assertcount_2',['assertCount',['../classBBUnit_1_1ProvidesAssertions.html#adfdb920c486010220a0680605ee8bd7b',1,'BBUnit::ProvidesAssertions']]],
   ['assertempty_3',['assertEmpty',['../classBBUnit_1_1ProvidesAssertions.html#a3bd2664c0a3da68ce7d5c8da7a43127a',1,'BBUnit::ProvidesAssertions']]],
   ['assertequals_4',['assertEquals',['../classBBUnit_1_1ProvidesAssertions.html#aca417c3e8c896a150d034880f88f399f',1,'BBUnit::ProvidesAssertions::assertEquals(const T &amp;expected, const T &amp;actual) noexcept(false)'],['../classBBUnit_1_1ProvidesAssertions.html#a73773e24ed166685d3c8a8388e95c2c1',1,'BBUnit::ProvidesAssertions::assertEquals(const T &amp;expected, const std::optional&lt; T &gt; &amp;actual)']]],
