@@ -1,25 +1,14 @@
 @page tutorials Tutorials
 
-## Install project
+## 📋 Writing tests
 
-@subpage install-submodule (Recommended)
-
-@subpage install-as-part
-
-## Writing tests
-
-@subpage first-test
-
-@subpage assert-count
-
-$subpage assert-optional
-
-@subpage shorthands
-
+@subpage first-test  
+@subpage assert-count  
+@subpage assert-optional  
+@subpage shorthands  
 @subpage because
 
-## Advanced
+## 💡 Advanced
 
-@subpage exceptions
-
+@subpage exceptions  
 @subpage equals-custom-class
